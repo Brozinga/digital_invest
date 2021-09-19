@@ -120,3 +120,4 @@ dist
 #Others
 data/
 .history/
+.vscode/

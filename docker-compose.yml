@@ -28,6 +28,7 @@ services:
     image: mongo
     container_name: digitaldb
     environment:
+      MONGO_INITDB_DATABASE: DigitalInvest
       MONGO_INITDB_ROOT_USERNAME: master
       MONGO_INITDB_ROOT_PASSWORD: digit4l1nv*st!
     ports:
