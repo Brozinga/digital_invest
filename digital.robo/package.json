@@ -13,10 +13,12 @@
     "@mongoosejs/double": "^0.2.0",
     "axios": "^0.21.4",
     "date-fns": "^2.24.0",
+    "date-fns-tz": "^1.1.6",
     "dotenv": "^10.0.0",
     "mongodb": "^4.1.2",
     "mongoose": "^6.0.6",
     "nodemon": "^2.0.12",
-    "toad-scheduler": "^1.5.0"
+    "toad-scheduler": "^1.5.0",
+    "winston": "^3.3.3"
   }
 }

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
-const moedasSchema = require("../Models/Moedas");
-const cotacoesSchema = require("../Models/Cotacao");
+const moedasSchema = require("../../../digital.domain/src/Models/Moedas");
+const cotacoesSchema = require("../../../digital.domain/src/Models/Cotacao");
 
 const connection = mongoose.createConnection(process.env.BANCO_DADOS,
     {
