@@ -3,7 +3,7 @@ const { addHours } = require('date-fns')
 const { PegarDataHoraAtual, ConvertTimeSpanInDateTime } = require('../Utils')
 const logger = require("../Utils/logger")(__filename)
 
-module.exports.COTACOES_ID = "COTACOES"
+module.exports.COTACOES_ID = "JOB_COTACOES"
 
 const { BuscarTicker } = require("../Services")
 
@@ -12,7 +12,7 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
         "Pegar Cotacoes",
         async () => {
 
-            logger.log("INICIANDO COTAÇÕES")
+            logger.info("INICIANDO COTAÇÕES")
 
             const correctData = PegarDataHoraAtual();
             const advancedData = addHours(PegarDataHoraAtual(), 1);
@@ -24,16 +24,21 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
                 }
             })
 
-            logger.log("Existe cotação nesse horário:" + !!existCotacoesNessaHora)
+            logger.info("Existe cotação nesse horário:" + !!existCotacoesNessaHora)
 
 
             if (existCotacoesNessaHora == null) {
 
-                const todasMoedas = await MoedasRepository.find({ "ativo": true });
+                const todasMoedas = await MoedasRepository.find({ "ativo": true }) || [];
+
+                logger.info("Quantidade de moedas selecionadas: " + todasMoedas.length)
+
 
                 todasMoedas.forEach(async item => {
 
                     const result = await BuscarTicker(item.acronimo)
+                    logger.info(`MOEDA: ${item.nome}, VALOR: ${Number(result.data?.ticker.last).toFixed(2)}`)
+
                     CotacoesRepository.create({
                         moedaId: item._id,
                         dataCotacao: ConvertTimeSpanInDateTime(result.data?.ticker.date),
@@ -43,7 +48,7 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
                 })
             }
 
-            logger.log("COTAÇÕES FINALIZADOS")
+            logger.info("COTAÇÕES FINALIZADOS")
 
         }
     )
