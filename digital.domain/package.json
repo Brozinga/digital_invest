@@ -1,0 +1,10 @@
+{
+  "name": "digital.domain",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@mongoosejs/double": "^0.2.0",
+    "mongoose": "^6.0.7"
+  }
+}
