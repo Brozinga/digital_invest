@@ -14,39 +14,21 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
 
             logger.info("INICIANDO COTAÇÕES")
 
-            const correctData = PegarDataHoraAtual();
-            const advancedData = addHours(PegarDataHoraAtual(), 1);
+            const todasMoedas = await MoedasRepository.find({ "ativo": true }) || [];
 
-            const existCotacoesNessaHora = await CotacoesRepository.findOne({
-                "dataCotacao": {
-                    $gt: correctData,
-                    $lt: advancedData
-                }
-            })
+            logger.info("Quantidade de moedas selecionadas: " + todasMoedas.length)
 
-            logger.info("Existe cotação nesse horário:" + !!existCotacoesNessaHora)
+            todasMoedas.forEach(async item => {
 
+                const result = await BuscarTicker(item.acronimo)
+                logger.info(`MOEDA: ${item.nome}, VALOR: ${Number(result.data?.ticker.last).toFixed(2)}`)
 
-            if (existCotacoesNessaHora == null) {
-
-                const todasMoedas = await MoedasRepository.find({ "ativo": true }) || [];
-
-                logger.info("Quantidade de moedas selecionadas: " + todasMoedas.length)
-
-
-                todasMoedas.forEach(async item => {
-
-                    const result = await BuscarTicker(item.acronimo)
-                    logger.info(`MOEDA: ${item.nome}, VALOR: ${Number(result.data?.ticker.last).toFixed(2)}`)
-
-                    CotacoesRepository.create({
-                        moedaId: item._id,
-                        dataCotacao: ConvertTimeSpanInDateTime(result.data?.ticker.date),
-                        valorCotado: Number(result.data?.ticker.last).toFixed(2)
-                    })
-
+                CotacoesRepository.create({
+                    moedaId: item._id,
+                    dataCotacao: ConvertTimeSpanInDateTime(result.data?.ticker.date),
+                    valorCotado: Number(result.data?.ticker.last).toFixed(2)
                 })
-            }
+            })
 
             logger.info("COTAÇÕES FINALIZADOS")
 
