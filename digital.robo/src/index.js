@@ -1,6 +1,6 @@
 const { ToadScheduler, SimpleIntervalJob } = require('toad-scheduler')
 
-const { MoedasRepository, CotacoesRepository } = require('./Database')
+const { MoedasRepository, CotacoesRepository } = require('../../digital.domain/src/Database')
 const { ConvertSecondsToTime } = require("./Utils")
 const logger = require("./Utils/logger")(__filename)
 

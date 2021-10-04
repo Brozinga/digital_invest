@@ -20,14 +20,18 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
 
             todasMoedas.forEach(async item => {
 
-                const result = await BuscarTicker(item.acronimo)
-                logger.info(`MOEDA: ${item.nome}, VALOR: ${Number(result.data?.ticker.last).toFixed(2)}`)
+                const { data } = await BuscarTicker(item.acronimo)
 
-                CotacoesRepository.create({
-                    moedaId: item._id,
-                    dataCotacao: ConvertTimeSpanInDateTime(result.data?.ticker.date),
-                    valorCotado: Number(result.data?.ticker.last).toFixed(2)
-                })
+                if (data != null || data != undefined) {
+
+                    logger.info(`MOEDA: ${item.nome}, VALOR: ${Number(data?.ticker.last).toFixed(2)}`)
+
+                    CotacoesRepository.create({
+                        moedaId: item._id,
+                        dataCotacao: ConvertTimeSpanInDateTime(data?.ticker.date),
+                        valorCotado: Number(data?.ticker.last).toFixed(2)
+                    })
+                }
             })
 
             logger.info("COTAÇÕES FINALIZADOS")
