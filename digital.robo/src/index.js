@@ -1,16 +1,16 @@
 const { ToadScheduler, SimpleIntervalJob } = require('toad-scheduler')
 
-const { MoedasRepository, CotacoesRepository } = require('../../digital.domain/src/Database')
+const { MoedaRepository, CotacaoRepository } = require('../../digital.data/src/Database')
 const { ConvertSecondsToTime } = require("./Utils")
 const logger = require("./Utils/logger")(__filename)
 
 
-const { PegarCotacoesTask, COTACOES_ID } = require('./Tasks/Cotacoes')
+const { PegarCotacoesTask, ID: COTACOES_ID } = require('./Tasks/Cotacoes')
 
 const scheduler = new ToadScheduler()
 
 const JOB_COTACAO = new SimpleIntervalJob({ seconds: process.env.TEMPO_EXECUCAO_COTACAO },
-    PegarCotacoesTask(MoedasRepository, CotacoesRepository), COTACOES_ID);
+    PegarCotacoesTask(MoedaRepository, CotacaoRepository), COTACOES_ID);
 
 scheduler.addSimpleIntervalJob(JOB_COTACAO)
 

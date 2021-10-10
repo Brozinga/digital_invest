@@ -1,9 +1,8 @@
-const { AsyncTask, Task } = require('toad-scheduler')
-const { addHours } = require('date-fns')
-const { PegarDataHoraAtual, ConvertTimeSpanInDateTime } = require('../Utils')
+const { AsyncTask } = require('toad-scheduler')
+const { ConvertTimeSpanInDateTime } = require('../Utils')
 const logger = require("../Utils/logger")(__filename)
 
-module.exports.COTACOES_ID = "JOB_COTACOES"
+module.exports.ID = "JOB_COTACOES"
 
 const { BuscarTicker } = require("../Services")
 
