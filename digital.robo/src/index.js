@@ -1,6 +1,6 @@
 const { ToadScheduler, SimpleIntervalJob } = require('toad-scheduler')
 
-const { MoedasRepository, CotacoesRepository, PedidosRepository } = require('../../digital.data/src/Database')
+const { MoedasRepository, CotacoesRepository, PedidosRepository, UsuariosRepository } = require('../../digital.data/src/Database')
 const { ConvertSecondsToTime } = require("./Utils")
 const logger = require("./Utils/logger")(__filename)
 
@@ -16,7 +16,7 @@ const JOB_COTACAO = new SimpleIntervalJob({ seconds: process.env.TEMPO_EXECUCAO_
 
 //JOB DE VENDA DAS MOEDAS
 const JOB_VENDA = new SimpleIntervalJob({ seconds: process.env.TEMPO_EXECUCAO_VENDA },
-    VenderMoedasTask(CotacoesRepository, PedidosRepository), VENDAS_ID);
+    VenderMoedasTask(CotacoesRepository, PedidosRepository, UsuariosRepository), VENDAS_ID);
 
 scheduler.addSimpleIntervalJob(JOB_COTACAO)
 scheduler.addSimpleIntervalJob(JOB_VENDA)

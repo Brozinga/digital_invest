@@ -1,6 +1,10 @@
 const { AsyncTask } = require('toad-scheduler')
 const { ConvertTimeSpanInDateTime } = require('../Utils')
 const logger = require("../Utils/logger")(__filename)
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+
+dayjs.extend(utc)
 
 module.exports.ID = "JOB_COTACOES"
 
@@ -27,7 +31,7 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
 
                     CotacoesRepository.create({
                         moedaId: item._id,
-                        dataCotacao: ConvertTimeSpanInDateTime(data?.ticker.date),
+                        dataCotacao: dayjs(data?.ticker.date * 1000).utc().format(),
                         valorCotado: Number(data?.ticker.last).toFixed(2)
                     })
                 }
