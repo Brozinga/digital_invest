@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const moedaSchema = require("../Models/Moeda");
-const cotacaoSchema = require("../Models/Cotacao");
-const usuarioSchema = require("../Models/Usuario");
-const pedidoSchema = require("../Models/Pedido");
+const moedasSchema = require("../Models/Moedas");
+const cotacoesSchema = require("../Models/Cotacoes");
+const usuariosSchema = require("../Models/Usuarios");
+const pedidosSchema = require("../Models/Pedidos");
 
 const connection = mongoose.createConnection(process.env.BANCO_DADOS,
     {
@@ -11,15 +11,18 @@ const connection = mongoose.createConnection(process.env.BANCO_DADOS,
     })
 
 const Connection = connection;
-const MoedaRepository = connection.model("moeda", moedaSchema);
-const CotacaoRepository = connection.model("cotacao", cotacaoSchema);
-const UsuarioRepository = connection.model("usuario", usuarioSchema);
-const PedidoRepository = connection.model("pedido", pedidoSchema);
+const MoedasRepository = connection.model("moedas", moedasSchema);
+const CotacoesRepository = connection.model("cotacoes", cotacoesSchema);
+const UsuariosRepository = connection.model("usuarios", usuariosSchema);
+const PedidosRepository = connection.model("pedidos", pedidosSchema);
+
+let item = MoedasRepository.find({});
+
 
 module.exports = {
     Connection,
-    MoedaRepository,
-    CotacaoRepository,
-    UsuarioRepository,
-    PedidoRepository
+    MoedasRepository,
+    CotacoesRepository,
+    UsuariosRepository,
+    PedidosRepository
 }

@@ -1,7 +1,8 @@
 const { Schema } = require("mongoose")
 
-const usuarioSchema = new Schema({
+const usuariosSchema = new Schema({
     email: { type: String, required: true, unique: true },
+    nome: { type: String, required: true },
     senha: { type: String, required: true },
     cpf: { type: String, required: true, unique: true },
     ativo: { type: Boolean, required: true },
@@ -9,4 +10,4 @@ const usuarioSchema = new Schema({
     dataCriacao: { type: Date, index: true }
   });
 
-  module.exports = usuarioSchema;
+  module.exports = usuariosSchema;

@@ -1,0 +1,1 @@
+[{"_id":{"$oid":"616345414794527e145c296e"},"email":"fnd_broz@hotmail.com","nome":"Fernando","senha":"123","cpf":"12345678909","ativo":true,"carteira":500,"dataCriacao":{"$date":"2021-10-10T19:55:45.679Z"}}]
