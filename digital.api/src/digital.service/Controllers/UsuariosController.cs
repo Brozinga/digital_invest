@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Identity.Mongo.Mongo;
+using digital.business.Handlers;
 using digital.data.DbContext;
 using digital.domain.InputViewModel;
 using digital.domain.Models;
@@ -19,14 +20,16 @@ namespace digital.service.Controllers
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Papel> _papeisManager;
         private readonly TokenService _tokenService;
+        private readonly UsuarioHandler _userHandler;
 
-        public UsuariosController(UserManager<Usuario> userManager, MongoDbContext dbContext, 
-            RoleManager<Papel> papeisManager, TokenService tokenService)
+        public UsuariosController(UserManager<Usuario> userManager, MongoDbContext dbContext,
+            RoleManager<Papel> papeisManager, TokenService tokenService, UsuarioHandler userHandler)
         {
             _userManager = userManager;
             _dbContext = dbContext;
             _papeisManager = papeisManager;
             _tokenService = tokenService;
+            _userHandler = userHandler;
         }
 
 
@@ -43,25 +46,18 @@ namespace digital.service.Controllers
             return BadRequest(result);
         }
 
-        [HttpGet("[action]/{name}/{email}/{pass}")]
+        [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> CriarUsuario([FromRoute] string name, string email, string pass, string role)
+        public async Task<IActionResult> Post([FromBody] NewUsuarioInput usuario)
         {
-            var user = new Usuario(name.ToUpper(), email.ToLower(), "12345678909");
-            var papel = await _papeisManager.FindByNameAsync(role);
-
-            var result = await _userManager.CreateAsync(user, pass);
-
-            if (result.Succeeded)
-                return Ok(result);
-
-            return BadRequest(result);
+            var result = await _userHandler.Execute(usuario);
+            return StatusCode(result.Status, result);
         }
 
 
         [HttpPost("/login")]
         [AllowAnonymous]
-        public async Task<IActionResult> Login([FromBody] LoginViewModel userLogin) {
+        public async Task<IActionResult> Login([FromBody] LoginInputView userLogin) {
 
             var userResult = await _dbContext.Usuarios.FirstOrDefaultAsync(x=> x.Email == userLogin.user); 
 

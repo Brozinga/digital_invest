@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
+    <ProjectReference Include="..\digital.data\digital.data.csproj" />
+    <ProjectReference Include="..\digital.domain\digital.domain.csproj" />
+    <ProjectReference Include="..\digital.util\digital.util.csproj" />
   </ItemGroup>
 
 </Project>

@@ -44,6 +44,8 @@ namespace digital.service
                 );
 
             services.InjectDatabase();
+            services.InjectHandlers();
+
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 
             services.AddControllers();

@@ -1,4 +1,5 @@
-﻿using digital.data.DbContext;
+﻿using digital.business.Handlers;
+using digital.data.DbContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +12,11 @@ namespace digital.ioc
         public static void InjectDatabase(this IServiceCollection services)
         {
             services.AddScoped(typeof(MongoDbContext));
+        }
+
+        public static void InjectHandlers(this IServiceCollection services)
+        {
+            services.AddScoped<UsuarioHandler>();
         }
 
         public static void InjectJWT(this IServiceCollection services, string secret)
