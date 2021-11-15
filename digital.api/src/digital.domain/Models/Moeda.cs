@@ -5,7 +5,7 @@ using System;
 namespace digital.domain.Models
 {
     [BsonIgnoreExtraElements]
-    public class Moedas
+    public class Moeda
     {
         [BsonId]
         public string Id { get; set; }
@@ -30,6 +30,6 @@ namespace digital.domain.Models
         public DateTime DataRegistro { get; set; }
 
         [BsonIgnore]
-        public virtual Cotacoes cotacoes { get; set; }
+        public virtual Cotacao cotacoes { get; set; }
     }
 }

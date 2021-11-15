@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,12 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UnitOfWork\" />
-    <Folder Include="Repository\" />
+    <ProjectReference Include="..\digital.domain\digital.domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\digital.domain\digital.domain.csproj" />
+    <Folder Include="UnitOfWork\" />
   </ItemGroup>
 
 </Project>

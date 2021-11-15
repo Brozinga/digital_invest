@@ -5,7 +5,7 @@ using System;
 namespace digital.domain.Models
 {
     [BsonIgnoreExtraElements]
-    public class Cotacoes
+    public class Cotacao
     {
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
@@ -22,3 +22,4 @@ namespace digital.domain.Models
         public DateTime DataCotacao { get; set; }
     }
 }
+ 

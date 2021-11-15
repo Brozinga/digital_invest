@@ -1,14 +1,16 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDbGenericRepository.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace digital.domain.Models
 {
+    [CollectionName("pedidos")]
     [BsonIgnoreExtraElements]
-    public class Pedidos
+    public class Pedido
     {
-        public Pedidos()
+        public Pedido()
         {
             MoedasCompra = new List<MoedasCompraVenda>();
             MoedasVenda = new List<MoedasCompraVenda>();

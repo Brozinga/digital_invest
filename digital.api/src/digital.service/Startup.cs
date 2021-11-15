@@ -3,6 +3,8 @@ using digital.data.DbContext;
 using digital.data.Identity;
 using digital.domain.Models;
 using digital.ioc;
+using digital.service.Middlewares;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -26,6 +28,8 @@ namespace digital.service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<TokenService>();
+
             string ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             string DatabaseName = Configuration.GetSection("MongoConnection:Database").Value;
 
@@ -33,12 +37,14 @@ namespace digital.service
             MongoDbContext.DatabaseName = DatabaseName;
             MongoDbContext.IsSSL = Convert.ToBoolean(this.Configuration.GetSection("MongoConnection:IsSSL").Value);
 
-            services.AddIdentity<Usuarios, Papeis>(IdentityConfiguration.GetDefault())
-                .AddMongoDbStores<Usuarios, Papeis, ObjectId>(
+            services.AddIdentity<Usuario, Papel>(IdentityConfiguration.GetDefault())
+                .AddRoles<Papel>()
+                .AddMongoDbStores<Usuario, Papel, ObjectId>(
                     ConnectionString, DatabaseName
                 );
 
             services.InjectDatabase();
+            services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -56,9 +62,16 @@ namespace digital.service
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "digital.service v1"));
             }
-
+           
             app.UseHttpsRedirection();
             app.UseRouting();
+
+            app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

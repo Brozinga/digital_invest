@@ -12,7 +12,7 @@ namespace digital.data.DbContext
 
         private IMongoDatabase Database { get; }
 
-        private CreateIndexModel<Usuarios> IndexModel { get; set; }
+        private CreateIndexModel<Usuario> IndexModel { get; set; }
 
         public MongoDbContext()
         {
@@ -26,9 +26,9 @@ namespace digital.data.DbContext
 
                 var mongoClient = new MongoClient(settings);
 
-                IndexModel = new CreateIndexModel<Usuarios>(
-                    new IndexKeysDefinitionBuilder<Usuarios>()
-                    .Ascending(new StringFieldDefinition<Usuarios>("cpf")), new CreateIndexOptions() { Unique = true });
+                IndexModel = new CreateIndexModel<Usuario>(
+                    new IndexKeysDefinitionBuilder<Usuario>()
+                    .Ascending(new StringFieldDefinition<Usuario>("cpf")), new CreateIndexOptions() { Unique = true });
 
 
                 Database = mongoClient.GetDatabase(DatabaseName);
@@ -39,45 +39,45 @@ namespace digital.data.DbContext
             }
         }
 
-        public IMongoCollection<Usuarios> Usuarios
+        public IMongoCollection<Usuario> Usuarios
         {
             get
             {
-                var users = Database.GetCollection<Usuarios>("usuarios");
+                var users = Database.GetCollection<Usuario>("usuarios");
                 users.Indexes.CreateOneAsync(IndexModel);
                 return users;
             }
         }
 
-        public IMongoCollection<Cotacoes> Cotacoes
+        public IMongoCollection<Cotacao> Cotacoes
         {
             get
             {
-                return Database.GetCollection<Cotacoes>("cotacoes");
+                return Database.GetCollection<Cotacao>("cotacoes");
             }
         }
 
-        public IMongoCollection<Moedas> Moedas
+        public IMongoCollection<Moeda> Moedas
         {
             get
             {
-                return Database.GetCollection<Moedas>("moedas");
+                return Database.GetCollection<Moeda>("moedas");
             }
         }
 
-        public IMongoCollection<Pedidos> Pedidos
+        public IMongoCollection<Pedido> Pedidos
         {
             get
             {
-                return Database.GetCollection<Pedidos>("pedidos");
+                return Database.GetCollection<Pedido>("pedidos");
             }
         }
 
-        public IMongoCollection<Papeis> Papeis
+        public IMongoCollection<Papel> Papeis
         {
             get
             {
-                return Database.GetCollection<Papeis>("papeis");
+                return Database.GetCollection<Papel>("papeis");
             }
         }
     }
