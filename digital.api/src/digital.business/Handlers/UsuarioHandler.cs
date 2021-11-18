@@ -2,7 +2,7 @@
 using digital.data.Interfaces;
 using digital.domain.InputViewModel;
 using digital.domain.OutputViewModel;
-using digital.util.Enums;
+using digital.domain.Enums;
 using digital.util.Texts;
 using System.Threading.Tasks;
 

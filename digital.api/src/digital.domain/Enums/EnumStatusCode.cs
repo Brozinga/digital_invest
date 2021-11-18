@@ -1,4 +1,4 @@
-﻿namespace digital.util.Enums
+﻿namespace digital.domain.Enums
 {
     public enum EnumStatusCode
     {
