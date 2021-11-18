@@ -1,5 +1,8 @@
 ﻿using digital.business.Handlers;
 using digital.data.DbContext;
+using digital.data.Interfaces;
+using digital.data.Repository;
+using digital.data.UnitOfWork;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,6 +20,19 @@ namespace digital.ioc
         public static void InjectHandlers(this IServiceCollection services)
         {
             services.AddScoped<UsuarioHandler>();
+        }
+
+        public static void InjectRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IMoedaRepository, MoedaRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
+            services.AddScoped<ICotacaoRepository, CotacaoRepository>();
+        }
+
+        public static void InjectUnitOfWork(this IServiceCollection services)
+        {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
 
         public static void InjectJWT(this IServiceCollection services, string secret)

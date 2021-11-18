@@ -1,5 +1,5 @@
 ﻿using digital.domain.Models;
-using digital.util;
+using digital.util.Texts;
 using Flunt.Extensions.Br.Validations;
 using Flunt.Notifications;
 using Flunt.Validations;

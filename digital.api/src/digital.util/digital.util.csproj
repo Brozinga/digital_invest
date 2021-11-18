@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="ValidationsText.Designer.cs">
+    <Compile Update="Texts\ValidationsText.Designer.cs">
       <DependentUpon>ValidationsText.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="ValidationsText.resx">
+    <EmbeddedResource Update="Texts\ValidationsText.resx">
       <LastGenOutput>ValidationsText.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>

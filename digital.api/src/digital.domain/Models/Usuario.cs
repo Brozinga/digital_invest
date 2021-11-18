@@ -47,7 +47,7 @@ namespace digital.domain.Models
         [BsonElement("carteira")]
         [BsonRequired]
         [BsonDefaultValue(0)]
-        public decimal Carteira { get; set; } = 600M;
+        public decimal Carteira { get; set; } = 500M;
 
         [BsonElement("RolesName")]
         public ICollection<string> RolesName { get; set; }

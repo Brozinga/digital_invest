@@ -14,8 +14,4 @@
     <ProjectReference Include="..\digital.domain\digital.domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UnitOfWork\" />
-  </ItemGroup>
-
 </Project>

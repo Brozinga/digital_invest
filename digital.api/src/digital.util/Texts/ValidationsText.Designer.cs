@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace digital.util {
+namespace digital.util.Texts {
     using System;
     
     
@@ -19,7 +19,7 @@ namespace digital.util {
     // através de uma ferramenta como ResGen ou Visual Studio.
     // Para adicionar ou remover um associado, edite o arquivo .ResX e execute ResGen novamente
     // com a opção /str, ou recrie o projeto do VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ValidationsText {
@@ -39,7 +39,7 @@ namespace digital.util {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("digital.util.ValidationsText", typeof(ValidationsText).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("digital.util.Texts.ValidationsText", typeof(ValidationsText).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

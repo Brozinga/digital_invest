@@ -1,26 +1,20 @@
-﻿using AspNetCore.Identity.Mongo.Mongo;
-using digital.business.Interfaces;
-using digital.data.DbContext;
+﻿using digital.business.Interfaces;
+using digital.data.Interfaces;
 using digital.domain.InputViewModel;
-using digital.domain.Models;
 using digital.domain.OutputViewModel;
-using digital.util;
-using Microsoft.AspNetCore.Identity;
+using digital.util.Enums;
+using digital.util.Texts;
 using System.Threading.Tasks;
 
 namespace digital.business.Handlers
 {
     public class UsuarioHandler : IHandlerBase<NewUsuarioInput, NewUsuarioOutputView>
     {
-        private readonly MongoDbContext _dbContext;
-        private readonly UserManager<Usuario> _userManager;
-        private readonly RoleManager<Papel> _papeisManager;
+        private readonly IUnitOfWork _uow;
 
-        public UsuarioHandler(MongoDbContext dbContext, UserManager<Usuario> userManager, RoleManager<Papel> papeisManager)
+        public UsuarioHandler(IUnitOfWork uow)
         {
-            _dbContext = dbContext;
-            _userManager = userManager;
-            _papeisManager = papeisManager;
+            _uow = uow;
         }
 
         public async Task<NewUsuarioOutputView> Execute(NewUsuarioInput data)
@@ -29,18 +23,14 @@ namespace digital.business.Handlers
                 return new NewUsuarioOutputView(data.Notifications,(int) EnumStatusCode.BadRequest, false);
 
 
-            var exists = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email == data.Email || x.CPF == data.CPF);
+            var exists = await _uow.UsuarioRepository.Exists(data.Email, data.CPF);
 
-            if(exists != null)
+            if(exists)
                 return new NewUsuarioOutputView(null, (int)EnumStatusCode.BadRequest, false, ValidationsText.EmailCPFJaCadastrado);
 
-
-            var papel = await _papeisManager.FindByNameAsync("basic");
             var user = data.Map();
 
-            user.Roles.Add(papel.Id);
-
-            var result = await _userManager.CreateAsync(user, data.Senha);
+            var result = await _uow.UsuarioRepository.CreateUsuario(user, data.Senha);
 
             if (result.Succeeded)
                 return new NewUsuarioOutputView(null, message: ValidationsText.UsuarioCriadoSucesso);

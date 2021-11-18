@@ -45,6 +45,8 @@ namespace digital.service
 
             services.InjectDatabase();
             services.InjectHandlers();
+            services.InjectRepositories();
+            services.InjectUnitOfWork();
 
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 

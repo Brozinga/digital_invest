@@ -39,6 +39,12 @@ namespace digital.data.DbContext
             }
         }
 
+        public IMongoDatabase MongoDatabase()
+        {
+            return Database;
+        }
+
+
         public IMongoCollection<Usuario> Usuarios
         {
             get
