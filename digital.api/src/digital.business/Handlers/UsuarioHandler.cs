@@ -20,13 +20,13 @@ namespace digital.business.Handlers
         public async Task<NewUsuarioOutputView> Execute(NewUsuarioInput data)
         {
             if(!data.IsValid)
-                return new NewUsuarioOutputView(data.Notifications,(int) EnumStatusCode.BadRequest, false);
+                return new NewUsuarioOutputView(data.Notifications, EStatusCode.BadRequest, false);
 
 
             var exists = await _uow.UsuarioRepository.Exists(data.Email, data.CPF);
 
             if(exists)
-                return new NewUsuarioOutputView(null, (int)EnumStatusCode.BadRequest, false, ValidationsText.EmailCPFJaCadastrado);
+                return new NewUsuarioOutputView(null, EStatusCode.BadRequest, false, ValidationsText.EmailCPFJaCadastrado);
 
             var user = data.Map();
 
@@ -36,7 +36,7 @@ namespace digital.business.Handlers
                 return new NewUsuarioOutputView(null, message: ValidationsText.UsuarioCriadoSucesso);
 
             else
-                return new NewUsuarioOutputView(null, (int)EnumStatusCode.ServerError, message: ValidationsText.ServerError);
+                return new NewUsuarioOutputView(null, EStatusCode.ServerError, message: ValidationsText.ServerError);
 
         }
     }

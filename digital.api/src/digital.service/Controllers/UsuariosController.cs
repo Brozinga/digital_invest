@@ -51,7 +51,7 @@ namespace digital.service.Controllers
         public async Task<IActionResult> Post([FromBody] NewUsuarioInput usuario)
         {
             var result = await _userHandler.Execute(usuario);
-            return StatusCode(result.Status, result);
+            return StatusCode((int) result.Status, result);
         }
 
 

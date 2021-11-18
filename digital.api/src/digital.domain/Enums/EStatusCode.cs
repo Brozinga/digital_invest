@@ -1,6 +1,6 @@
 ﻿namespace digital.domain.Enums
 {
-    public enum EnumStatusCode
+    public enum EStatusCode
     {
         Ok = 200,
         Created = 201,
