@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace digital.util.Texts {
+namespace digital.assets.Texts {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace digital.util.Texts {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ValidationsText {
+    public class SuccessText {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ValidationsText() {
+        internal SuccessText() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace digital.util.Texts {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("digital.util.Texts.ValidationsText", typeof(ValidationsText).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("digital.assets.Texts.SuccessText", typeof(SuccessText).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,11 @@ namespace digital.util.Texts {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O Numero CPF é Invalido.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Senha alterada com sucesso.
         /// </summary>
-        public static string CPFInvalid {
+        public static string SenhaAlterada {
             get {
-                return ResourceManager.GetString("CPFInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Email e/ou CPF já cadastrados!.
-        /// </summary>
-        public static string EmailCPFJaCadastrado {
-            get {
-                return ResourceManager.GetString("EmailCPFJaCadastrado", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Este email não é válido.
-        /// </summary>
-        public static string EmailInvalid {
-            get {
-                return ResourceManager.GetString("EmailInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a A senha está vazia ou contem caracteres inválidos.
-        /// </summary>
-        public static string SenhaInvalid {
-            get {
-                return ResourceManager.GetString("SenhaInvalid", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro tente novamente mais tarde.
-        /// </summary>
-        public static string ServerError {
-            get {
-                return ResourceManager.GetString("ServerError", resourceCulture);
+                return ResourceManager.GetString("SenhaAlterada", resourceCulture);
             }
         }
         

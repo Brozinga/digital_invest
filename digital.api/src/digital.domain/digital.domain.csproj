@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\digital.assets\digital.assets.csproj" />
     <ProjectReference Include="..\digital.util\digital.util.csproj" />
   </ItemGroup>
 

@@ -16,5 +16,7 @@ namespace digital.data.Interfaces
         public Task<bool> CheckPassword(Usuario usuario, string password);
         public Task<Usuario> DisabledUser(ObjectId id);
         public Task<Usuario> DisabledUser(Usuario usuario);
+        public Task<IdentityResult> ChangePassword(Usuario user, string currentPass, string newPass);
+        public Task<Usuario> GetUsuarioId(string Id);
     }
 }

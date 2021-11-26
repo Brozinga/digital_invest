@@ -1,21 +1,19 @@
-﻿using digital.domain.Models;
-using digital.util.Texts;
+﻿using digital.assets.Texts;
+using digital.domain.Models;
 using Flunt.Extensions.Br.Validations;
 using Flunt.Notifications;
 using Flunt.Validations;
-using System;
 
 namespace digital.domain.InputViewModel
 {
     public class NewUsuarioInput : BasicInputView
     {
-        public NewUsuarioInput(string nome, string email, string senha, string cPF)
+        public NewUsuarioInput(string nome, string email, string senha, string cPF): base()
         {
             Nome = nome;
             Email = email.ToLower();
             Senha = senha;
             CPF = cPF;
-            Validate();
         }
 
         public string Nome { get; set; }
@@ -27,9 +25,9 @@ namespace digital.domain.InputViewModel
         {
             AddNotifications(
                 new Contract<Notification>()
-                    .IsEmail(Email, "Email", ValidationsText.EmailInvalid)
-                    .IsCpf(CPF, "CPF", ValidationsText.CPFInvalid)
-                    .IsNotNullOrEmpty(Senha, "Senha", ValidationsText.SenhaInvalid)
+                    .IsEmail(Email, "Email", ErrorText.EmailInvalido)
+                    .IsCpf(CPF, "CPF", ErrorText.CPFInvalido)
+                    .IsNotNullOrEmpty(Senha, "Senha", ErrorText.SenhaInvalida)
                 );
         }
 

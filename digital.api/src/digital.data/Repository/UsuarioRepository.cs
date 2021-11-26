@@ -30,6 +30,13 @@ namespace digital.data.Repository
             return await _userManager.CheckPasswordAsync(usuario, password);
         }
 
+        public async Task<IdentityResult> ChangePassword(Usuario user, string currentPass, string newPass)
+        {
+            var usuario = await _userManager.ChangePasswordAsync(user, currentPass, newPass);   
+            
+            return usuario;
+        }
+
         public async Task<IdentityResult> CreateUsuario(Usuario usuario, string password, EPapeisNames papel = EPapeisNames.BASIC)
         {
             var res = papel.ToDescriptionString();
@@ -81,6 +88,12 @@ namespace digital.data.Repository
         public async Task<Usuario> GetUsuarioEmail(string email)
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+            return usuario;
+        }
+
+        public async Task<Usuario> GetUsuarioId(string Id)
+        {
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == ObjectId.Parse(Id));
             return usuario;
         }
 

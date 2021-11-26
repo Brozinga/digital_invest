@@ -54,6 +54,14 @@ namespace digital.service.Controllers
             return StatusCode((int) result.Status, result);
         }
 
+        [HttpPost("[action]")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordInputView passChange)
+        {
+            var result = await _userHandler.Execute(passChange);
+            return StatusCode((int)result.Status, result);
+        }
+
 
         [HttpPost("/login")]
         [AllowAnonymous]
@@ -81,11 +89,14 @@ namespace digital.service.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
+        [Authorize(Roles = "basic")]
         public IActionResult Get()
         {
+            string jwt = HttpContext.Request.Headers.Authorization;
+            var decoded = _tokenService.DecodeToken(jwt);
 
-            return Ok("Hy");
+
+            return Ok(decoded.Email);
         }
 
     }

@@ -117,20 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CPFInvalid" xml:space="preserve">
-    <value>O Numero CPF é Invalido</value>
-  </data>
-  <data name="EmailCPFJaCadastrado" xml:space="preserve">
-    <value>Email e/ou CPF já cadastrados!</value>
-  </data>
-  <data name="EmailInvalid" xml:space="preserve">
-    <value>Este email não é válido</value>
-  </data>
-  <data name="SenhaInvalid" xml:space="preserve">
-    <value>A senha está vazia ou contem caracteres inválidos</value>
-  </data>
-  <data name="ServerError" xml:space="preserve">
-    <value>Ocorreu um erro tente novamente mais tarde</value>
+  <data name="SenhaAlterada" xml:space="preserve">
+    <value>Senha alterada com sucesso</value>
   </data>
   <data name="UsuarioCriadoSucesso" xml:space="preserve">
     <value>Usuário cridado com sucesso</value>

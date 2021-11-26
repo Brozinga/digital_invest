@@ -2,8 +2,6 @@
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDbGenericRepository.Attributes;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace digital.domain.Models
 {
@@ -13,14 +11,12 @@ namespace digital.domain.Models
     {
         public Usuario() : base()
         {
-            RolesName = new Collection<string>();
         }
 
         public Usuario(string nome, string email, string cpf) : base(email, email)
         {
             CPF = cpf;
             Nome = nome;
-            RolesName = new Collection<string>();
 
         }
 
@@ -49,13 +45,5 @@ namespace digital.domain.Models
         [BsonDefaultValue(0)]
         public decimal Carteira { get; set; } = 500M;
 
-        [BsonElement("RolesName")]
-        public ICollection<string> RolesName { get; set; }
-
-        public bool AddRole(ObjectId roleId, string roleName)
-        {
-            RolesName.Add(roleName);
-            return base.AddRole(roleId);
-        }
     }
 }
