@@ -120,7 +120,7 @@
   <data name="SenhaAlterada" xml:space="preserve">
     <value>Senha alterada com sucesso</value>
   </data>
-  <data name="UsuarioCriadoSucesso" xml:space="preserve">
+  <data name="UsuarioCriado" xml:space="preserve">
     <value>Usuário cridado com sucesso</value>
   </data>
 </root>

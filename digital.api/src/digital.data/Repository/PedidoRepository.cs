@@ -1,17 +1,12 @@
-﻿using digital.data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using digital.data.DbContext;
+using digital.data.Interfaces;
 
 namespace digital.data.Repository
 {
-    public class PedidoRepository : IPedidoRepository
+    public class PedidoRepository : GenericRepository, IPedidoRepository
     {
-        public void Dispose()
+        public PedidoRepository(MongoDbContext dbContext) : base(dbContext)
         {
-            //throw new NotImplementedException();
         }
     }
 }

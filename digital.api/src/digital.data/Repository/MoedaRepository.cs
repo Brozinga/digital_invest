@@ -1,17 +1,12 @@
-﻿using digital.data.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using digital.data.DbContext;
+using digital.data.Interfaces;
 
 namespace digital.data.Repository
 {
-    public class MoedaRepository : IMoedaRepository
+    public class MoedaRepository : GenericRepository, IMoedaRepository
     {
-        public void Dispose()
+        public MoedaRepository(MongoDbContext dbContext) : base(dbContext)
         {
-            //throw new NotImplementedException();
         }
     }
 }

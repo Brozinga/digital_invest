@@ -1,4 +1,5 @@
 ﻿using digital.business.Handlers;
+using digital.business.Services;
 using digital.data.DbContext;
 using digital.data.Interfaces;
 using digital.data.Repository;
@@ -33,6 +34,11 @@ namespace digital.ioc
         public static void InjectUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+        }
+
+        public static void InjectServices(this IServiceCollection services)
+        {
+            services.AddScoped<TokenService>();
         }
 
         public static void InjectJWT(this IServiceCollection services, string secret)

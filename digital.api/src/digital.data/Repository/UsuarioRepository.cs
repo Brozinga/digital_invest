@@ -12,15 +12,14 @@ using System.Threading.Tasks;
 
 namespace digital.data.Repository
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository : GenericRepository, IUsuarioRepository
     {
-        private readonly MongoDbContext _dbContext;
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Papel> _papeisManager;
 
         public UsuarioRepository(MongoDbContext dbContext, UserManager<Usuario> userManager, RoleManager<Papel> papeisManager)
+            :base(dbContext)
         {
-            _dbContext = dbContext;
             _userManager = userManager;
             _papeisManager = papeisManager;
         }
@@ -52,7 +51,7 @@ namespace digital.data.Repository
 
         public async Task<Usuario> DisabledUser(ObjectId id)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id && x.Ativo == true);
 
             usuario.Ativo = false;
 
@@ -81,25 +80,21 @@ namespace digital.data.Repository
 
         public async Task<Usuario> GetUsuarioCpf(string cpf)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.CPF == cpf);
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.CPF == cpf && x.Ativo == true);
             return usuario;
         }
 
         public async Task<Usuario> GetUsuarioEmail(string email)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
+            throw new Exception("Deu ruim, teste!");
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.Ativo == true);
             return usuario;
         }
 
         public async Task<Usuario> GetUsuarioId(string Id)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == ObjectId.Parse(Id));
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == ObjectId.Parse(Id) && x.Ativo == true);
             return usuario;
-        }
-
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
         }
     }
 }

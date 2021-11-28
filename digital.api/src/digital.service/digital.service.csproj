@@ -25,4 +25,8 @@
     <ProjectReference Include="..\digital.ioc\digital.ioc.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>

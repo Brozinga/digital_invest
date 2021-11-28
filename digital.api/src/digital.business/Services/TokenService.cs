@@ -10,7 +10,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 
-namespace digital.service.Middlewares
+namespace digital.business.Services
 {
     public class TokenService
     {
@@ -23,7 +23,7 @@ namespace digital.service.Middlewares
             _papeisManager = papeisManager;
         }
 
-        public string GenerateToken(Usuario user)
+        public TokenModel GenerateToken(Usuario user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(configuration.GetSection("Jwt:Secret").Value);
@@ -45,7 +45,7 @@ namespace digital.service.Middlewares
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            return new TokenModel(tokenHandler.WriteToken(token), tokenDescriptor.Expires.Value.TimeOfDay);
         }
 
         public AuthenticationModel DecodeToken(string token)

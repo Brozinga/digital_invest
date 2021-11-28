@@ -72,9 +72,9 @@ namespace digital.assets.Texts {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário cridado com sucesso.
         /// </summary>
-        public static string UsuarioCriadoSucesso {
+        public static string UsuarioCriado {
             get {
-                return ResourceManager.GetString("UsuarioCriadoSucesso", resourceCulture);
+                return ResourceManager.GetString("UsuarioCriado", resourceCulture);
             }
         }
     }

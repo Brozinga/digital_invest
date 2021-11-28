@@ -3,8 +3,6 @@ using digital.data.DbContext;
 using digital.data.Identity;
 using digital.domain.Models;
 using digital.ioc;
-using digital.service.Middlewares;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +26,6 @@ namespace digital.service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<TokenService>();
 
             string ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
             string DatabaseName = Configuration.GetSection("MongoConnection:Database").Value;
@@ -47,6 +44,8 @@ namespace digital.service
             services.InjectHandlers();
             services.InjectRepositories();
             services.InjectUnitOfWork();
+
+            services.InjectServices();
 
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 

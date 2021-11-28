@@ -129,8 +129,11 @@
   <data name="EmailInvalido" xml:space="preserve">
     <value>Este email não é válido</value>
   </data>
+  <data name="EmailVazio" xml:space="preserve">
+    <value>O email é obrigatório</value>
+  </data>
   <data name="ErroServidor" xml:space="preserve">
-    <value>Ocorreu um erro tente novamente mais tarde</value>
+    <value>Ocorreu um erro inesperado, informe o ErroID para o administrador</value>
   </data>
   <data name="SenhaInvalida" xml:space="preserve">
     <value>A senha está vazia ou contem caracteres inválidos</value>
@@ -139,6 +142,6 @@
     <value>A senha antiga não pode ser igual a nova</value>
   </data>
   <data name="UsuarioNaoExiste" xml:space="preserve">
-    <value>Usuario não existe</value>
+    <value>Usuario ou senha incorretos</value>
   </data>
 </root>

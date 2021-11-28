@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# CA1000: Não declarar membros estáticos em tipos genéricos
+dotnet_diagnostic.CA1000.severity = suggestion

@@ -1,13 +1,9 @@
-﻿using AspNetCore.Identity.Mongo.Mongo;
-using digital.business.Handlers;
-using digital.data.DbContext;
+﻿using digital.business.Handlers;
 using digital.domain.InputViewModel;
 using digital.domain.Models;
-using digital.service.Middlewares;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 using System.Threading.Tasks;
 
 namespace digital.service.Controllers
@@ -16,23 +12,14 @@ namespace digital.service.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        private readonly MongoDbContext _dbContext;
-        private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Papel> _papeisManager;
-        private readonly TokenService _tokenService;
         private readonly UsuarioHandler _userHandler;
 
-        public UsuariosController(UserManager<Usuario> userManager, MongoDbContext dbContext,
-            RoleManager<Papel> papeisManager, TokenService tokenService, UsuarioHandler userHandler)
+        public UsuariosController(RoleManager<Papel> papeisManager, UsuarioHandler userHandler)
         {
-            _userManager = userManager;
-            _dbContext = dbContext;
             _papeisManager = papeisManager;
-            _tokenService = tokenService;
             _userHandler = userHandler;
         }
-
-
 
         [HttpGet("[action]/{name}")]
         [AllowAnonymous]
@@ -67,37 +54,8 @@ namespace digital.service.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginInputView userLogin) {
 
-            var userResult = await _dbContext.Usuarios.FirstOrDefaultAsync(x=> x.Email == userLogin.user); 
-
-            if(userResult == null)
-                return NotFound();
-
-            var pass = await _userManager.CheckPasswordAsync(userResult, userLogin.password);
-
-            if (pass == false)
-                return BadRequest();
-
-
-            var token = _tokenService.GenerateToken(userResult);
-            userResult.PasswordHash = "";
-
-            return Ok(new
-            {
-                user = userResult,
-                token = token
-            });
+            var result = await _userHandler.Execute(userLogin);
+            return StatusCode((int)result.Status, result);
         }
-
-        [HttpGet]
-        [Authorize(Roles = "basic")]
-        public IActionResult Get()
-        {
-            string jwt = HttpContext.Request.Headers.Authorization;
-            var decoded = _tokenService.DecodeToken(jwt);
-
-
-            return Ok(decoded.Email);
-        }
-
     }
 }

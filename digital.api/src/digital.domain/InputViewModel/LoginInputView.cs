@@ -1,13 +1,22 @@
-﻿namespace digital.domain.InputViewModel
+﻿using digital.assets.Texts;
+using Flunt.Notifications;
+using Flunt.Validations;
+
+namespace digital.domain.InputViewModel
 {
     public class LoginInputView : BasicInputView
     {
-        public string user { get; set; }
-        public string password { get; set; }
+        public string Email { get; set; }
+        public string Senha { get; set; }
 
         public override void Validate()
         {
-            throw new System.NotImplementedException();
+            AddNotifications(
+                new Contract<Notification>()
+                    .IsEmail(Email, "Email", ErrorText.EmailInvalido)
+                    .IsNotNullOrEmpty(Email, "Email", ErrorText.EmailVazio)
+                    .IsNotNullOrEmpty(Senha, "Senha", ErrorText.SenhaInvalida)
+                );
         }
     }
 }

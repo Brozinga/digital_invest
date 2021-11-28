@@ -97,7 +97,16 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro tente novamente mais tarde.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O email é obrigatório.
+        /// </summary>
+        public static string EmailVazio {
+            get {
+                return ResourceManager.GetString("EmailVazio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, informe o ErroID para o administrador.
         /// </summary>
         public static string ErroServidor {
             get {
@@ -124,7 +133,7 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuario não existe.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuario ou senha incorretos.
         /// </summary>
         public static string UsuarioNaoExiste {
             get {
