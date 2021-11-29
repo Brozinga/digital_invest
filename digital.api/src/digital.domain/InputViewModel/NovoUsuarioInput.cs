@@ -6,9 +6,9 @@ using Flunt.Validations;
 
 namespace digital.domain.InputViewModel
 {
-    public class NewUsuarioInput : BasicInputView
+    public class NovoUsuarioInput : BasicInputView
     {
-        public NewUsuarioInput(string nome, string email, string senha, string cPF): base()
+        public NovoUsuarioInput(string nome, string email, string senha, string cPF): base()
         {
             Nome = nome;
             Email = email.ToLower();

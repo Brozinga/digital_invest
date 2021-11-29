@@ -37,8 +37,7 @@ namespace digital.business.Services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                    new Claim("custom", user.Id.ToString()),
-                    new Claim(ClaimTypes.Name, user.Email.ToString()),
+                    new Claim(ClaimTypes.Email, user.Email.ToString()),
                     new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
@@ -72,7 +71,6 @@ namespace digital.business.Services
                         Id = claims.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid)?.Value ?? "",
                         Role = claims.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value ?? "",
                         Email = claims.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value ?? "",
-                        Custom = claims.Claims.FirstOrDefault(x => x.Type == "custom")?.Value ?? ""
                     };
             }
             return null;

@@ -7,7 +7,6 @@ using digital.util.Extensions;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using System;
 using System.Threading.Tasks;
 
 namespace digital.data.Repository
@@ -24,74 +23,65 @@ namespace digital.data.Repository
             _papeisManager = papeisManager;
         }
 
-        public async Task<bool> CheckPassword(Usuario usuario, string password)
+        public async Task<bool> VerificarSenha(Usuario usuario, string senha)
         {
-            return await _userManager.CheckPasswordAsync(usuario, password);
+            return await _userManager.CheckPasswordAsync(usuario, senha);
         }
 
-        public async Task<IdentityResult> ChangePassword(Usuario user, string currentPass, string newPass)
+        public async Task<IdentityResult> AtualizarSenha(Usuario usuario, string senhaAtual, string senhaNova)
         {
-            var usuario = await _userManager.ChangePasswordAsync(user, currentPass, newPass);   
-            
-            return usuario;
+            var usuarioDb = await _userManager.ChangePasswordAsync(usuario, senhaAtual, senhaNova);   
+            return usuarioDb;
         }
 
-        public async Task<IdentityResult> CreateUsuario(Usuario usuario, string password, EPapeisNames papel = EPapeisNames.BASIC)
+        public async Task<IdentityResult> CriarUsuario(Usuario usuario, string senha, EPapeisNomes papel = EPapeisNomes.BASIC)
         {
             var res = papel.ToDescriptionString();
-
             var papelSelecionado = await _papeisManager.FindByNameAsync(res);
-
             usuario.AddRole(papelSelecionado.Id);
-
-            var usuarioCriado = await _userManager.CreateAsync(usuario, password);
+            var usuarioCriado = await _userManager.CreateAsync(usuario, senha);
 
             return usuarioCriado;
         }
 
-        public async Task<Usuario> DisabledUser(ObjectId id)
+        public async Task<Usuario> DesabilitarUsuario(ObjectId id)
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id && x.Ativo == true);
-
             usuario.Ativo = false;
-
             var replace = await _dbContext.Usuarios.FindOneAndReplaceAsync(x => x.Id == usuario.Id, usuario);
 
             return replace;
         }
 
-        public async Task<Usuario> DisabledUser(Usuario usuario)
+        public async Task<Usuario> DesabilitarUsuario(Usuario usuario)
         {
             usuario.Ativo = false;
-
             var replace = await _dbContext.Usuarios.FindOneAndReplaceAsync(x => x.Id == usuario.Id, usuario);
 
             return replace;
         }
 
-        public async Task<bool> Exists(string email, string cpf)
+        public async Task<bool> Existe(string email, string cpf)
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() || x.CPF == cpf);
-
             if (usuario == null) return false;
 
             return true;
         }
 
-        public async Task<Usuario> GetUsuarioCpf(string cpf)
+        public async Task<Usuario> PegarUsuarioCpf(string cpf)
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.CPF == cpf && x.Ativo == true);
             return usuario;
         }
 
-        public async Task<Usuario> GetUsuarioEmail(string email)
+        public async Task<Usuario> PegarUsuarioEmail(string email)
         {
-            throw new Exception("Deu ruim, teste!");
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower() && x.Ativo == true);
             return usuario;
         }
 
-        public async Task<Usuario> GetUsuarioId(string Id)
+        public async Task<Usuario> PegarUsuarioId(string Id)
         {
             var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == ObjectId.Parse(Id) && x.Ativo == true);
             return usuario;

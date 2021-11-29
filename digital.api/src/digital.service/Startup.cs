@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace digital.service
 {
@@ -23,7 +25,6 @@ namespace digital.service
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -52,15 +53,21 @@ namespace digital.service
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "digital.service", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Digital Invest API", 
+                    Version = "v1",
+                    Description = "API de serviços para o Front-End da aplicação Digital Invest essa API é responsável pelo controle de acessos," +
+                    "controle de usuários, controle das contas e por fim controle das compras de moedas"
+                });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Please insert JWT with Bearer into field",
+                    Description = "Por favor insira o JWT e não se esqueça de escrever 'Bearer' com o espaço",
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement {
                    {
                      new OpenApiSecurityScheme
@@ -71,20 +78,23 @@ namespace digital.service
                          Id = "Bearer"
                        }
                       },
-                      new string[] { }
+                      Array.Empty<string>()
                     }
                   });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "digital.service v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Invest API v1"));
             }
            
             app.UseHttpsRedirection();

@@ -22,7 +22,6 @@ namespace digital.ioc
         {
             services.AddScoped<UsuarioHandler>();
         }
-
         public static void InjectRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -30,17 +29,14 @@ namespace digital.ioc
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<ICotacaoRepository, CotacaoRepository>();
         }
-
         public static void InjectUnitOfWork(this IServiceCollection services)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
         }
-
         public static void InjectServices(this IServiceCollection services)
         {
             services.AddScoped<TokenService>();
         }
-
         public static void InjectJWT(this IServiceCollection services, string secret)
         {
             var key = Encoding.ASCII.GetBytes(secret);
@@ -62,6 +58,5 @@ namespace digital.ioc
                 };
             });
         }
-
     }
 }

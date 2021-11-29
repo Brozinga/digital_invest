@@ -4,7 +4,7 @@ using Flunt.Validations;
 
 namespace digital.domain.InputViewModel
 {
-    public class ChangePasswordInputView : BasicInputView
+    public class AlterarSenhaInputView : BasicInputView
     {
         public string Id { get; set; }
         public string SenhaAtual { get; set; }

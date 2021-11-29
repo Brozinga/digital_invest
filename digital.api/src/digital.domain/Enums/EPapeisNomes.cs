@@ -2,7 +2,7 @@
 
 namespace digital.domain.Enums
 {
-    public enum EPapeisNames
+    public enum EPapeisNomes
     {
         [Description("admin")]
         ADMIN,

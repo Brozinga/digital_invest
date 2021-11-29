@@ -11,8 +11,8 @@ using digital.domain.OutputViewModel;
 
 namespace digital.business.Handlers
 {
-    public class UsuarioHandler : GenericHandler, IHandlerBase<NewUsuarioInput, BasicResponse>,
-        IHandlerBase<ChangePasswordInputView, BasicResponse>,
+    public class UsuarioHandler : GenericHandler, IHandlerBase<NovoUsuarioInput, BasicResponse>,
+        IHandlerBase<AlterarSenhaInputView, BasicResponse>,
         IHandlerBase<LoginInputView, BasicResponse>
 
     {
@@ -23,7 +23,7 @@ namespace digital.business.Handlers
             _jwt = jwt;
         }
 
-        public async Task<BasicResponse> Execute(NewUsuarioInput data)
+        public async Task<BasicResponse> Executar(NovoUsuarioInput data)
         {
             try
             {
@@ -32,14 +32,14 @@ namespace digital.business.Handlers
                 if (!data.IsValid)
                     return BasicResponse.BadRequest(null, data.Notifications);
 
-                var exists = await _uow.UsuarioRepository.Exists(data.Email, data.CPF);
+                var exists = await _uow.UsuarioRepository.Existe(data.Email, data.CPF);
 
                 if (exists)
                     return BasicResponse.BadRequest(ErrorText.EmailCPFJaCadastrado, null);
 
                 var user = data.Map();
 
-                var result = await _uow.UsuarioRepository.CreateUsuario(user, data.Senha);
+                var result = await _uow.UsuarioRepository.CriarUsuario(user, data.Senha);
 
                 if (result.Succeeded)
                     return BasicResponse.OK(SuccessText.UsuarioCriado);
@@ -53,7 +53,7 @@ namespace digital.business.Handlers
             }
         }
 
-        public async Task<BasicResponse> Execute(ChangePasswordInputView data)
+        public async Task<BasicResponse> Executar(AlterarSenhaInputView data)
         {
             try
             {
@@ -62,12 +62,12 @@ namespace digital.business.Handlers
                 if (!data.IsValid)
                     return BasicResponse.BadRequest(null, data.Notifications);
 
-                var user = await _uow.UsuarioRepository.GetUsuarioId(data.Id);
+                var user = await _uow.UsuarioRepository.PegarUsuarioId(data.Id);
 
                 if (user == null)
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
 
-                var result = await _uow.UsuarioRepository.ChangePassword(user, data.SenhaAtual, data.NovaSenha);
+                var result = await _uow.UsuarioRepository.AtualizarSenha(user, data.SenhaAtual, data.NovaSenha);
 
                 if (result.Succeeded)
                     return BasicResponse.OK(SuccessText.SenhaAlterada);
@@ -81,7 +81,7 @@ namespace digital.business.Handlers
             }
         }
 
-        public async Task<BasicResponse> Execute(LoginInputView data)
+        public async Task<BasicResponse> Executar(LoginInputView data)
         {
             try
             {
@@ -90,12 +90,12 @@ namespace digital.business.Handlers
                 if (!data.IsValid)
                     return BasicResponse.BadRequest(null, data.Notifications);
 
-                var user = await _uow.UsuarioRepository.GetUsuarioEmail(data.Email);
+                var user = await _uow.UsuarioRepository.PegarUsuarioEmail(data.Email);
 
                 if (user == null)
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
 
-                var checkPass = await _uow.UsuarioRepository.CheckPassword(user, data.Senha);
+                var checkPass = await _uow.UsuarioRepository.VerificarSenha(user, data.Senha);
 
                 if (!checkPass)
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
@@ -110,6 +110,7 @@ namespace digital.business.Handlers
                 return this.InternalServerError(ex);                
             }
         }
+
 
 
 
