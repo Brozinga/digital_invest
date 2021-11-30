@@ -51,6 +51,7 @@ namespace digital.service
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { 

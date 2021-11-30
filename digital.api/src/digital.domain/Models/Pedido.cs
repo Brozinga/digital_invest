@@ -17,12 +17,12 @@ namespace digital.domain.Models
         }
 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("idUsuario")]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonRequired]
-        public string IdUsuario { get; set; }
+        public ObjectId IdUsuario { get; set; }
 
         [BsonElement("valorTotalCompra")]
         [BsonRequired]

@@ -120,6 +120,9 @@
   <data name="ConfirmacaoSenha" xml:space="preserve">
     <value>A senha não pode ser igual a anterior</value>
   </data>
+  <data name="CotacoesNaoExiste" xml:space="preserve">
+    <value>Cotações não encontradas</value>
+  </data>
   <data name="CPFInvalido" xml:space="preserve">
     <value>O Numero CPF é Invalido</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="ErroServidor" xml:space="preserve">
     <value>Ocorreu um erro inesperado, informe o ErroID para o administrador</value>
+  </data>
+  <data name="MoedasNaoExiste" xml:space="preserve">
+    <value>Moeda(s) não encontrada(s)</value>
   </data>
   <data name="SenhaInvalida" xml:space="preserve">
     <value>A senha está vazia ou contem caracteres inválidos</value>

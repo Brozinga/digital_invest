@@ -110,17 +110,5 @@ namespace digital.business.Handlers
                 return this.InternalServerError(ex);                
             }
         }
-
-
-
-
-        private BasicResponse InternalServerError()
-        {
-            return BasicResponse.ServerError(_env.IsDevelopment());
-        }
-        private BasicResponse InternalServerError(Exception ex)
-        {
-            return BasicResponse.ServerError(_env.IsDevelopment(), ex);
-        }
     }
 }

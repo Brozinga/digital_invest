@@ -11,10 +11,7 @@ namespace digital.service.Controllers
     [Route("api/[controller]")]
     public class ContaController : ControllerBase
     {
-
         private readonly UsuarioHandler _userHandler;
-
-
 
         public ContaController(UsuarioHandler userHandler)
         {

@@ -7,12 +7,12 @@ namespace digital.domain.Models
     public class MoedasCompraVenda
     {
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("moedaId")]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonRequired]
-        public string MoedaId { get; set; }
+        public ObjectId MoedaId { get; set; }
 
         [BsonElement("valorCotado")]
         [BsonRequired]

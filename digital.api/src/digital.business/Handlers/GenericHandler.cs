@@ -1,5 +1,7 @@
 ﻿using digital.data.Interfaces;
+using digital.domain.Responses;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace digital.business.Handlers
 {
@@ -12,6 +14,15 @@ namespace digital.business.Handlers
         {
             _uow = uow;
             _env = env;
+        }
+
+        protected virtual BasicResponse InternalServerError()
+        {
+            return BasicResponse.ServerError(_env.IsDevelopment());
+        }
+        protected virtual BasicResponse InternalServerError(Exception ex)
+        {
+            return BasicResponse.ServerError(_env.IsDevelopment(), ex);
         }
     }
 }

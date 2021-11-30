@@ -19,7 +19,7 @@ namespace digital.assets.Texts {
     // através de uma ferramenta como ResGen ou Visual Studio.
     // Para adicionar ou remover um associado, edite o arquivo .ResX e execute ResGen novamente
     // com a opção /str, ou recrie o projeto do VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ErrorText {
@@ -70,6 +70,15 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Cotações não encontradas.
+        /// </summary>
+        public static string CotacoesNaoExiste {
+            get {
+                return ResourceManager.GetString("CotacoesNaoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O Numero CPF é Invalido.
         /// </summary>
         public static string CPFInvalido {
@@ -111,6 +120,15 @@ namespace digital.assets.Texts {
         public static string ErroServidor {
             get {
                 return ResourceManager.GetString("ErroServidor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Moeda(s) não encontrada(s).
+        /// </summary>
+        public static string MoedasNaoExiste {
+            get {
+                return ResourceManager.GetString("MoedasNaoExiste", resourceCulture);
             }
         }
         

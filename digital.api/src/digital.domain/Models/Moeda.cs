@@ -1,14 +1,21 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace digital.domain.Models
 {
     [BsonIgnoreExtraElements]
     public class Moeda
     {
+        public Moeda()
+        {
+            Cotacoes = new Collection<Cotacao>();
+        }
+
         [BsonId]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
 
         [BsonElement("nome")]
         [BsonRequired]
@@ -30,6 +37,6 @@ namespace digital.domain.Models
         public DateTime DataRegistro { get; set; }
 
         [BsonIgnore]
-        public virtual Cotacao cotacoes { get; set; }
+        public virtual ICollection<Cotacao> Cotacoes { get; set; }
     }
 }

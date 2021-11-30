@@ -21,6 +21,8 @@ namespace digital.ioc
         public static void InjectHandlers(this IServiceCollection services)
         {
             services.AddScoped<UsuarioHandler>();
+            services.AddScoped<MoedaHandler>();
+            services.AddScoped<CotacaoHandler>();
         }
         public static void InjectRepositories(this IServiceCollection services)
         {
