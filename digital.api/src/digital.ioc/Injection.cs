@@ -17,12 +17,12 @@ namespace digital.ioc
         {
             services.AddScoped(typeof(MongoDbContext));
         }
-
         public static void InjectHandlers(this IServiceCollection services)
         {
             services.AddScoped<UsuarioHandler>();
             services.AddScoped<MoedaHandler>();
             services.AddScoped<CotacaoHandler>();
+            services.AddScoped<PedidoHandler>();
         }
         public static void InjectRepositories(this IServiceCollection services)
         {

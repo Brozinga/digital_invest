@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using System;
 using digital.business.Services;
 using digital.domain.OutputViewModel;
+using MongoDB.Bson;
 
 namespace digital.business.Handlers
 {
@@ -62,7 +63,7 @@ namespace digital.business.Handlers
                 if (!data.IsValid)
                     return BasicResponse.BadRequest(null, data.Notifications);
 
-                var user = await _uow.UsuarioRepository.PegarUsuarioId(data.Id);
+                var user = await _uow.UsuarioRepository.PegarUsuarioId(ObjectId.Parse(data.Id));
 
                 if (user == null)
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);

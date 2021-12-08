@@ -141,6 +141,15 @@
   <data name="MoedasNaoExiste" xml:space="preserve">
     <value>Moeda(s) não encontrada(s)</value>
   </data>
+  <data name="NovoPedidoMaiorCarteira" xml:space="preserve">
+    <value>Erro, a quantidade do pedido não pode ser maior que o valor em carteira</value>
+  </data>
+  <data name="NovoPedidoMoedaNaoEncontrada" xml:space="preserve">
+    <value>Erro nas cotações, nem todas as moedas tem cotações registradas</value>
+  </data>
+  <data name="QuantidadeMoedasMinima" xml:space="preserve">
+    <value>É necessário informar quantas moedas deseja comprar</value>
+  </data>
   <data name="SenhaInvalida" xml:space="preserve">
     <value>A senha está vazia ou contem caracteres inválidos</value>
   </data>

@@ -81,9 +81,15 @@ namespace digital.data.Repository
             return usuario;
         }
 
-        public async Task<Usuario> PegarUsuarioId(string Id)
+        public async Task<Usuario> PegarUsuarioId(ObjectId Id)
         {
-            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == ObjectId.Parse(Id) && x.Ativo == true);
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == Id && x.Ativo == true);
+            return usuario;
+        }
+
+        public async Task<ReplaceOneResult> AtualizarUsuario(Usuario data)
+        {
+            var usuario = await _dbContext.Usuarios.ReplaceOneAsync(x => x.Id == data.Id, data);
             return usuario;
         }
     }

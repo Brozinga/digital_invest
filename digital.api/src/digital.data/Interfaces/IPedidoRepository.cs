@@ -10,5 +10,7 @@ namespace digital.data.Interfaces
     {
         void CriarPedido(Pedido pedido);
         Task<ICollection<Pedido>> PegarPedidosPorUsuarioId(ObjectId usuarioId);
+        Task<Pedido> PegarPedido(ObjectId id);
+
     }
 }

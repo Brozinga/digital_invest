@@ -5,7 +5,8 @@
   "main": "./src/index.js",
   "author": "Fernando e Matteus",
   "scripts": {
-    "start": "node -r dotenv/config ./src/index.js",
+    "start": "node NODE_ENV=production ./src/index.js",
+    "start-dev": "node -r dotenv/config ./src/index.js",
     "dev": "nodemon -r dotenv/config ./src/index.js"
   },
   "license": "MIT",

@@ -133,6 +133,33 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro, a quantidade do pedido não pode ser maior que o valor em carteira.
+        /// </summary>
+        public static string NovoPedidoMaiorCarteira {
+            get {
+                return ResourceManager.GetString("NovoPedidoMaiorCarteira", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Erro nas cotações, nem todas as moedas tem cotações registradas.
+        /// </summary>
+        public static string NovoPedidoMoedaNaoEncontrada {
+            get {
+                return ResourceManager.GetString("NovoPedidoMoedaNaoEncontrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a É necessário informar quantas moedas deseja comprar.
+        /// </summary>
+        public static string QuantidadeMoedasMinima {
+            get {
+                return ResourceManager.GetString("QuantidadeMoedasMinima", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A senha está vazia ou contem caracteres inválidos.
         /// </summary>
         public static string SenhaInvalida {

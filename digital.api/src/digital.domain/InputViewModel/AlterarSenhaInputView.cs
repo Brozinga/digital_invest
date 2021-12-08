@@ -6,6 +6,7 @@ namespace digital.domain.InputViewModel
 {
     public class AlterarSenhaInputView : BasicInputView
     {
+        [System.Text.Json.Serialization.JsonIgnore]
         public string Id { get; set; }
         public string SenhaAtual { get; set; }
         public string NovaSenha { get; set; }
