@@ -103,7 +103,11 @@ namespace digital.business.Handlers
 
                 var result = _jwt.GenerateToken(user);
 
-                return BasicResponse.OK(null, new LoginOutputView(data.Email.ToLower(), result.ExpireTime.Value, result.Token));
+                return BasicResponse.OK(null, new LoginOutputView(data.Email.ToLower(), 
+                                                                  user.Nome.ToUpper(), 
+                                                                  user.Carteira, 
+                                                                  result.Token, 
+                                                                  result.ExpireTime.Value));
 
             }
             catch (Exception ex)
