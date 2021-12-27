@@ -7,4 +7,9 @@ namespace digital.business.Interfaces
     {
         Task<T> Executar(I data);
     }
+
+    public interface IHandlerBase<T> where T : GenericResponse<object>
+    {
+        Task<T> Executar();
+    }
 }

@@ -39,8 +39,6 @@ namespace digital.business.Handlers
             {
                 return this.InternalServerError(ex);
             }
-
-
         }
     }
 }

@@ -11,8 +11,11 @@ namespace digital.data.Interfaces
     {
         Task<ICollection<Moeda>> PegarTodasMoedas(Expression<Func<Moeda, bool>> filtro);
         Task<ICollection<Moeda>> PegarTodasMoedas();
+        Task<ICollection<Moeda>> PegarTodasMoedasComCotacoes();
         Task<int> QuantidadeMoedas();
         Task<Moeda> PegarMoedaAcronimo(string acronimo);
         Task<Moeda> PegarMoedaId(ObjectId id);
+        Task<Moeda> PegarMoedaCotacao(ObjectId moedaId);
+        Task<ICollection<Moeda>> PegarTodasMoedasComCotacoesPorHora();
     }
 }

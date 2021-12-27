@@ -11,9 +11,6 @@ namespace digital.domain.InputViewModel
 {
     public class NovoPedidoInputView : BasicInputView
     {
-        [JsonProperty("idUsuario")]
-        [System.Text.Json.Serialization.JsonIgnore]
-        public ObjectId IdUsuario { get; set; }
 
         [System.Text.Json.Serialization.JsonIgnore]
         public IEnumerable<Claim> UsuarioClaims { get; set; }
