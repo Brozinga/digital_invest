@@ -138,6 +138,9 @@
   <data name="ErroServidor" xml:space="preserve">
     <value>Ocorreu um erro inesperado, informe o ErroID para o administrador</value>
   </data>
+  <data name="HoraCompraMinima" xml:space="preserve">
+    <value>O horário da compra é de no mínimo, 3 horas acima do horário atual</value>
+  </data>
   <data name="MoedasNaoExiste" xml:space="preserve">
     <value>Moeda(s) não encontrada(s)</value>
   </data>
@@ -158,5 +161,8 @@
   </data>
   <data name="UsuarioNaoExiste" xml:space="preserve">
     <value>Usuario ou senha incorretos</value>
+  </data>
+  <data name="ValorTotalEMenorQueZero" xml:space="preserve">
+    <value>O valor total da compra precisa ser superior a zero</value>
   </data>
 </root>

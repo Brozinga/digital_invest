@@ -51,7 +51,7 @@ namespace digital.business.Handlers
                     data.ValorTotalCompra += (moedaCotacao.ValorCotado * moedaComprada.Quantidade);
                 }
 
-                var usuarioId = data.UsuarioClaims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+                var usuarioId = PegarUsuarioIdPeloToken(data.UsuarioClaims);
 
                 if (string.IsNullOrEmpty(usuarioId))
                     return this.InternalServerError(new Exception(ErrorText.UsuarioNaoExiste));
@@ -83,6 +83,14 @@ namespace digital.business.Handlers
             {
                return this.InternalServerError(ex);
             }
+        }
+
+        private string PegarUsuarioIdPeloToken(IEnumerable<Claim> claims)
+        {
+            if (claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value != null)
+                return claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+
+            return null;
         }
     }
 }

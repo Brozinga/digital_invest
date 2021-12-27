@@ -1,4 +1,7 @@
-﻿using MongoDB.Bson;
+﻿using digital.assets.Texts;
+using Flunt.Notifications;
+using Flunt.Validations;
+using MongoDB.Bson;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -41,7 +44,11 @@ namespace digital.domain.InputViewModel
 
         public override void Validate()
         {
-            
+            AddNotifications(
+                new Contract<Notification>()
+                    .IsGreaterThan(ValorTotalCompra, 0, "ValorTotalCompra", ErrorText.ValorTotalEMenorQueZero)
+                    .IsGreaterThan(DataCompra, DateTime.Now.AddHours(3), "DataCompra", ErrorText.HoraCompraMinima)
+                );
         }
     }
 }
