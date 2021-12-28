@@ -1,7 +1,0 @@
-FROM node:16.13
-WORKDIR /usr/src/app
-COPY ./digital.robo/ ./digital.robo
-COPY ./digital.data/ ./digital.data
-COPY ./executar-robo.sh .
-RUN ["chmod", "+x", "/usr/src/app/executar-robo.sh"]
-CMD ["sh", "/usr/src/app/executar-robo.sh"]
