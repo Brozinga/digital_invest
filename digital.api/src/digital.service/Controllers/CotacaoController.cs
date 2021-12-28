@@ -1,13 +1,12 @@
 ﻿using digital.business.Handlers;
 using digital.domain.InputViewModel;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace digital.service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/cotacao")]
     [ApiController]
     public class CotacaoController : ControllerBase
     {
@@ -18,7 +17,7 @@ namespace digital.service.Controllers
             _cotacaoHandler = cotacaoHandler;
         }
 
-        [HttpGet("/v1/listar_por_acronimo/{acronimo}")]
+        [HttpGet("v1/listar_por_acronimo/{acronimo}")]
         [Authorize]
         public async Task<IActionResult> ListarPorAcronimo(string acronimo)
         {

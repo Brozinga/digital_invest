@@ -1,3 +1,11 @@
+const path = require('path')
+
+require('dotenv').config({
+    path: process.env.NODE_ENV == "production" ?
+    path.resolve(process.cwd(), './.env.production') :
+    path.resolve(process.cwd(), './.env.development')
+})
+
 const { ToadScheduler, SimpleIntervalJob } = require('toad-scheduler')
 
 const { MoedasRepository, CotacoesRepository, PedidosRepository, UsuariosRepository } = require('../../digital.data/src/Database')

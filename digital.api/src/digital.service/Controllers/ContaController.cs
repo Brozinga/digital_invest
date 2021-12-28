@@ -8,7 +8,7 @@ namespace digital.service.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("api/[controller]")]
+    [Route("api/conta")]
     public class ContaController : ControllerBase
     {
         private readonly UsuarioHandler _userHandler;
@@ -23,7 +23,7 @@ namespace digital.service.Controllers
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns></returns>
-        [HttpPost("/v1/criar")]
+        [HttpPost("v1/criar")]
         [AllowAnonymous]
         public async Task<IActionResult> Criar([FromBody] NovoUsuarioInput usuario)
         {
@@ -31,7 +31,7 @@ namespace digital.service.Controllers
             return StatusCode((int)result.Status, result);
         }
 
-        [HttpPost("/v1/alterar_senha")]
+        [HttpPost("v1/alterar_senha")]
         [AllowAnonymous]
         public async Task<IActionResult> AlterarSenha([FromBody] AlterarSenhaInputView passChange)
         {
@@ -40,7 +40,7 @@ namespace digital.service.Controllers
         }
 
 
-        [HttpPost("/v1/login")]
+        [HttpPost("v1/login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginInputView userLogin)
         {

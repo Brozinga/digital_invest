@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace digital.service.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/moeda")]
     [ApiController]
     public class MoedaController : ControllerBase
     {
@@ -17,7 +17,7 @@ namespace digital.service.Controllers
             _moedaHandler = moedaHandler;
         }
 
-        [HttpGet("/v1/listar")]
+        [HttpGet("v1/listar")]
         [Authorize]
         public async Task<IActionResult> Listar()
         {
@@ -25,7 +25,7 @@ namespace digital.service.Controllers
             return StatusCode((int)result.Status, result);
         }
 
-        [HttpGet("/v1/cotacoes")]
+        [HttpGet("v1/cotacoes")]
         [Authorize]
         public async Task<IActionResult> Cotacoes()
         {
