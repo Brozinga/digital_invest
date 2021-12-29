@@ -54,17 +54,18 @@ namespace digital.service
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { 
-                    Title = "Digital Invest API", 
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Digital Invest API",
                     Version = "v1",
-                    Description = "API de serviços para o Front-End da aplicação Digital Invest essa API é responsável pelo controle de acessos," +
-                    "controle de usuários, controle das contas e por fim controle das compras de moedas"
+                    Description = "API de serviï¿½os para o Front-End da aplicaï¿½ï¿½o Digital Invest essa API ï¿½ responsï¿½vel pelo controle de acessos," +
+                    "controle de usuï¿½rios, controle das contas e por fim controle das compras de moedas"
                 });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Por favor insira o JWT e não se esqueça de escrever 'Bearer' com o espaço",
+                    Description = "Por favor insira o JWT e nï¿½o se esqueï¿½a de escrever 'Bearer' com o espaï¿½o",
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
@@ -97,7 +98,7 @@ namespace digital.service
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Invest API v1"));
             }
-           
+
             app.UseHttpsRedirection();
             app.UseRouting();
 

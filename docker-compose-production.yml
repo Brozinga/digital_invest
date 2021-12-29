@@ -1,6 +1,7 @@
 # Digital Invest
 version: '3'
 services:
+
   mongo-express:
     image: mongo-express
     depends_on:
@@ -21,6 +22,7 @@ services:
     networks:
       - digital-invest-network
 
+
   digital-db:
     image: mongo
     container_name: digital-db
@@ -32,12 +34,32 @@ services:
     networks:
       - digital-invest-network
 
+
   digital-robo:
     build:
       context: .
       dockerfile: Dockerfile.Robo
     image: digital-robo:latest
     container_name: digital-robo
+    depends_on:
+      - digital-db
+    links:
+      - digital-db
+    restart: always
+    networks:
+      - digital-invest-network
+
+
+  digital-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.API
+    image: digital-api:latest
+    container_name: digital-api
+    environment:
+      ENV_PROFILE: Production
+    ports:
+      - 5000:5000
     depends_on:
       - digital-db
     links:

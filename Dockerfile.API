@@ -1,0 +1,8 @@
+FROM mcr.microsoft.com/dotnet/sdk:6.0
+WORKDIR /app
+COPY ./digital.api ./digital.api
+COPY ./scripts ./scripts
+EXPOSE 5000/tcp
+EXPOSE 5001/tcp
+RUN chmod +x ./scripts/executar-api.sh
+CMD /bin/bash ./scripts/executar-api.sh

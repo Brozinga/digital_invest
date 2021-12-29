@@ -3,5 +3,5 @@ WORKDIR /usr/src/app
 COPY ./digital.data ./digital.data
 COPY ./digital.robo ./digital.robo
 COPY ./scripts ./scripts
-RUN ["chmod", "+x", "/usr/src/app/scripts/executar-robo.sh"]
-CMD ["sh", "/usr/src/app/scripts/executar-robo.sh"]
+RUN chmod +x /usr/src/app/scripts/executar-robo.sh
+CMD /bin/bash /usr/src/app/scripts/executar-robo.sh

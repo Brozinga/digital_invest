@@ -17,7 +17,7 @@ namespace digital.data.Repository
         private readonly RoleManager<Papel> _papeisManager;
 
         public UsuarioRepository(MongoDbContext dbContext, UserManager<Usuario> userManager, RoleManager<Papel> papeisManager)
-            :base(dbContext)
+            : base(dbContext)
         {
             _userManager = userManager;
             _papeisManager = papeisManager;
@@ -30,7 +30,7 @@ namespace digital.data.Repository
 
         public async Task<IdentityResult> AtualizarSenha(Usuario usuario, string senhaAtual, string senhaNova)
         {
-            var usuarioDb = await _userManager.ChangePasswordAsync(usuario, senhaAtual, senhaNova);   
+            var usuarioDb = await _userManager.ChangePasswordAsync(usuario, senhaAtual, senhaNova);
             return usuarioDb;
         }
 

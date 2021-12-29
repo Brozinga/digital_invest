@@ -8,7 +8,7 @@ namespace digital.domain.InputViewModel
 {
     public class NovoUsuarioInput : BasicInputView
     {
-        public NovoUsuarioInput(string nome, string email, string senha, string cPF): base()
+        public NovoUsuarioInput(string nome, string email, string senha, string cPF) : base()
         {
             Nome = nome;
             Email = email.ToLower();
@@ -41,6 +41,6 @@ namespace digital.domain.InputViewModel
                 CPF = this.CPF,
                 Ativo = true
             };
-        } 
+        }
     }
 }

@@ -41,11 +41,17 @@ namespace digital.domain.Responses
             }
 
 
-            return new BasicResponse(
-                            new ServerErrorOutputView(null,
-                                                      null,
-                                                      null),
-                            EStatusCode.ServerError, false, ErrorText.ErroServidor);
+                return new BasicResponse(
+                            new ServerErrorOutputView(error?.InnerException?.Message ?? error.Message,
+                                                      error?.Source,
+                                                      error.StackTrace),
+                            EStatusCode.ServerError, false, error.ToString());
+
+            // return new BasicResponse(
+            //                 new ServerErrorOutputView(null,
+            //                                           null,
+            //                                           null),
+            //                 EStatusCode.ServerError, false, ErrorText.ErroServidor);
 
         }
     }
