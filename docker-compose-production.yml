@@ -2,27 +2,6 @@
 version: '3'
 services:
 
-  mongo-express:
-    image: mongo-express
-    depends_on:
-      - digital-db
-    container_name: digitaldb-express
-    ports:
-      - 8085:8081
-    restart: unless-stopped
-    environment:
-      ME_CONFIG_BASICAUTH_USERNAME: digitaldb
-      ME_CONFIG_BASICAUTH_PASSWORD: 4inv3st
-      ME_CONFIG_MONGODB_PORT: 27017
-      ME_CONFIG_MONGODB_SERVER: digital-db
-    links:
-      - digital-db
-    volumes:
-      - digital-invest-db:/data/db
-    networks:
-      - digital-invest-network
-
-
   digital-db:
     image: mongo
     container_name: digital-db
@@ -33,7 +12,6 @@ services:
       - ./assets/backups:/data/dump
     networks:
       - digital-invest-network
-
 
   digital-robo:
     build:
@@ -48,7 +26,6 @@ services:
     restart: always
     networks:
       - digital-invest-network
-
 
   digital-api:
     build:
