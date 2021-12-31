@@ -33,24 +33,44 @@ export default function Conta() {
                     className="mb-3"
                 >
                     <Tab eventKey="login" title="Entrar">
-                        <Form>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" />
+                        <Form id="formLogin">
+                            <Form.Group className="mb-3" controlId="formLoginEmail">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" placeholder="Digite o email" />
                             </Form.Group>
+                            <Form.Group className="mb-3" controlId="formLoginSenha">
+                                <Form.Label>Senha</Form.Label>
+                                <Form.Control type="password" placeholder="Digite a senha" />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Entrar
+                            </Button>
                         </Form>
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Submit
-                        </Button>
+
                     </Tab>
                     <Tab eventKey="criar" title="Nova Conta">
-                        <p>
-                            So am I as the rich, whose blessed key, Can bring him to his sweet up-locked treasure, The which he will not every hour survey, For blunting the fine point of seldom pleasure. Therefore are feasts so solemn and so rare, Since, seldom coming in that long year set, Like stones of worth they thinly placed are, Or captain jewels in the carcanet. So is the time that keeps you as my chest, Or as the wardrobe which the robe doth hide,
-                        </p>
+                        <Form id="formCadastro">
+                            <Form.Group className="mb-3" controlId="formCadastroEmail">
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="email" placeholder="Digite um email válido" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formCadastroEmail">
+                                <Form.Label>CPF</Form.Label>
+                                <Form.Control type="email" placeholder="Digite o seu CPF" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formCadastroSenha">
+                                <Form.Label>Senha</Form.Label>
+                                <Form.Control type="password" placeholder="Digite uma senha forte" />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formCadastroSenha">
+                                <Form.Label>Confirmação de Senha</Form.Label>
+                                <Form.Control type="password" placeholder="Digite a mesma senha digitada acima" />
+                            </Form.Group>
+                            <Button variant="primary" type="submit">
+                                Criar Conta
+                            </Button>
+                        </Form>
+
                     </Tab>
                 </Tabs>
             </Card>
