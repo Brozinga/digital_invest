@@ -3,17 +3,38 @@ import { Tab, Tabs, Form, Button } from 'react-bootstrap'
 import Card from '../../components/Card'
 import Head from '../../components/Head'
 
+import NovaConta from '../../components/#Pages/NovaConta'
+
 import Image from 'next/image'
 
 import logo from '../../public/logo-g-purple-to-blue.png'
 
+import { Notifications, warning, danger } from '../../components/Alerts'
+
+
 export default function Conta() {
     const [key, setKey] = useState('login');
 
+    const loginModel = {
+        email: "",
+        senha: ""
+    };
+
+    const novaContaModel = {
+        nome: "",
+        email: "",
+        cpf: "",
+        senha: "",
+        confirmSenha: "",
+    }
+
+    const [login, setLogin] = useState(loginModel)
+    const [novaConta, setNovaConta] = useState(novaContaModel)
 
     return (
         <div className="container bg-center login-tab">
             <Head Title={"Digital Invest | Entrar"} />
+            <Notifications />
 
             <div className="logo">
                 <div className="logo-container">
@@ -42,35 +63,14 @@ export default function Conta() {
                                 <Form.Label>Senha</Form.Label>
                                 <Form.Control type="password" placeholder="Digite a senha" />
                             </Form.Group>
-                            <Button variant="primary" type="submit">
+                            <Button variant="primary" type="button">
                                 Entrar
                             </Button>
                         </Form>
 
                     </Tab>
                     <Tab eventKey="criar" title="Nova Conta">
-                        <Form id="formCadastro">
-                            <Form.Group className="mb-3" controlId="formCadastroEmail">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="Digite um email válido" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formCadastroEmail">
-                                <Form.Label>CPF</Form.Label>
-                                <Form.Control type="email" placeholder="Digite o seu CPF" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formCadastroSenha">
-                                <Form.Label>Senha</Form.Label>
-                                <Form.Control type="password" placeholder="Digite uma senha forte" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formCadastroSenha">
-                                <Form.Label>Confirmação de Senha</Form.Label>
-                                <Form.Control type="password" placeholder="Digite a mesma senha digitada acima" />
-                            </Form.Group>
-                            <Button variant="primary" type="submit">
-                                Criar Conta
-                            </Button>
-                        </Form>
-
+                        <NovaConta novaConta={novaConta} setNovaConta={setNovaConta} />
                     </Tab>
                 </Tabs>
             </Card>

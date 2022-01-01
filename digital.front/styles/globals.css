@@ -2,9 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Lato', Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  font-weight: 500;
+  font-family: 'Manrope', sans-serif;
+  color: #494a63;
+  font-size: 11pt;
 }
 
 #__next,
@@ -27,9 +27,6 @@ a {
 
 * {
   box-sizing: border-box;
-  font-family: 'Manrope', sans-serif;
-  color: #494a63;
-  font-size: 11pt;
 }
 
 .loading-c {
@@ -251,6 +248,28 @@ input[type="text"].form-control {
   padding-left: 20px;
 }
 
+.error>input[type="email"].form-control,
+.error>input[type="password"].form-control,
+.error>input[type="text"].form-control,
+.error>input[type="email"].form-control:focus,
+.error>input[type="password"].form-control:focus,
+.error>input[type="text"].form-control:focus
+{
+  border: 1px solid #dc3545;
+  box-shadow: 0 0 3px 0.25rem #dc354524;
+}
+
+.success>input[type="email"].form-control,
+.success>input[type="password"].form-control,
+.success>input[type="text"].form-control,
+.success>input[type="email"].form-control:focus,
+.success>input[type="password"].form-control:focus,
+.success>input[type="text"].form-control:focus
+{
+  border: 1px solid #198754;
+  box-shadow: 0 0 3px 0.25rem #19875424;
+}
+
 input[type="email"].form-control:focus,
 input[type="password"].form-control:focus,
 input[type="text"].form-control:focus {
@@ -278,3 +297,176 @@ button.btn-primary {
 
 
 /* INPUTS GERAL - FIM */
+
+/* NOTIFICATIONS */
+
+.notification-container {
+  position: relative;
+}
+
+.notification-container>div {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+.notification-container header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgb(255 255 255 / 20%);
+  align-items: center;
+  color: #FFF;
+}
+
+.notification-container h1,
+.notification-container h2,
+.notification-container h3,
+.notification-container h4,
+.notification-container h5,
+.notification-container h6 {
+  word-wrap: break-word;
+  width: calc(100% - 70px);
+  margin-top: 5px;
+  font-weight: 600;
+  color: #FFF;
+  font-size: 1rem;
+}
+
+.notification-container>div>header.btn-white {
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+}
+
+.notification-container>div>section {
+  width: 100%;
+  margin-top: 15px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+.notification-container>button {
+  background: transparent;
+  position: absolute;
+  outline: none;
+  border: none;
+  margin-right: -15px;
+  margin-top: -5px;
+  cursor: pointer;
+  right: 0px;
+  top: 0px;
+  color: #fff;
+}
+
+.notification-container>div>button>svg {
+  color: #FFF;
+  font-size: 1rem;
+  min-height: 50px !important;
+  min-width: 50px !important;
+  padding: 5px !important;
+}
+
+.notification-container>div>header>svg {
+  font-size: 25px;
+  min-height: 45px;
+  min-width: 45px;
+  padding: 10px;
+  color: #fff;
+}
+
+.toasterdefault.btn-default,
+.btn-default,
+a.btn-default:link,
+a.btn-default:visited {
+  color: #ffffff;
+  background-color: #909aa0;
+  outline: none;
+}
+
+.toasterdefault.btn-primary {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.toasterdefault.btn-secondary,
+.btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.toasterdefault.btn-success,
+.toasterdefault.btn-success:hover,
+.btn-success {
+  color: #fff;
+  background-color: #198754;
+  border-color: #198754;
+}
+
+.toasterdefault.btn-danger,
+.toasterdefault.btn-danger:hover,
+.btn-danger {
+  color: #fff;
+  background-color: #dc3545;
+  border-color: #dc3545;
+}
+
+.toasterdefault.btn-warning,
+.toasterdefault.btn-warning:hover,
+.btn-warning {
+  color: #000;
+  background-color: #ffc107;
+  border-color: #ffc107;
+}
+
+.toasterdefault.btn-info,
+.toasterdefault.btn-info:hover,
+.btn-info {
+  color: #000;
+  background-color: #0dcaf0;
+  border-color: #0dcaf0;
+}
+
+.toasterdefault.btn-dark,
+.toasterdefault.btn-dark:hover,
+.btn-dark {
+  color: #fff;
+  background-color: #212529;
+  border-color: #212529;
+}
+
+.toasterdefault {
+  z-index: 10020 important;
+  border-radius: 4px;
+  padding: 10px;
+}
+
+.toasterdefault.btn-warning h4,
+.toasterdefault.btn-warning svg {
+  color: #000;
+}
+
+.toasterdefault.btn-default {
+  background-color: #4e4e4e;
+
+}
+
+.toasterdefault.btn-white {
+  background-color: #ffffff;
+  color: #4e4e4e;
+}
+
+.toasterdefault.btn-white h4,
+.toasterdefault.btn-white svg {
+  color: #4e4e4e;
+}
+
+@media (max-width: 600px) {
+  .notification-responsive {
+    justify-content: center;
+  }
+}
+
+
+
+/* NOTIFICATIONS - FIM*/
