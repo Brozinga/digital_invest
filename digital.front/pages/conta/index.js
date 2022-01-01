@@ -1,15 +1,16 @@
 import React, { useState } from 'react'
-import { Tab, Tabs, Form, Button } from 'react-bootstrap'
+import { Tab, Tabs} from 'react-bootstrap'
 import Card from '../../components/Card'
 import Head from '../../components/Head'
 
 import NovaConta from '../../components/#Pages/NovaConta'
+import Login from '../../components/#Pages/Login'
 
 import Image from 'next/image'
 
 import logo from '../../public/logo-g-purple-to-blue.png'
 
-import { Notifications, warning, danger } from '../../components/Alerts'
+import { Notifications } from '../../components/Alerts'
 
 
 export default function Conta() {
@@ -54,20 +55,7 @@ export default function Conta() {
                     className="mb-3"
                 >
                     <Tab eventKey="login" title="Entrar">
-                        <Form id="formLogin">
-                            <Form.Group className="mb-3" controlId="formLoginEmail">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control type="email" placeholder="Digite o email" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="formLoginSenha">
-                                <Form.Label>Senha</Form.Label>
-                                <Form.Control type="password" placeholder="Digite a senha" />
-                            </Form.Group>
-                            <Button variant="primary" type="button">
-                                Entrar
-                            </Button>
-                        </Form>
-
+                        <Login login={login} setLogin={setLogin} />
                     </Tab>
                     <Tab eventKey="criar" title="Nova Conta">
                         <NovaConta novaConta={novaConta} setNovaConta={setNovaConta} />

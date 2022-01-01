@@ -185,6 +185,7 @@ nav.navbar.navbar-light.bg-light {
   height: 100%;
 }
 
+
 .login-tab ul.nav-tabs>li.nav-item {
   width: 50%;
 }
@@ -219,7 +220,7 @@ nav.navbar.navbar-light.bg-light {
 }
 
 .logo-container {
-  width: 100px;
+  width: 90px;
 }
 
 .logo {
@@ -232,7 +233,7 @@ nav.navbar.navbar-light.bg-light {
 
 .logo>div>h2 {
   font-weight: 100;
-  font-size: 2.4rem;
+  font-size: 2.6rem;
   color: #8466ef;
   margin-left: 20px;
 }
@@ -467,6 +468,15 @@ a.btn-default:visited {
   }
 }
 
+@media (max-height: 760px) {
+  .login-tab {
+    margin-bottom: 20px;
+  }
+
+  #__next, html, body {
+    height: auto;
+  }
+}
 
 
 /* NOTIFICATIONS - FIM*/

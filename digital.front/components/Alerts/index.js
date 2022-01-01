@@ -14,7 +14,9 @@ const defaultNotification = (message, title, icon, configurations) => {
                         {icon}<h4>{title}</h4>
                     </header>
                     <section>
-                        {message}
+                        {(typeof (message) == "string") ?
+                            message : message.map(e => (<p>{e}</p>))
+                        }
                     </section>
                 </div>
                 <button type="button" onClick={() => notify.dismiss(t.id)}><FiX /></button>
@@ -26,7 +28,7 @@ const defaultNotification = (message, title, icon, configurations) => {
 
 
 export const success = (message, title = "Sucesso", icon = <FiCheckCircle />) => {
-   return defaultNotification(message, title, icon,
+    return defaultNotification(message, title, icon,
         {
             position: 'top-right',
             duration: 5000,
@@ -46,7 +48,7 @@ export const warning = (message, title = "Atenção", icon = <FiAlertTriangle />
 export const danger = (message, title = "Erro", icon = <FiXCircle />) => {
     return defaultNotification(message, title, icon, {
         position: 'top-right',
-        duration: 5000,
+        duration: 10000,
         className: 'toasterdefault btn-danger',
     })
 }

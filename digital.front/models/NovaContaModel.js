@@ -22,10 +22,28 @@ let NovaContaModel = Yup.object().shape({
         .isValidCpf("O CPF informado é inválido"),
     senha: Yup.string()
         .required('A senha é obrigatória')
-        .min(8, 'A senha precisa de no mínimo 8 caracteres'),
+        .min(6, 'A senha precisa de no mínimo 6 caracteres'),
     confirmSenha: Yup.string()
         .required('A confirmação de senha é obrigatória')
         .oneOf([Yup.ref('senha'), null], 'A confirmação de senha não corresponde a senha informada')
 });
 
-export default NovaContaModel;
+const NovaContaValidate = async (novaConta) => {
+    try {
+
+        await NovaContaModel.validate(novaConta, {
+            abortEarly: false
+        })
+
+        return [];
+
+    } catch (error) {
+            return error.inner;
+    }
+}
+
+export {
+    NovaContaModel,
+    NovaContaValidate
+
+};
