@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Tab, Tabs} from 'react-bootstrap'
+import React, { useState, useContext } from 'react'
+import { Tab, Tabs } from 'react-bootstrap'
 import Card from '../../components/Card'
 import Head from '../../components/Head'
 
@@ -10,11 +10,16 @@ import Image from 'next/image'
 
 import logo from '../../public/logo-g-purple-to-blue.png'
 
-import { Notifications } from '../../components/Alerts'
+import { Notifications, HttpResponseAlert } from '../../components/Alerts'
 
+import { AuthContext } from '../../contexts/AuthContext'
+
+import { NovaContaCall } from "../../services/ContaService"
 
 export default function Conta() {
     const [key, setKey] = useState('login');
+
+    const { signIn, routerContext, deleteAuthCookie, getAuthCookie } = useContext(AuthContext)
 
     const loginModel = {
         email: "",
@@ -31,6 +36,21 @@ export default function Conta() {
 
     const [login, setLogin] = useState(loginModel)
     const [novaConta, setNovaConta] = useState(novaContaModel)
+
+    const handleLogin = async (login) => {
+        const response = await signIn(login)
+        HttpResponseAlert(response, false)
+    }
+
+    const handleNovaConta = async (novaConta) => {
+        const response = await NovaContaCall(novaConta)
+        HttpResponseAlert(response)
+
+        if (response.status == 200) {
+            setNovaConta(novaContaModel)
+            setKey("login")
+        }
+    }
 
     return (
         <div className="container bg-center login-tab">
@@ -55,10 +75,10 @@ export default function Conta() {
                     className="mb-3"
                 >
                     <Tab eventKey="login" title="Entrar">
-                        <Login login={login} setLogin={setLogin} />
+                        <Login login={login} setLogin={setLogin} onSubmitLogin={handleLogin} />
                     </Tab>
                     <Tab eventKey="criar" title="Nova Conta">
-                        <NovaConta novaConta={novaConta} setNovaConta={setNovaConta} />
+                        <NovaConta novaConta={novaConta} setNovaConta={setNovaConta} onSubmitNovaConta={handleNovaConta} />
                     </Tab>
                 </Tabs>
             </Card>

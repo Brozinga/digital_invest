@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { danger } from '../../Alerts'
 
-import { NovaContaValidate } from '../../../models/NovaContaModel'
+import { NovaContaValidate, NovaContaModel } from '../../../models/NovaContaModel'
 
 import { InputAddClassNameErro } from "../../../utils"
 
@@ -18,6 +18,7 @@ const cpfMask = value => {
 export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }) {
 
     const [errors, setErrors] = useState([])
+    const [loading, setLoading] = useState(false)
     const { IfErrorList, RemoveErrors, AddErrosArray } = InputAddClassNameErro(errors, setErrors)
 
     const handleCPF = (e) => {
@@ -37,15 +38,11 @@ export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }
         RemoveErrors(campo)
     }
 
-    const ErrosView = (message) => {
-        return <p>{message}</p>
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault()
         const result = await NovaContaValidate(novaConta)
 
-        if (result.length > 0) {
+        if (result?.length > 0) {
             const paths = [];
             let textoErrors = [];
 
@@ -56,6 +53,11 @@ export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }
 
             danger(textoErrors)
             AddErrosArray(paths)
+
+        } else {
+            setLoading(true)
+            await onSubmitNovaConta(novaConta)
+            setLoading(false)
         }
     }
 
@@ -83,8 +85,8 @@ export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }
                 <Form.Label>Confirmação de Senha</Form.Label>
                 <Form.Control value={novaConta.confirmSenha} onChange={e => handleNovaConta(e, "confirmSenha")} type="password" placeholder="Digite a mesma senha digitada acima" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Criar Conta
+            <Button disabled={loading} variant="primary" type="submit">
+                {loading ? "Carregando" : "Criar Conta"}
             </Button>
         </Form>
     )

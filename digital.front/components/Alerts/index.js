@@ -15,7 +15,7 @@ const defaultNotification = (message, title, icon, configurations) => {
                     </header>
                     <section>
                         {(typeof (message) == "string") ?
-                            message : message.map(e => (<p>{e}</p>))
+                            message : message?.map((e, i) => (<p key={i}>{e}</p>))
                         }
                     </section>
                 </div>
@@ -78,6 +78,35 @@ export const white = (message, title = "Informação", icon = <FiInfo />) => {
             duration: 5000,
             className: 'toasterdefault btn-white'
         })
+}
+
+export const HttpResponseAlert = ({ status, message, result }, withOkStatus = true) => {
+
+    let messageFinish = [];
+    if (Array.isArray(result) && !message) {
+        messageFinish = message.map(m => m.message)
+    } else {
+        messageFinish = message
+    }
+
+    switch (status) {
+        case 200:
+            if (message && withOkStatus)
+                success(message)
+            break;
+        case 400:
+            if (messageFinish != null || messageFinish != "")
+                warning(messageFinish)
+            break;
+        case 404:
+            if (messageFinish != null || messageFinish != "")
+                warning(messageFinish)
+            break;
+        case 500:
+            if (messageFinish != null || messageFinish != "")
+                danger(messageFinish)
+            break;
+    }
 }
 
 export const Notifications = Toaster;

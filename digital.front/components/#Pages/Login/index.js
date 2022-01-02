@@ -6,10 +6,12 @@ import { LoginValidate } from "../../../models/LoginModel"
 
 import { danger } from '../../../components/Alerts'
 
-export default function Login({login, setLogin, onSubmitLogin}) {
+export default function Login({ login, setLogin, onSubmitLogin }) {
 
     const [errors, setErrors] = useState([])
+    const [loading, setLoading] = useState(false);
     const { IfErrorList, RemoveErrors, AddErrosArray } = InputAddClassNameErro(errors, setErrors)
+
 
     const handleLogin = (e, campo) => {
         setLogin({
@@ -33,6 +35,10 @@ export default function Login({login, setLogin, onSubmitLogin}) {
             })
             danger(messagesErros)
             AddErrosArray(paths)
+        } else {
+            setLoading(true)
+            await onSubmitLogin(login)
+            setLoading(false)
         }
     }
 
@@ -46,8 +52,8 @@ export default function Login({login, setLogin, onSubmitLogin}) {
                 <Form.Label>Senha</Form.Label>
                 <Form.Control value={login.senha} onChange={e => handleLogin(e, "senha")} type="password" placeholder="Digite a senha" />
             </Form.Group>
-            <Button variant="primary" type="submit">
-                Entrar
+            <Button disabled={loading} variant="primary" type="submit">
+                {loading ? "Carregando" : "Entrar"}
             </Button>
         </Form>
     )
