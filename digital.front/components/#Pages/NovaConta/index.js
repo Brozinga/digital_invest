@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
-import { danger } from '../../Alerts'
+import { danger, HttpResponseAlert } from '../../Alerts'
 
-import { NovaContaValidate, NovaContaModel } from '../../../models/NovaContaModel'
+import { NovaContaValidate } from '../../../models/NovaContaModel'
 
 import { InputAddClassNameErro } from "../../../utils"
+
+import { NovaContaCall } from "../../../services/ContaService"
 
 const cpfMask = value => {
     return value
@@ -15,7 +17,7 @@ const cpfMask = value => {
         .replace(/(-\d{2})\d+?$/, '$1')
 }
 
-export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }) {
+export default function NovaConta({ novaConta, setNovaConta, setTabLogin, resetNovaConta }) {
 
     const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(false)
@@ -29,13 +31,24 @@ export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }
         RemoveErrors("cpf")
     }
 
-
     const handleNovaConta = (e, campo) => {
         setNovaConta({
             ...novaConta,
             [campo]: e.target.value
         })
         RemoveErrors(campo)
+    }
+
+    const submitNovaConta = async (novaConta) => {
+        setLoading(true)
+        const response = await NovaContaCall(novaConta)
+        setLoading(false)
+        HttpResponseAlert(response)
+
+        if (response.status == 200) {
+            setNovaConta(resetNovaConta)
+            setTabLogin("login")
+        }
     }
 
     const onSubmit = async (e) => {
@@ -56,7 +69,7 @@ export default function NovaConta({ novaConta, setNovaConta, onSubmitNovaConta }
 
         } else {
             setLoading(true)
-            await onSubmitNovaConta(novaConta)
+            await submitNovaConta(novaConta)
             setLoading(false)
         }
     }

@@ -3,7 +3,7 @@ import toast, { Toaster } from 'react-hot-toast'
 
 import { FiAlertTriangle, FiInfo, FiCheckCircle, FiXCircle, FiX } from "react-icons/fi"
 
-const notify = toast;
+export const notify = toast;
 
 const defaultNotification = (message, title, icon, configurations) => {
     return notify(
@@ -110,4 +110,3 @@ export const HttpResponseAlert = ({ status, message, result }, withOkStatus = tr
 }
 
 export const Notifications = Toaster;
-export default notify

@@ -1,24 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useRouter } from 'next/router'
 import { Form, Button } from 'react-bootstrap'
 
 import { InputAddClassNameErro } from "../../../utils"
+
 import { LoginValidate } from "../../../models/LoginModel"
 
-import { danger } from '../../../components/Alerts'
+import { HttpResponseAlert, danger, notify } from '../../../components/Alerts'
 
-export default function Login({ login, setLogin, onSubmitLogin }) {
+import { AuthContext } from '../../../contexts/AuthContext'
+
+export default function Login({ login, setLogin }) {
 
     const [errors, setErrors] = useState([])
     const [loading, setLoading] = useState(false);
     const { IfErrorList, RemoveErrors, AddErrosArray } = InputAddClassNameErro(errors, setErrors)
+    const { signIn, routerContext } = useContext(AuthContext)
 
-
-    const handleLogin = (e, campo) => {
+    const handleInformationLogin = (e, campo) => {
         setLogin({
             ...login,
             [campo]: e.target.value
         })
         RemoveErrors(campo)
+    }
+
+    const getLoginToken = async (login) => {
+        setLoading(true)
+        let response = await signIn(login)
+
+        if (!response.success) {
+            HttpResponseAlert(response, false)
+            setLoading(false)
+        } else {
+            notify.remove();
+            routerContext.push("/dashboard")
+        }
     }
 
     const onSubmit = async (e) => {
@@ -35,10 +52,9 @@ export default function Login({ login, setLogin, onSubmitLogin }) {
             })
             danger(messagesErros)
             AddErrosArray(paths)
-        } else {
-            setLoading(true)
-            await onSubmitLogin(login)
-            setLoading(false)
+        }
+        else {
+            await getLoginToken(login)
         }
     }
 
@@ -46,11 +62,11 @@ export default function Login({ login, setLogin, onSubmitLogin }) {
         <Form id="formLogin" onSubmit={onSubmit}>
             <Form.Group className={`mb-3 ${IfErrorList("email")}`} controlId="formLoginEmail">
                 <Form.Label>Email</Form.Label>
-                <Form.Control value={login.email} onChange={e => handleLogin(e, "email")} type="text" placeholder="Digite o email" />
+                <Form.Control value={login.email} onChange={e => handleInformationLogin(e, "email")} type="text" placeholder="Digite o email" />
             </Form.Group>
             <Form.Group className={`mb-3 ${IfErrorList("senha")}`} controlId="formLoginSenha">
                 <Form.Label>Senha</Form.Label>
-                <Form.Control value={login.senha} onChange={e => handleLogin(e, "senha")} type="password" placeholder="Digite a senha" />
+                <Form.Control value={login.senha} onChange={e => handleInformationLogin(e, "senha")} type="password" placeholder="Digite a senha" />
             </Form.Group>
             <Button disabled={loading} variant="primary" type="submit">
                 {loading ? "Carregando" : "Entrar"}

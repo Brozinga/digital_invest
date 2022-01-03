@@ -1,4 +1,4 @@
-import Loading from "../components/Loading"
+import { LoadingCentalized } from "../components/Loading"
 import { useEffect } from "react"
 
 import { useRouter } from "next/router"
@@ -11,8 +11,6 @@ export default function Home() {
   }, [])
 
   return (
-    <div className="background-color max-heigth loading-c">
-      <Loading />
-    </div>
+    <LoadingCentalized />
   )
 }

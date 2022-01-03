@@ -13,7 +13,8 @@ const userIntialData = {
     nome: "",
     carteira: 0,
     email: "",
-    token: ""
+    token: "",
+    dataExpiracao: ""
 }
 
 const AuthContextIntialData = {
@@ -22,16 +23,19 @@ const AuthContextIntialData = {
     deleteAuthCookie: () => { },
     getAuthCookie: (name) => { },
     isAutenticated: () => false,
-    isAuthorized: () => { }
+    isAuthorized: () => { },
+    Logoff: () => { },
+    user: userIntialData
 }
 
 export const AuthContext = createContext(AuthContextIntialData);
 
 export function AuthProvider({ children }) {
 
-    const routerContext = useRouter();
+    const [user, setUser] = useState(userIntialData)
 
-    const [user, setUser] = useState(userIntialData);
+
+    const routerContext = useRouter();
 
     const setAuthCookie = (data) => {
         SaveEncryptLocalStorage(data, "@digital-data")
@@ -39,10 +43,10 @@ export function AuthProvider({ children }) {
 
     const signIn = async ({ email, senha }) => {
         const response = await LoginCall({ email, senha });
-        setUser(response?.result);
-        if (response.result?.token)
+        if (response.result?.token) {
+            setUser(response.result)
             setAuthCookie(response.result)
-
+        }
         return response;
     }
 
@@ -52,12 +56,29 @@ export function AuthProvider({ children }) {
 
     const deleteAuthCookie = () => {
         RemoveEncryptLocalStorage("@digital-data")
+        setUser({ ...userIntialData })
     }
 
     const isAuthenticated = () => {
-        const cookie = getCookie();
+        const cookie = getAuthCookie();
 
-        if (user.token && cookie) {
+        if (!cookie || !cookie?.dataExpiracao)
+            return false;
+
+        let tokenExpirationDate = new Date(cookie.dataExpiracao).getTime() / 1000;
+        let currentDate = new Date().getTime() / 1000;
+
+        console.log('TOKEN_EXP ', tokenExpirationDate)
+        console.log('CURRENT ', currentDate)
+        console.log('TOKEN IS GREAT CURRENT ', tokenExpirationDate > currentDate)
+
+        if (tokenExpirationDate < currentDate) {
+            deleteAuthCookie()
+            return false;
+        }
+
+        if (cookie.token && tokenExpirationDate > currentDate) {
+            setUser(cookie)
             return true;
         }
 
@@ -66,8 +87,13 @@ export function AuthProvider({ children }) {
 
     const isAuthorized = () => {
         if (!isAuthenticated()) {
-            routerContext.push("/conta")
+            routerContext.push("/")
         }
+    }
+
+    const Logoff = () => {
+        deleteAuthCookie()
+        routerContext.push("/")
     }
 
     return (
@@ -77,7 +103,9 @@ export function AuthProvider({ children }) {
             routerContext,
             getAuthCookie,
             deleteAuthCookie,
-            isAuthorized
+            isAuthorized,
+            Logoff,
+            user
         }}>
             {children}
         </AuthContext.Provider>

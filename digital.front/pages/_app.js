@@ -4,10 +4,16 @@ import { AuthProvider } from '../contexts/AuthContext';
 
 
 function MyApp({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page) => page)
+
   return (
-    <AuthProvider>
-      <Component {...pageProps} />
-    </AuthProvider>
+    <div id="__app" suppressHydrationWarning>
+      {typeof window === 'undefined' ? null :
+        <AuthProvider>
+          {getLayout(<Component {...pageProps} />)}
+        </AuthProvider>
+      }
+    </div>
   )
 }
 

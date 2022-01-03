@@ -8,6 +8,7 @@ body {
 }
 
 #__next,
+#__app,
 html,
 body {
   width: 100%;
@@ -16,7 +17,8 @@ body {
 }
 
 .background-color,
-#__next {
+#__next,
+#__app {
   background-color: #f0f5ff;
 }
 
@@ -47,6 +49,34 @@ nav.navbar.navbar-light.bg-light {
   background-color: #fff !important;
 }
 
+nav.navbar>div.container {
+  padding: 5px 15px;
+}
+
+.navbar-logo {
+  position: relative;
+  width: 35px;
+  display: flex;
+}
+
+.active.nav-link {
+  font-weight: 500;
+}
+
+.user-nav {
+  display: flex;
+  align-items: center;
+}
+
+.user-nav>svg {
+  padding-left: 5px;
+  margin-top: -2px;
+}
+
+.user-nav-container>hr {
+  background-color: #abaaaa;
+}
+
 /* NAVBAR - FIM */
 
 /* CARD */
@@ -57,6 +87,49 @@ nav.navbar.navbar-light.bg-light {
 }
 
 /* CARD - FIM */
+
+/* DIALOG */
+.dialog .modal-content {
+  border-radius: 10px;
+  border: none;
+}
+
+.dialog div.modal-title {
+  text-align: center;
+  font-weight: 600;
+}
+
+.dialog div.modal-body {
+  text-align: center;
+  font-weight: 400;
+  font-size: 14pt;
+  margin-top: 10px;
+}
+
+.dialog div.modal-footer>button.btn {
+  display: inline-block;
+  width: 40%;
+  min-width: auto;
+}
+
+.dialog div.modal-footer {
+  border-top: none;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-bottom: 10px;
+}
+
+.dialog div.modal-header {
+  text-align: center;
+  border-bottom: 1px solid #f1f1f1;
+  display: block;
+}
+
+.dialog div.modal-header>.modal-title {
+  text-align: center;
+}
+
+/* DIALOG - FIM */
 
 /* LOADING */
 .loading-container {
@@ -254,8 +327,7 @@ input[type="text"].form-control {
 .error>input[type="text"].form-control,
 .error>input[type="email"].form-control:focus,
 .error>input[type="password"].form-control:focus,
-.error>input[type="text"].form-control:focus
-{
+.error>input[type="text"].form-control:focus {
   border: 1px solid #dc3545;
   box-shadow: 0 0 3px 0.25rem #dc354524;
 }
@@ -265,8 +337,7 @@ input[type="text"].form-control {
 .success>input[type="text"].form-control,
 .success>input[type="email"].form-control:focus,
 .success>input[type="password"].form-control:focus,
-.success>input[type="text"].form-control:focus
-{
+.success>input[type="text"].form-control:focus {
   border: 1px solid #198754;
   box-shadow: 0 0 3px 0.25rem #19875424;
 }
@@ -282,6 +353,9 @@ input[type="text"].form-control:focus {
 
 button.btn-primary {
   background-color: #613aea;
+}
+
+button.btn {
   border-color: transparent;
   border-radius: 100px;
   min-width: 100%;
@@ -347,15 +421,19 @@ button.btn-primary {
 
 .notification-container>button {
   background: transparent;
+  display: block;
   position: absolute;
   outline: none;
   border: none;
-  margin-right: -15px;
-  margin-top: -5px;
+  margin-right: -10px;
+  margin-top: 3px;
   cursor: pointer;
   right: 0px;
   top: 0px;
+  font-size: 14pt;
   color: #fff;
+  width: 30px;
+  height: 30px;
 }
 
 .notification-container>div>button>svg {
@@ -372,6 +450,10 @@ button.btn-primary {
   min-width: 45px;
   padding: 10px;
   color: #fff;
+}
+
+.toasterdefault {
+  width: 100%;
 }
 
 .toasterdefault.btn-default,
@@ -466,6 +548,10 @@ a.btn-default:visited {
   .notification-responsive {
     justify-content: center;
   }
+
+  .notification-container>button {
+    margin-right: 15px;
+  }
 }
 
 @media (max-height: 760px) {
@@ -473,7 +559,9 @@ a.btn-default:visited {
     margin-bottom: 20px;
   }
 
-  #__next, html, body {
+  #__next,
+  html,
+  body {
     height: auto;
   }
 }

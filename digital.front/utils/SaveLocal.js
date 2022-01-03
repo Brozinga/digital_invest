@@ -29,5 +29,5 @@ export const GetEncryptLocalStorage = (name) => {
 }
 
 export const RemoveEncryptLocalStorage = (name) => {
-    localStorage.remove(name)
+    localStorage.removeItem(name)
 }
