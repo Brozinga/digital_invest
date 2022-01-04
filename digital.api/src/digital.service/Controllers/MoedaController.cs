@@ -1,5 +1,6 @@
 ﻿using digital.business.Handlers;
 using digital.domain.InputViewModel;
+using digital.util.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace digital.service.Controllers
         }
 
         [HttpGet("v1/listar")]
-        [Authorize]
+        [AuthorizeMultiplePolicy("policy_basic", false)]
         public async Task<IActionResult> Listar()
         {
             var result = await _moedaHandler.Executar(new PegarTodasAsMoedasInputView());
@@ -26,7 +27,7 @@ namespace digital.service.Controllers
         }
 
         [HttpGet("v1/cotacoes")]
-        [Authorize]
+        [AuthorizeMultiplePolicy("policy_basic", false)]
         public async Task<IActionResult> Cotacoes()
         {
             var result = await _moedaHandler.Executar(new PegarTodasAsMoedasCotacoesPorHoraInputView());

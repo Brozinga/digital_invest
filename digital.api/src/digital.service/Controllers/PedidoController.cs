@@ -19,7 +19,7 @@ namespace digital.service.Controllers
         }
 
         [HttpPost("v1/novo")]
-        [Authorize]
+        [Authorize(Policy = "policy_basic")]
         public async Task<IActionResult> Novo([FromBody] NovoPedidoInputView data)
         {
             var identity = (ClaimsIdentity) User.Identity;

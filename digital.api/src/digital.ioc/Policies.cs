@@ -6,16 +6,17 @@ namespace digital.ioc
 {
     public static class Policies
     {
-        public static void InjectPolicies(this IServiceCollection services, List<PolicyItem> policies)
+        public static void InjectPolicies(this IServiceCollection services, PolicyItem[] policies)
         {
             var authorizationConf = new AuthorizationOptions();
 
-            foreach (var item in policies)
+            services.AddAuthorization(configure =>
             {
-                authorizationConf.AddPolicy(item.Name, p => p.RequireRole(item.Value.Split(",")));
-            }
-
-            services.AddAuthorization(configure => configure = authorizationConf);
+                foreach (var item in policies)
+                {
+                    configure.AddPolicy(item.Name, p => p.RequireRole(item.Value.Split(",")));
+                }
+            });
         }
     }
 

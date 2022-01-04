@@ -1,5 +1,6 @@
 ﻿using digital.business.Handlers;
 using digital.domain.InputViewModel;
+using digital.util.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace digital.service.Controllers
         }
 
         [HttpPost("v1/alterar_senha")]
-        [AllowAnonymous]
+        [AuthorizeMultiplePolicy("policy_admin", false)]
         public async Task<IActionResult> AlterarSenha([FromBody] AlterarSenhaInputView passChange)
         {
             var result = await _userHandler.Executar(passChange);

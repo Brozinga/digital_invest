@@ -18,13 +18,13 @@ namespace digital.service.Controllers
         }
 
         [HttpGet("v1/listar_por_acronimo/{acronimo}")]
-        [Authorize]
+        [Authorize(Policy = "policy_basic")]
         public async Task<IActionResult> ListarPorAcronimo(string acronimo)
         {
             var result = await _cotacaoHandler.Executar(
                 new CotacaoPorAcronimoMoedaInputView
                 {
-                    Acronimo = acronimo
+                    Acronimo = acronimo.Trim().ToUpper()
                 });
 
             return StatusCode((int)result.Status, result);

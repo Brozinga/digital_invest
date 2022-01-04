@@ -48,7 +48,7 @@ namespace digital.service
             services.InjectUnitOfWork();
             services.InjectServices();
 
-            var policiesList = Configuration.GetSection("Policies").Get<List<PolicyItem>>();
+            var policiesList = Configuration.GetSection("Policies").Get<PolicyItem[]>();
 
             services.InjectPolicies(policiesList);
 
