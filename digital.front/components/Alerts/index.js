@@ -101,6 +101,12 @@ export const HttpResponseAlert = ({ status, message, result }, withOkStatus = tr
             if (messageFinish != null || messageFinish != "")
                 warning(messageFinish)
             break;
+        case 401:
+            warning("Ops! você não está autenticado!")
+            break;
+        case 403:
+            danger("Ops! você não tem permissão para fazer isso!")
+            break;
         case 404:
             if (messageFinish != null || messageFinish != "")
                 warning(messageFinish)

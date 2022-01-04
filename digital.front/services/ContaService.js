@@ -12,10 +12,13 @@ export const NovaContaCall = async ({ nome, email, cpf, senha }) => {
 
     } catch (error) {
         if (error.response) {
-            return error.response.data;
             // console.log(error.response.data);
             // console.log(error.response.status);
             // console.log(error.response.headers);
+            return {
+                ...error.response.data,
+                status: error.response.status
+            };
         } else if (error.request) {
             // console.log(error.request);
         }
@@ -33,7 +36,10 @@ export const LoginCall = async ({ email, senha }) => {
 
     } catch (error) {
         if (error.response) {
-            return error.response.data;
+            return {
+                ...error.response.data,
+                status: error.response.status
+            };
         }
     }
 }
