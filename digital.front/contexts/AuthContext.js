@@ -38,7 +38,7 @@ export function AuthProvider({ children }) {
     const routerContext = useRouter();
 
     const setAuthCookie = (data) => {
-        SaveEncryptLocalStorage(data, "@digital-data")
+        SaveEncryptLocalStorage(data, process.env.NEXT_PUBLIC_AUTHCONTEXT_DATA_NAME)
     }
 
     const signIn = async ({ email, senha }) => {
@@ -51,11 +51,11 @@ export function AuthProvider({ children }) {
     }
 
     const getAuthCookie = () => {
-        return GetEncryptLocalStorage("@digital-data")
+        return GetEncryptLocalStorage(process.env.NEXT_PUBLIC_AUTHCONTEXT_DATA_NAME)
     }
 
     const deleteAuthCookie = () => {
-        RemoveEncryptLocalStorage("@digital-data")
+        RemoveEncryptLocalStorage(process.env.NEXT_PUBLIC_AUTHCONTEXT_DATA_NAME)
         setUser({ ...userIntialData })
     }
 
@@ -87,13 +87,13 @@ export function AuthProvider({ children }) {
 
     const isAuthorized = () => {
         if (!isAuthenticated()) {
-            routerContext.push("/")
+            routerContext.push(process.env.NEXT_PUBLIC_REDIRECT_LOGIN_PATH)
         }
     }
 
     const Logoff = () => {
         deleteAuthCookie()
-        routerContext.push("/")
+        routerContext.push(process.env.NEXT_PUBLIC_REDIRECT_LOGIN_PATH)
     }
 
     return (

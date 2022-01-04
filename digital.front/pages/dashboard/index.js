@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 
 import { LoadingCentalized } from "../../components/Loading"
 
-import LayoutWithNavbar from "../../components/Layouts/LayoutWithNavbar"
-import Head from "../../components/Head"
+import BasicLayout from "../../components/Layouts/BasicLayout"
 
 export default function Dashboard() {
 
@@ -16,10 +15,9 @@ export default function Dashboard() {
 
     return (
         <>
-            {!user?.nome ?
+            {!user?.email ?
                 <LoadingCentalized /> :
                 <>
-                    <Head Title="Digital Invest | Dashboard" />
                 </>
             }
         </>
@@ -28,8 +26,8 @@ export default function Dashboard() {
 
 Dashboard.getLayout = function getLayout(page) {
     return (
-        <LayoutWithNavbar>
+        <BasicLayout title="Digital Invest | Dashboard">
             {page}
-        </LayoutWithNavbar>
+        </BasicLayout>
     )
 }

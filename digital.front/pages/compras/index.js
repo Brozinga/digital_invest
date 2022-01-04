@@ -1,12 +1,10 @@
 import React, { useEffect, useContext } from 'react'
-import dynamic from 'next/dynamic'
 
 import { AuthContext } from '../../contexts/AuthContext'
 
 import { LoadingCentalized } from "../../components/Loading"
-import Head from '../../components/Head'
 
-import LayoutWithNavbar from "../../components/Layouts/LayoutWithNavbar"
+import BasicLayout from "../../components/Layouts/BasicLayout"
 
 
 export default function Compra() {
@@ -19,10 +17,9 @@ export default function Compra() {
 
     return (
         <>
-            {!user?.nome ?
+            {!user?.email ?
                 <LoadingCentalized /> :
                 <>
-                    <Head Title={"Digital Invest | Compra de Moedas"} />
                 </>
             }
         </>
@@ -32,8 +29,8 @@ export default function Compra() {
 
 Compra.getLayout = function getLayout(page) {
     return (
-        <LayoutWithNavbar>
+        <BasicLayout title="Digital Invest | Compra de Moedas">
             {page}
-        </LayoutWithNavbar>
+        </BasicLayout>
     )
 }

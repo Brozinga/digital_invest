@@ -8,7 +8,7 @@ import { AuthContext } from '../../contexts/AuthContext'
 
 import { Navbar as NavbarBootstrap, Container, Nav } from 'react-bootstrap'
 
-import logo from "../../assets/images/logo-black-50px.png"
+import logo from "../../public/logos/logo-black-50px.png"
 
 import Dialog from '../Dialog'
 

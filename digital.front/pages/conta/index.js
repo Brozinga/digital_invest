@@ -3,12 +3,12 @@ import Image from 'next/image'
 import { Tab, Tabs } from 'react-bootstrap'
 
 import Card from '../../components/Card'
-import Head from '../../components/Head'
 import NovaConta from '../../components/#Pages/NovaConta'
 import Login from '../../components/#Pages/Login'
-import { Notifications } from '../../components/Alerts'
 
-import logo from '../../assets/images/logo-g-purple-to-blue.png'
+import BasicLayout from "../../components/Layouts/BasicLayout"
+
+import logo from '../../public/logos/logo-g-purple-to-blue.png'
 
 
 export default function Conta() {
@@ -32,9 +32,6 @@ export default function Conta() {
 
     return (
         <div className="container bg-center login-tab">
-            <Head Title={"Digital Invest | Entrar"} />
-            <Notifications />
-
             <div className="logo">
                 <div className="logo-container">
                     <Image src={logo} layout='responsive' width={90} height={102} />
@@ -62,5 +59,13 @@ export default function Conta() {
                 </Tabs>
             </Card>
         </div>
+    )
+}
+
+Conta.getLayout = function getLayout(page) {
+    return (
+        <BasicLayout disabledNavbar title="Digital Invest | Entrar">
+            {page}
+        </BasicLayout>
     )
 }

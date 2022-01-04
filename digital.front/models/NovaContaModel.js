@@ -13,24 +13,27 @@ Yup.addMethod(Yup.string, "isValidCpf", function (errorMessage) {
 
 let NovaContaModel = Yup.object().shape({
     nome: Yup.string()
+        .trim("Esse nome contém caracteres inválidos")
         .required("O nome é obrigatório"),
     email: Yup.string()
+        .trim()
         .required("um email é obrigatório")
         .email("O formato não corresponde a um email válido"),
     cpf: Yup.string()
+        .trim()
         .required("O CPF é obrigatório")
         .isValidCpf("O CPF informado é inválido"),
     senha: Yup.string()
+        .trim()
         .required('A senha é obrigatória')
         .min(6, 'A senha precisa de no mínimo 6 caracteres'),
     confirmSenha: Yup.string()
-        .required('A confirmação de senha é obrigatória')
+        .trim()
         .oneOf([Yup.ref('senha'), null], 'A confirmação de senha não corresponde a senha informada')
 });
 
 const NovaContaValidate = async (novaConta) => {
     try {
-
         await NovaContaModel.validate(novaConta, {
             abortEarly: false
         })
@@ -38,7 +41,7 @@ const NovaContaValidate = async (novaConta) => {
         return [];
 
     } catch (error) {
-            return error.inner;
+        return error.inner;
     }
 }
 

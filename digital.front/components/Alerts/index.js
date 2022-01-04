@@ -83,7 +83,10 @@ export const white = (message, title = "Informação", icon = <FiInfo />) => {
 export const HttpResponseAlert = ({ status, message, result }, withOkStatus = true) => {
 
     let messageFinish = [];
+
     if (Array.isArray(result) && !message) {
+        messageFinish = result.map(m => m.message)
+    } else if (Array.isArray(message) && message.length > 0) {
         messageFinish = message.map(m => m.message)
     } else {
         messageFinish = message
