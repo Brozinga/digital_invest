@@ -4,7 +4,7 @@ namespace digital.domain.Authentication
 {
     public class TokenModel
     {
-        public TokenModel(string token, TimeSpan? expireTime)
+        public TokenModel(string token, DateTime? expireTime)
         {
             Token = token;
             ExpireTime = expireTime;
@@ -12,6 +12,6 @@ namespace digital.domain.Authentication
 
         public string Token { get; }
 
-        public TimeSpan? ExpireTime { get; }
+        public DateTime? ExpireTime { get; }
     }
 }

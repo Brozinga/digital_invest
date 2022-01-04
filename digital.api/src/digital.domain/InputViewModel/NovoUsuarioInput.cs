@@ -10,10 +10,10 @@ namespace digital.domain.InputViewModel
     {
         public NovoUsuarioInput(string nome, string email, string senha, string cPF) : base()
         {
-            Nome = nome;
+            Nome = nome.ToUpper();
             Email = email.ToLower();
             Senha = senha;
-            CPF = cPF;
+            CPF = cPF.Replace(".", "").Replace("-", "");
         }
 
         public string Nome { get; set; }

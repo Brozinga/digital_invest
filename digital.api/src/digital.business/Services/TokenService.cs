@@ -44,7 +44,7 @@ namespace digital.business.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new TokenModel(tokenHandler.WriteToken(token), tokenDescriptor.Expires.Value.TimeOfDay);
+            return new TokenModel(tokenHandler.WriteToken(token), tokenDescriptor.Expires);
         }
 
         public AuthenticationModel DecodeToken(string token)
