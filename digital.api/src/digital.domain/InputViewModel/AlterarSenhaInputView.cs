@@ -1,4 +1,5 @@
 ﻿using digital.assets.Texts;
+using digital.util.Extensions;
 using Flunt.Notifications;
 using Flunt.Validations;
 
@@ -13,6 +14,8 @@ namespace digital.domain.InputViewModel
 
         public override void Validate()
         {
+            this.TrimAllStrings();
+
             AddNotifications(
                 new Contract<Notification>()
                     .IsNotNullOrEmpty(SenhaAtual, "SenhaAtual", ErrorText.SenhaInvalida)

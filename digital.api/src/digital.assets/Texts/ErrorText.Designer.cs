@@ -115,7 +115,7 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, informe o ErroID para o administrador.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro inesperado, informe o ERROR_ID para o administrador.
         /// </summary>
         public static string ErroServidor {
             get {
@@ -129,6 +129,15 @@ namespace digital.assets.Texts {
         public static string HoraCompraMinima {
             get {
                 return ResourceManager.GetString("HoraCompraMinima", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O Id da Moeda é Obrigatória.
+        /// </summary>
+        public static string MoedaIdObrigatorio {
+            get {
+                return ResourceManager.GetString("MoedaIdObrigatorio", resourceCulture);
             }
         }
         

@@ -1,4 +1,5 @@
 ﻿using digital.assets.Texts;
+using digital.util.Extensions;
 using Flunt.Notifications;
 using Flunt.Validations;
 using MongoDB.Bson;
@@ -25,7 +26,10 @@ namespace digital.domain.InputViewModel
 
         public override void Validate()
         {
+            this.TrimAllStrings();
+
             AddNotifications(new Contract<Notification>()
+                .IsNotNullOrEmpty(MoedaId, ErrorText.MoedaIdObrigatorio)
                 .IsGreaterThan(Quantidade, 0, "quantidade", ErrorText.QuantidadeMoedasMinima));
         }
     }

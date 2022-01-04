@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using MongoDB.Bson;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 
@@ -45,12 +46,21 @@ namespace digital.service
             services.InjectHandlers();
             services.InjectRepositories();
             services.InjectUnitOfWork();
-
             services.InjectServices();
+
+            var policiesList = Configuration.GetSection("Policies").Get<List<PolicyItem>>();
+
+            services.InjectPolicies(policiesList);
 
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 
             services.AddControllers();
+
+            services.AddCors(op => op.AddPolicy("allowAll", p =>
+              p.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin()
+            ));
 
             services.AddSwaggerGen(c =>
             {
@@ -58,14 +68,14 @@ namespace digital.service
                 {
                     Title = "Digital Invest API",
                     Version = "v1",
-                    Description = "API de servi�os para o Front-End da aplica��o Digital Invest essa API � respons�vel pelo controle de acessos," +
-                    "controle de usu�rios, controle das contas e por fim controle das compras de moedas"
+                    Description = "API de servicos para o Front-End da aplicao Digital Invest essa API responsavel pelo controle de acessos," +
+                    "controle de usuarios, controle das contas e por fim controle das compras de moedas"
                 });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
-                    Description = "Por favor insira o JWT e n�o se esque�a de escrever 'Bearer' com o espa�o",
+                    Description = "Por favor insira o JWT e nao se esqueca de escrever 'Bearer' com o espaco",
                     Name = "Authorization",
                     Type = SecuritySchemeType.ApiKey
                 });
@@ -102,10 +112,7 @@ namespace digital.service
             app.UseHttpsRedirection();
             app.UseRouting();
 
-            app.UseCors(x => x
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+            app.UseCors("allowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();

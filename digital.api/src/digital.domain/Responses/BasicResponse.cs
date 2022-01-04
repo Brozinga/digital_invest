@@ -31,27 +31,27 @@ namespace digital.domain.Responses
         {
             error ??= new Exception(message ?? ErrorText.ErroServidor);
 
+            var errorMessage = new ServerErrorOutputView(error?.InnerException?.Message ?? error.Message,
+                                                  error?.Source,
+                                                  error.StackTrace);
             if (isDevelopment)
             {
+
                 return new BasicResponse(
-                            new ServerErrorOutputView(error?.InnerException?.Message ?? error.Message,
-                                                      error?.Source,
-                                                      error.StackTrace),
-                            EStatusCode.ServerError, false, error.ToString());
+                           errorMessage,
+                            EStatusCode.ServerError, false, $"{error}, ERROR_ID: {errorMessage.ErrorID}");
             }
 
 
-                return new BasicResponse(
-                            new ServerErrorOutputView(error?.InnerException?.Message ?? error.Message,
-                                                      error?.Source,
-                                                      error.StackTrace),
-                            EStatusCode.ServerError, false, error.ToString());
+            return new BasicResponse(
+                        errorMessage,
+                        EStatusCode.ServerError, false, $"{error}, ERROR_ID: {errorMessage.ErrorID}");
 
             // return new BasicResponse(
             //                 new ServerErrorOutputView(null,
             //                                           null,
             //                                           null),
-            //                 EStatusCode.ServerError, false, ErrorText.ErroServidor);
+            //                 EStatusCode.ServerError, false, $"{ErrorText.ErroServidor}, ERROR_ID: {errorMessage.ErrorID}");
 
         }
     }

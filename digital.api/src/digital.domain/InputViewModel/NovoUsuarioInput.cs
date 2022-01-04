@@ -1,5 +1,6 @@
 ﻿using digital.assets.Texts;
 using digital.domain.Models;
+using digital.util.Extensions;
 using Flunt.Extensions.Br.Validations;
 using Flunt.Notifications;
 using Flunt.Validations;
@@ -23,6 +24,8 @@ namespace digital.domain.InputViewModel
 
         public override void Validate()
         {
+            this.TrimAllStrings();
+
             AddNotifications(
                 new Contract<Notification>()
                     .IsEmail(Email, "Email", ErrorText.EmailInvalido)
