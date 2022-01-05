@@ -9,8 +9,8 @@ dayjs.extend(utc)
 module.exports.ID = "JOB_VENDAS"
 
 module.exports.VenderMoedasTask = (CotacoesRepository,
-    PedidoRepository,
-    UsuariosRepository) => new AsyncTask("Vendas", async () => {
+    PedidoRepository, UsuariosRepository,
+    HistoricoCarteiraRepository) => new AsyncTask("Vendas", async () => {
 
         const pegandoTodosPedidos =
             await PedidoRepository.find(
@@ -47,11 +47,17 @@ module.exports.VenderMoedasTask = (CotacoesRepository,
                     valorVenda += Number((valorCotado * mC.quantidade).toFixed(2))
                 }
 
-                usuario = await UsuariosRepository.findOne({ _id: item.idUsuario });
+                usuario = await UsuariosRepository.findOne({ _id: item.usuarioId });
                 usuario.carteira += valorVenda;
 
                 item.valorTotalVenda = valorVenda;
                 item.status = StatusEnum.FECHADO;
+
+                HistoricoCarteiraRepository.create({
+                    usuarioId: item.usuarioId,
+                    dataAdicao: dayjs().utc().format(),
+                    carteira: usuario.carteira
+                })
 
                 logger.info(`PEDIDO Nº: ${item._id}`)
                 logger.info(`VALOR DE COMPRA: ${item.valorTotalCompra}`)
