@@ -138,6 +138,9 @@
   <data name="ErroServidor" xml:space="preserve">
     <value>Ocorreu um erro inesperado, informe o ERROR_ID para o administrador</value>
   </data>
+  <data name="HistoricoCarteiraNaoExiste" xml:space="preserve">
+    <value>Historico da carteira não encontrado</value>
+  </data>
   <data name="HoraCompraMinima" xml:space="preserve">
     <value>O horário da compra é de no mínimo, 3 horas acima do horário atual</value>
   </data>

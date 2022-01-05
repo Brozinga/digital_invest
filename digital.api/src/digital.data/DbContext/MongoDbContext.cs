@@ -79,6 +79,14 @@ namespace digital.data.DbContext
             }
         }
 
+        public IMongoCollection<HistoricoCarteira> HistoricoCarteiras
+        {
+            get
+            {
+                return Database.GetCollection<HistoricoCarteira>("historicocarteiras");
+            }
+        }
+
         public IMongoCollection<Papel> Papeis
         {
             get

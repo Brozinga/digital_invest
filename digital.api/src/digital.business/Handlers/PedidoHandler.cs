@@ -1,5 +1,6 @@
 ﻿using digital.assets.Texts;
 using digital.business.Interfaces;
+using digital.business.Services;
 using digital.data.Interfaces;
 using digital.domain.InputViewModel;
 using digital.domain.Models;
@@ -16,9 +17,11 @@ namespace digital.business.Handlers
 {
     public class PedidoHandler : GenericHandler, IHandlerBase<NovoPedidoInputView, BasicResponse>
     {
-        public PedidoHandler(IUnitOfWork uow, IHostEnvironment env) : base(uow, env)
-        {
+        private readonly TokenService _jwt;
 
+        public PedidoHandler(IUnitOfWork uow, IHostEnvironment env, TokenService jwt) : base(uow, env)
+        {
+            _jwt = jwt;
         }
 
         public async Task<BasicResponse> Executar(NovoPedidoInputView data)
@@ -28,6 +31,16 @@ namespace digital.business.Handlers
                 data.Validate();
                 if (!data.IsValid)
                     return BasicResponse.BadRequest(null, data.Notifications);
+
+                var usuarioId = _jwt.GetUserIdByToken(data.UsuarioClaims);
+
+                if (string.IsNullOrEmpty(usuarioId))
+                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+
+                var usuario = await _uow.UsuarioRepository.PegarUsuarioId(ObjectId.Parse(usuarioId));
+
+                if (usuario == null)
+                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
 
                 var moedasModel = new List<MoedasCompraVenda>();
                 data.ValorTotalCompra = 0.0M;
@@ -51,16 +64,6 @@ namespace digital.business.Handlers
                     data.ValorTotalCompra += (moedaCotacao.ValorCotado * moedaComprada.Quantidade);
                 }
 
-                var usuarioId = PegarUsuarioIdPeloToken(data.UsuarioClaims);
-
-                if (string.IsNullOrEmpty(usuarioId))
-                    return this.InternalServerError(new Exception(ErrorText.UsuarioNaoExiste));
-
-                var usuario = await _uow.UsuarioRepository.PegarUsuarioId(ObjectId.Parse(usuarioId));
-
-                if (usuario == null)
-                    return this.InternalServerError(new Exception(ErrorText.UsuarioNaoExiste));
-
                 if (data.ValorTotalCompra > usuario.Carteira)
                     return BasicResponse.BadRequest(ErrorText.NovoPedidoMaiorCarteira);
 
@@ -69,7 +72,7 @@ namespace digital.business.Handlers
                 _uow.PedidoRepository.CriarPedido(new Pedido
                 {
                     DataVenda = data.DataVenda,
-                    IdUsuario = usuario.Id,
+                    UsuarioId = usuario.Id,
                     MoedasCompra = moedasModel,
                     ValorTotalCompra = data.ValorTotalCompra
                 });
@@ -83,14 +86,6 @@ namespace digital.business.Handlers
             {
                return this.InternalServerError(ex);
             }
-        }
-
-        private string PegarUsuarioIdPeloToken(IEnumerable<Claim> claims)
-        {
-            if (claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value != null)
-                return claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
-
-            return null;
         }
     }
 }

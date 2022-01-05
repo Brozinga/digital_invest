@@ -30,6 +30,7 @@ namespace digital.ioc
             services.AddScoped<IMoedaRepository, MoedaRepository>();
             services.AddScoped<IPedidoRepository, PedidoRepository>();
             services.AddScoped<ICotacaoRepository, CotacaoRepository>();
+            services.AddScoped<IHistoricoCarteiraRepository, HistoricoCarteiraRepository>();
         }
         public static void InjectUnitOfWork(this IServiceCollection services)
         {

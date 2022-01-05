@@ -9,12 +9,14 @@ using System;
 using digital.business.Services;
 using digital.domain.OutputViewModel;
 using MongoDB.Bson;
+using System.Linq;
 
 namespace digital.business.Handlers
 {
     public class UsuarioHandler : GenericHandler, IHandlerBase<NovoUsuarioInput, BasicResponse>,
         IHandlerBase<AlterarSenhaInputView, BasicResponse>,
-        IHandlerBase<LoginInputView, BasicResponse>
+        IHandlerBase<LoginInputView, BasicResponse>,
+        IHandlerBase<PegarHistoricoCarteiraInputView, BasicResponse>
 
     {
         private readonly TokenService _jwt;
@@ -113,6 +115,33 @@ namespace digital.business.Handlers
             catch (Exception ex)
             {
                 return this.InternalServerError(ex);                
+            }
+        }
+
+        public async Task<BasicResponse> Executar(PegarHistoricoCarteiraInputView data)
+        {
+            try
+            {
+                var userId = _jwt.GetUserIdByToken(data.UsuarioClaims);
+                
+                if (userId == null)
+                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+
+                var usuarioExiste = await _uow.UsuarioRepository.Existe(ObjectId.Parse(userId));
+
+                if (!usuarioExiste)
+                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+
+                var result = await _uow.HistoricoCarteiraRepository.PegarUsuarioId(ObjectId.Parse(userId));
+
+                if (result.Count <= 0)
+                    return BasicResponse.NotFound(ErrorText.HistoricoCarteiraNaoExiste);
+
+                return BasicResponse.OK(null, result.Select(x => HistoricoCarteiraOutputView.Map(x)));
+            }
+            catch (Exception ex)
+            {
+                return this.InternalServerError(ex);
             }
         }
     }

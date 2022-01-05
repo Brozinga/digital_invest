@@ -48,5 +48,14 @@ namespace digital.service.Controllers
             var result = await _userHandler.Executar(userLogin);
             return StatusCode((int)result.Status, result);
         }
+
+        [HttpGet("v1/historico_carteira")]
+        [AuthorizeMultiplePolicy("policy_basic", false)]
+        public async Task<IActionResult> PegarHistoricoCarteira([FromRoute] int quantidadeRegistros = 20)
+        {
+            var result = await _userHandler.Executar(
+                new PegarHistoricoCarteiraInputView(quantidadeRegistros, User.Claims));
+            return StatusCode((int)result.Status, result);
+        }
     }
 }

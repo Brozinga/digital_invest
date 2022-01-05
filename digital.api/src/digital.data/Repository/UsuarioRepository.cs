@@ -68,6 +68,13 @@ namespace digital.data.Repository
 
             return true;
         }
+        public async Task<bool> Existe(ObjectId id)
+        {
+            var usuario = await _dbContext.Usuarios.FirstOrDefaultAsync(x => x.Id == id);
+            if (usuario == null) return false;
+
+            return true;
+        }
 
         public async Task<Usuario> PegarUsuarioCpf(string cpf)
         {

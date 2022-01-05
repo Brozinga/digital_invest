@@ -24,5 +24,9 @@ namespace digital.business.Handlers
         {
             return BasicResponse.ServerError(_env.IsDevelopment(), ex);
         }
+        protected virtual BasicResponse InternalServerError(string message)
+        {
+            return BasicResponse.ServerError(_env.IsDevelopment(), new Exception(message));
+        }
     }
 }

@@ -124,6 +124,15 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Historico da carteira não encontrado.
+        /// </summary>
+        public static string HistoricoCarteiraNaoExiste {
+            get {
+                return ResourceManager.GetString("HistoricoCarteiraNaoExiste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O horário da compra é de no mínimo, 3 horas acima do horário atual.
         /// </summary>
         public static string HoraCompraMinima {

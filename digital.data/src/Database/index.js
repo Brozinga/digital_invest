@@ -16,7 +16,7 @@ const MoedasRepository = connection.model("moedas", moedasSchema);
 const CotacoesRepository = connection.model("cotacoes", cotacoesSchema);
 const UsuariosRepository = connection.model("usuarios", usuariosSchema);
 const PedidosRepository = connection.model("pedidos", pedidosSchema);
-const HistoricoCarteiraRepository = connection.model("historicoCarteira", historicoCarteiraSchema);
+const HistoricoCarteiraRepository = connection.model("historicocarteiras", historicoCarteiraSchema);
 
 let item = MoedasRepository.find({});
 

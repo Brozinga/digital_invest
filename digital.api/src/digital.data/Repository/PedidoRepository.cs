@@ -39,7 +39,7 @@ namespace digital.data.Repository
             var result = await _dbContext.Pedidos.AsQueryable()
                 .Where(x => x.Ativo == true)
                 .OrderByDescending(x => x.DataCompra)
-                .FirstOrDefaultAsync(x => x.IdUsuario == usuarioId);
+                .FirstOrDefaultAsync(x => x.UsuarioId == usuarioId);
 
             return result;
         }
@@ -53,7 +53,7 @@ namespace digital.data.Repository
         public async Task<ICollection<Pedido>> PegarPedidosPorUsuarioId(ObjectId usuarioId)
         {
             var pedidos = await _dbContext.Pedidos.AsQueryable()
-                .Where(x => x.IdUsuario == usuarioId)
+                .Where(x => x.UsuarioId == usuarioId)
                 .ToListAsync();
 
             return pedidos;

@@ -107,6 +107,14 @@ namespace digital.business.Services
             return null;
         }
 
+        public string GetUserIdByToken(IEnumerable<Claim> claims)
+        {
+            if (claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value != null)
+                return claims.FirstOrDefault(x => x.Type == ClaimTypes.Sid).Value;
+
+            return null;
+        }
+
         private string CleanToken(string token)
         {
             return token.Replace("Bearer ", "");

@@ -11,6 +11,7 @@ namespace digital.data.Interfaces
     public interface IUsuarioRepository : IDisposable
     {
         public Task<bool> Existe(string email, string cpf);
+        public Task<bool> Existe(ObjectId id);
         public Task<Usuario> PegarUsuarioEmail(string email);
         public Task<Usuario> PegarUsuarioCpf(string cpf);
         public Task<IdentityResult> CriarUsuario(Usuario usuario, string senha, EPapeisNomes papel = EPapeisNomes.BASIC);
