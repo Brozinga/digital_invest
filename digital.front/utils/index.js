@@ -9,7 +9,7 @@ import {
     SaveEncryptLocalStorage
 } from './SaveLocal'
 import { encryptData, decryptData } from "./Cryptography"
-
+import { BrCurrency } from './Converters'
 
 export {
     InputAddClassNameErro,
@@ -23,5 +23,6 @@ export {
     RemoveEncryptLocalStorage,
     SaveEncryptLocalStorage,
     encryptData,
-    decryptData
+    decryptData,
+    BrCurrency
 }

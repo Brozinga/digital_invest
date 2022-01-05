@@ -165,6 +165,9 @@
   <data name="UsuarioNaoExiste" xml:space="preserve">
     <value>Usuario ou senha incorretos</value>
   </data>
+  <data name="ValorMinimoSenhaInvalido" xml:space="preserve">
+    <value>A senha precisa de no mínimo 6 caracteres</value>
+  </data>
   <data name="ValorTotalEMenorQueZero" xml:space="preserve">
     <value>O valor total da compra precisa ser superior a zero</value>
   </data>

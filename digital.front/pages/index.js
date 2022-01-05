@@ -2,6 +2,7 @@ import { LoadingCentalized } from "../components/Loading"
 import { useEffect } from "react"
 
 import { useRouter } from "next/router"
+import Head from '../components/Head'
 
 export default function Home() {
   const route = useRouter();
@@ -11,6 +12,9 @@ export default function Home() {
   }, [])
 
   return (
-    <LoadingCentalized />
+    <>
+      <Head Title="Digital Invest | Entrar"/>
+      <LoadingCentalized />
+    </>
   )
 }

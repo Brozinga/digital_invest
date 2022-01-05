@@ -13,15 +13,14 @@ Yup.addMethod(Yup.string, "isValidCpf", function (errorMessage) {
 
 let NovaContaModel = Yup.object().shape({
     nome: Yup.string()
-        .trim("Esse nome contém caracteres inválidos")
+        .trim()
         .required("O nome é obrigatório"),
     email: Yup.string()
         .trim()
-        .required("um email é obrigatório")
+        .required("O email é obrigatório")
         .email("O formato não corresponde a um email válido"),
     cpf: Yup.string()
         .trim()
-        .required("O CPF é obrigatório")
         .isValidCpf("O CPF informado é inválido"),
     senha: Yup.string()
         .trim()

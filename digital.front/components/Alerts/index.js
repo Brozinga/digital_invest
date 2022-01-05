@@ -15,7 +15,7 @@ const defaultNotification = (message, title, icon, configurations) => {
                     </header>
                     <section>
                         {(typeof (message) == "string") ?
-                            message : message?.map((e, i) => (<p key={i}>{e}</p>))
+                            message : message?.map((e, i) => (<p key={i}>• {e}</p>))
                         }
                     </section>
                 </div>

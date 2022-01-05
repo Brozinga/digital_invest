@@ -2,9 +2,9 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Manrope', sans-serif;
   color: #494a63;
   font-size: 11pt;
+  position: relative;
 }
 
 #__next,
@@ -12,7 +12,7 @@ body {
 html,
 body {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   background-color: #f0f5ff;
 }
 
@@ -20,6 +20,7 @@ body {
 #__next,
 #__app {
   background-color: #f0f5ff;
+  position: relative;
 }
 
 a {
@@ -29,11 +30,7 @@ a {
 
 * {
   box-sizing: border-box;
-}
-
-.loading-c {
-  position: absolute;
-  width: 100%;
+  font-family: 'Manrope', sans-serif;
 }
 
 .bg-white {
@@ -42,6 +39,25 @@ a {
 
 .max-heigth {
   height: 100%;
+}
+
+.full-screen {
+  width: 100%;
+  min-height: 100vh;
+  z-index: 999;
+  position: absolute;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.main-content, main {
+  min-height: calc(100vh - 165px);
+  margin-top: 15px;
 }
 
 /* NAVBAR */
@@ -60,7 +76,7 @@ nav.navbar>div.container {
 }
 
 .active.nav-link {
-  font-weight: 500;
+  font-weight: 800;
 }
 
 .user-nav {
@@ -77,7 +93,38 @@ nav.navbar>div.container {
   background-color: #abaaaa;
 }
 
+.mg-top-15 {
+  margin-top: 15px;
+}
+
 /* NAVBAR - FIM */
+
+/* FOOTER */
+.digital-footer {
+  width: 100%;
+  background-color: #FFF;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #494a63;
+  margin-top: 15px;
+}
+
+.digital-footer>p {
+  margin-bottom: 0;
+}
+
+.digital-footer>p>span {
+  color: #8466ef;
+}
+
+.digital-footer>p>a {
+  text-decoration: none;
+  color: #0d6efd;
+}
+
+/* FOOTER - FIM */
 
 /* CARD */
 .bt-card.card {
@@ -102,7 +149,7 @@ nav.navbar>div.container {
 .dialog div.modal-body {
   text-align: center;
   font-weight: 400;
-  font-size: 14pt;
+  font-size: 13pt;
   margin-top: 10px;
 }
 
@@ -247,9 +294,17 @@ nav.navbar>div.container {
   }
 }
 
+
 /* LOADING - FIM */
 
 /* CONTA */
+
+.conta {
+  min-height: calc(100vh - 75px);
+  display: flex;
+  align-items: center;
+}
+
 .bg-center {
   display: flex;
   flex-direction: column;
@@ -306,7 +361,7 @@ nav.navbar>div.container {
 
 .logo>div>h2 {
   font-weight: 100;
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   color: #8466ef;
   margin-left: 20px;
 }
@@ -377,6 +432,12 @@ button.btn {
 
 .notification-container {
   position: relative;
+  margin-left: -5px;
+}
+
+
+.notification-container p {
+  margin-bottom: 5px;
 }
 
 .notification-container>div {
@@ -568,3 +629,104 @@ a.btn-default:visited {
 
 
 /* NOTIFICATIONS - FIM*/
+
+/* DASHBOARD */
+
+.card-currency.card {
+  border: none;
+  background: rgb(36 137 242);
+  background: linear-gradient(90deg, rgb(36 137 242) 0%, rgb(110 84 255) 100%);
+  min-height: 120px;
+}
+
+.card-currency .currency-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px 20px;
+  height: 100%;
+  flex-wrap: wrap;
+}
+
+.card-currency .currency-value>p {
+  font-weight: 600;
+  font-size: 28pt;
+  color: #fff;
+  margin-bottom: 0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.card-currency .currency {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.card-currency span.currency-title {
+  font-weight: 400;
+  color: #fff;
+}
+
+.card-currency h4.currency-title,
+.card-currency h3.currency-title {
+  font-weight: 100;
+  font-size: 14pt;
+  margin-bottom: 0;
+  color: #fff;
+}
+
+.card-currency h3.currency-title {
+  font-weight: 800;
+  font-size: 22pt;
+}
+
+.card-currency .currency-user {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.card-currency hr {
+  display: none;
+}
+
+@media (max-width: 992px) {
+  .card-currency .currency-user {
+    align-items: center;
+    width: 100%;
+  }
+
+  .card-currency hr {
+    display: block;
+    width: 100%;
+    background-color: #FFF;
+    margin-top: 30px;
+  }
+
+  .card-currency .currency {
+    margin-top: 10px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .card-currency span.currency-title {
+    font-size: 16pt;
+    font-weight: 100;
+  }
+
+  .card-currency .currency>.currency-value>p {
+    font-size: 20pt;
+    font-weight: 800;
+  }
+
+  .card-currency h3.currency-title {
+    font-size: 18pt;
+    text-align: center;
+    margin-top: 5px;
+  }
+}
+
+/* DASHBOARD - FIM */

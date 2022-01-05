@@ -20,20 +20,8 @@ export default function Loading() {
 
 export function LoadingCentalized() {
     return (
-        <div className='background-color max-heigth loading-c'>
-            <div className="loading-container">
-                <div className="sk-chase">
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                    <div className="sk-chase-dot"></div>
-                </div>
-                <p>
-                    Carregado
-                </p>
-            </div>
+        <div className='background-color full-screen'>
+            <Loading />
         </div>
     )
 }

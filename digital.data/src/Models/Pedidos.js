@@ -1,7 +1,7 @@
 const { Schema } = require("mongoose")
 
 const pedidosSchema = new Schema({
-    idUsuario: { type: Schema.Types.ObjectId, required: true, ref: "usuarios", index: true },
+    usuarioId: { type: Schema.Types.ObjectId, required: true, ref: "usuarios", index: true },
     dataCompra: { type: Date, required: true},
     valorTotalCompra: { type: Number, required: true },
     valorTotalVenda: { type: Number, default: 0 },

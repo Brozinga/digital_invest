@@ -205,6 +205,15 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A senha precisa de no mínimo 6 caracteres.
+        /// </summary>
+        public static string ValorMinimoSenhaInvalido {
+            get {
+                return ResourceManager.GetString("ValorMinimoSenhaInvalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O valor total da compra precisa ser superior a zero.
         /// </summary>
         public static string ValorTotalEMenorQueZero {

@@ -19,10 +19,10 @@ namespace digital.domain.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId Id { get; set; }
 
-        [BsonElement("idUsuario")]
+        [BsonElement("usuarioId")]
         [BsonRepresentation(BsonType.ObjectId)]
         [BsonRequired]
-        public ObjectId IdUsuario { get; set; }
+        public ObjectId UsuarioId { get; set; }
 
         [BsonElement("valorTotalCompra")]
         [BsonRequired]

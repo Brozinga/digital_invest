@@ -31,6 +31,7 @@ namespace digital.domain.InputViewModel
                     .IsEmail(Email, "Email", ErrorText.EmailInvalido)
                     .IsCpf(CPF, "CPF", ErrorText.CPFInvalido)
                     .IsNotNullOrEmpty(Senha, "Senha", ErrorText.SenhaInvalida)
+                    .IsGreaterOrEqualsThan(Senha, 6, "Senha", ErrorText.ValorMinimoSenhaInvalido)
                 );
         }
 

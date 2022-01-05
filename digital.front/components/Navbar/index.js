@@ -13,6 +13,11 @@ import logo from "../../public/logos/logo-black-50px.png"
 import Dialog from '../Dialog'
 
 export default function Navbar() {
+
+    const DASHBOAR_ROUTE="/dashboard"
+    const MOEDA_ROUTE="/moedas"
+
+
     const router = useRouter()
 
     const { user, Logoff } = useContext(AuthContext)
@@ -58,11 +63,11 @@ export default function Navbar() {
                         <NavbarBootstrap.Collapse id="basic-navbar-nav">
                             <br />
                             <Nav className="me-auto">
-                                <Link href="/dashboard">
-                                    <Nav.Link href="/dashboard" className={activeRoute("/dashboard")}>Dashboard</Nav.Link>
+                                <Link href={DASHBOAR_ROUTE}>
+                                    <Nav.Link href={DASHBOAR_ROUTE} className={activeRoute(DASHBOAR_ROUTE)}>Dashboard</Nav.Link>
                                 </Link>
-                                <Link href="/compras">
-                                    <Nav.Link href="/compras" className={activeRoute("/compras")}>Compra de Moedas</Nav.Link>
+                                <Link href={MOEDA_ROUTE}>
+                                    <Nav.Link href={MOEDA_ROUTE} className={activeRoute(MOEDA_ROUTE)}>Gerenciar Moedas</Nav.Link>
                                 </Link>
                             </Nav>
                             <Nav className="user-nav-container">
