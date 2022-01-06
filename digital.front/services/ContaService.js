@@ -27,10 +27,26 @@ export const NovaContaCall = async ({ nome, email, cpf, senha }) => {
 
 export const LoginCall = async ({ email, senha }) => {
     try {
-        let result = await httpClient.post(process.env.NEXT_PUBLIC_API_CONTA_LOGIN, {
+        let result = await httpClient().post(process.env.NEXT_PUBLIC_API_CONTA_LOGIN, {
             email,
             senha
         });
+
+        return result.data;
+
+    } catch (error) {
+        if (error.response) {
+            return {
+                ...error.response.data,
+                status: error.response.status
+            };
+        }
+    }
+}
+
+export const HistoricoCarteiraCall = async (token) => {
+    try {
+        let result = await httpClient(token).get(`${process.env.NEXT_PUBLIC_API_HISTORICO_CARTEIRA}`);
 
         return result.data;
 

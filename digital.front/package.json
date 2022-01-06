@@ -8,12 +8,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@iftek/react-chartjs-3": "^1.1.0",
     "axios": "^0.24.0",
     "bootstrap": "5.1.3",
+    "chart.js": "^3.7.0",
     "crypto-js": "^4.1.1",
+    "dayjs": "^1.10.7",
     "next": "12.0.7",
     "react": "17.0.2",
     "react-bootstrap": "^2.0.4",
+    "react-chartjs-2": "^4.0.0",
     "react-dom": "17.0.2",
     "react-hot-toast": "^2.1.1",
     "react-icons": "^4.3.1",

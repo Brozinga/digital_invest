@@ -41,6 +41,11 @@ a {
   height: 100%;
 }
 
+.min-heigth-400 {
+  min-height: 100%;
+  height: 400px;
+}
+
 .full-screen {
   width: 100%;
   min-height: 100vh;
@@ -55,7 +60,8 @@ a {
   right: 0;
 }
 
-.main-content, main {
+.main-content,
+main {
   min-height: calc(100vh - 165px);
   margin-top: 15px;
 }
@@ -300,7 +306,7 @@ nav.navbar>div.container {
 /* CONTA */
 
 .conta {
-  min-height: calc(100vh - 75px);
+  min-height: calc(100vh - 90px);
   display: flex;
   align-items: center;
 }
@@ -635,7 +641,7 @@ a.btn-default:visited {
 .card-currency.card {
   border: none;
   background: rgb(36 137 242);
-  background: linear-gradient(90deg, rgb(36 137 242) 0%, rgb(110 84 255) 100%);
+  background: linear-gradient(90deg, rgb(36 137 242) 0%, rgb(119, 92, 238) 100%);
   min-height: 120px;
 }
 
@@ -693,6 +699,77 @@ a.btn-default:visited {
   display: none;
 }
 
+.card-history .hystory-title>h3 {
+  font-weight: 800;
+  color: #6c6c6c;
+}
+
+.card-history .hystory-title>hr {
+  background-color: #a7a7a7;
+}
+
+.card-history .history-chart {
+  width: 100%;
+  height: 100%;
+  color: #a1a1a1;
+  margin-top: -30px;
+}
+
+.card-history .chart-container {
+  padding: 0px 3px 10px 3px;
+}
+
+.card-history .recharts-cartesian-axis.recharts-xAxis.xAxis {
+  padding-top: 10px;
+}
+
+.card-history .history-tooltip {
+  background-color: #FFF;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.card-history .history-tooltip>p {
+  padding: 0;
+  margin: 0;
+  font-weight: 600;
+  color: #212529;
+}
+
+.card-history .recharts-cartesian-axis-ticks {
+  font-size: .9rem;
+}
+
+.card-history .history-tooltip p.label.success {
+  color: #0fc96c;
+}
+
+.card-history .history-tooltip p.label.danger {
+  color: #f13c4e;
+}
+
+.card-history .history-tooltip p.label.secondary {
+  color: #0d6efd;
+}
+
+.no-history {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  min-height: calc(100vh - 460px);
+  justify-content: center;
+}
+
+.no-history>h3 {
+  padding-top: 20px;
+}
+
+.no-history>svg {
+  font-size: 30pt;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
 @media (max-width: 992px) {
   .card-currency .currency-user {
     align-items: center;
@@ -726,6 +803,18 @@ a.btn-default:visited {
     font-size: 18pt;
     text-align: center;
     margin-top: 5px;
+  }
+
+  .card-history .hystory-title>h3 {
+    text-align: center;
+  }
+
+  .history-chart ul.recharts-default-legend {
+    margin-top: -10px !important;
+  }
+
+  .card-history .chart-container {
+    padding: 0px 3px 10px 3px;
   }
 }
 
