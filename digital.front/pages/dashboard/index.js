@@ -13,7 +13,6 @@ export default function Dashboard() {
 
     const { user, isAuthorized } = useContext(AuthContext)
 
-
     useEffect(() => {
         isAuthorized()
     }, [])

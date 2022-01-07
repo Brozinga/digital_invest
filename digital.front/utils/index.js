@@ -11,6 +11,8 @@ import {
 import { encryptData, decryptData } from "./Cryptography"
 import { BrCurrency } from './Converters'
 
+import { useWindowSize, getWindowDimensions  } from './WindowVerify'
+
 export {
     InputAddClassNameErro,
     httpClient,
@@ -24,5 +26,7 @@ export {
     SaveEncryptLocalStorage,
     encryptData,
     decryptData,
-    BrCurrency
+    BrCurrency,
+    useWindowSize,
+    getWindowDimensions
 }

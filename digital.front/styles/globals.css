@@ -716,7 +716,7 @@ a.btn-default:visited {
 }
 
 .card-history .chart-container {
-  padding: 0px 3px 10px 3px;
+  padding: 0px 59px 10px 59px;
 }
 
 .card-history .recharts-cartesian-axis.recharts-xAxis.xAxis {
@@ -818,4 +818,9 @@ a.btn-default:visited {
   }
 }
 
+@media (max-width: 600px) {
+  .card-history .chart-container {
+    padding: 0px;
+  }
+}
 /* DASHBOARD - FIM */

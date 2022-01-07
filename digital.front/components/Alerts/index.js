@@ -80,7 +80,7 @@ export const white = (message, title = "Informação", icon = <FiInfo />) => {
         })
 }
 
-export const HttpResponseAlert = ({ status, message, result }, withOkStatus = true) => {
+export const HttpResponseAlert = ({ status, message, result }, withOkStatus = true, noAuthFunction = null) => {
 
     let messageFinish = [];
 
@@ -103,9 +103,15 @@ export const HttpResponseAlert = ({ status, message, result }, withOkStatus = tr
             break;
         case 401:
             warning("Ops! você não está autenticado!")
+            if (noAuthFunction != null) {
+                noAuthFunction()
+            }
             break;
         case 403:
             danger("Ops! você não tem permissão para fazer isso!")
+            if (noAuthFunction != null) {
+                noAuthFunction()
+            }
             break;
         case 404:
             if (messageFinish != null || messageFinish != "")

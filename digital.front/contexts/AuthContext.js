@@ -62,8 +62,9 @@ export function AuthProvider({ children }) {
     const isAuthenticated = () => {
         const cookie = getAuthCookie();
 
-        if (!cookie || !cookie?.dataExpiracao)
+        if (!cookie || !cookie?.dataExpiracao || !cookie?.token) {
             return false;
+        }
 
         let tokenExpirationDate = new Date(cookie.dataExpiracao).getTime() / 1000;
         let currentDate = new Date().getTime() / 1000;
@@ -94,6 +95,14 @@ export function AuthProvider({ children }) {
     const Logoff = () => {
         deleteAuthCookie()
         routerContext.push(process.env.NEXT_PUBLIC_REDIRECT_LOGIN_PATH)
+    }
+
+    const UserValidation = () => {
+        if (isAuthorized()) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     return (
