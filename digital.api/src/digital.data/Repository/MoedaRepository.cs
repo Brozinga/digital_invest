@@ -55,13 +55,12 @@ namespace digital.data.Repository
                 .Take(moedas.Count)
                 .ToListAsync();
 
-            foreach (var moeda in moedas)
-            {
-                moeda.Cotacoes = new List<Cotacao>
+                foreach (var moeda in moedas)
                 {
-                    cotacoes.First(x => x.MoedaId == moeda.Id)
-                };
-            }
+                    moeda.Cotacoes = cotacoes
+                                        .Where(c => c.MoedaId == moeda.Id)
+                                        .ToList();
+                }
 
             return moedas;
         }

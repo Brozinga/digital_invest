@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Setando o caminho fixo para execução do script
 BASE_PATH=$PWD
 BASE_DUMP=$BASE_PATH/assets/backups/dumps/db.dump

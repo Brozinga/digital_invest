@@ -1,4 +1,4 @@
-import { createContext, useState } from "react"
+import { createContext, useState, useEffect } from "react"
 import { useRouter } from "next/router"
 import {
     JwtRead,
@@ -17,6 +17,8 @@ const userIntialData = {
     dataExpiracao: ""
 }
 
+let userCustom = { ... userIntialData };
+
 const AuthContextIntialData = {
     signIn: function ({ email, senha }) { return userIntialData },
     routerContext: [],
@@ -25,6 +27,7 @@ const AuthContextIntialData = {
     isAutenticated: () => false,
     isAuthorized: () => { },
     Logoff: () => { },
+    getUser: () => userIntialData,
     user: userIntialData
 }
 
@@ -32,8 +35,11 @@ export const AuthContext = createContext(AuthContextIntialData);
 
 export function AuthProvider({ children }) {
 
-    const [user, setUser] = useState(userIntialData)
+    const [user, setUser] = useState({ ...userIntialData })
 
+    useEffect(() => {
+        setUser(getUser())
+    }, [])
 
     const routerContext = useRouter();
 
@@ -44,7 +50,7 @@ export function AuthProvider({ children }) {
     const signIn = async ({ email, senha }) => {
         const response = await LoginCall({ email, senha });
         if (response.result?.token) {
-            setUser(response.result)
+            setUser({ ...response.result })
             setAuthCookie(response.result)
         }
         return response;
@@ -78,8 +84,8 @@ export function AuthProvider({ children }) {
             return false;
         }
 
-        if (cookie.token && tokenExpirationDate > currentDate) {
-            setUser(cookie)
+        if (cookie.token && tokenExpirationDate >= currentDate) {
+            user = { ...cookie }
             return true;
         }
 
@@ -97,11 +103,21 @@ export function AuthProvider({ children }) {
         routerContext.push(process.env.NEXT_PUBLIC_REDIRECT_LOGIN_PATH)
     }
 
-    const UserValidation = () => {
-        if (isAuthorized()) {
-            return user;
+    const getUser = () => {
+        if (!user?.token) {
+
+            let userItem = getAuthCookie();
+
+            if (!userItem?.token) {
+                routerContext.push(process.env.NEXT_PUBLIC_REDIRECT_LOGIN_PATH)
+                return null;
+            } else {
+                return userItem;
+            }
+
         } else {
-            return null;
+            console.log("USUARIO", user);
+            return user;
         }
     }
 
@@ -114,6 +130,7 @@ export function AuthProvider({ children }) {
             deleteAuthCookie,
             isAuthorized,
             Logoff,
+            getUser,
             user
         }}>
             {children}

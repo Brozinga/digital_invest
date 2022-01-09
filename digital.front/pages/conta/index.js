@@ -26,7 +26,7 @@ export default function Conta() {
         confirmSenha: "",
     }
 
-    const [key, setKey] = useState('login')
+    const [tabSelected, setTabSelected] = useState('login')
     const [login, setLogin] = useState(loginModel)
     const [novaConta, setNovaConta] = useState(novaContaModel)
 
@@ -45,9 +45,9 @@ export default function Conta() {
                 </div>
                 <Card className="col-sm-12">
                     <Tabs
-                        id="controlled-tab-example"
-                        activeKey={key}
-                        onSelect={(k) => setKey(k)}
+                        id="conta-tab"
+                        activeKey={tabSelected}
+                        onSelect={(k) => setTabSelected(k)}
                         className="mb-3"
                     >
                         <Tab eventKey="login" title="Entrar">
@@ -55,7 +55,7 @@ export default function Conta() {
                         </Tab>
                         <Tab eventKey="criar" title="Nova Conta">
                             <NovaConta novaConta={novaConta} resetNovaConta={novaContaModel}
-                                setTabLogin={setKey} setNovaConta={setNovaConta} />
+                                setTabLogin={setTabSelected} setNovaConta={setNovaConta} />
                         </Tab>
                     </Tabs>
                 </Card>

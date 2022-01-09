@@ -1,7 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Setando o caminho fixo para execução do script
 BASE_PATH=$PWD
-ENV_PROFILE="PRODUCTION"
 # Pacotes do Robô onde fica o acesso ao banco de dados
 echo $BASE_PATH/digital.data/
 cd $BASE_PATH/digital.data/

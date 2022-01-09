@@ -219,7 +219,8 @@ export default function Grafico({ user }) {
             setDataGrafico(arrayGraficoPronto);
 
         } else {
-            HttpResponseAlert(response, false);
+            if (response.status != 404)
+                HttpResponseAlert(response, false);
         }
 
     }
@@ -263,7 +264,7 @@ export default function Grafico({ user }) {
     return (
         <>
             {
-                dataGrafico ?
+                dataGrafico.length > 0 ?
 
                     <div className='chart-container'>
                         {LineCustom}

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # Setando o caminho fixo para execução do script
 BASE_PATH=$PWD

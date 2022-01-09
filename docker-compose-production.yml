@@ -19,6 +19,8 @@ services:
       dockerfile: Dockerfile.Robo
     image: digital-robo:latest
     container_name: digital-robo
+    environment:
+      ENV_PROFILE: Production
     depends_on:
       - digital-db
     links:

@@ -1,14 +1,17 @@
 import { LoadingCentalized } from "../components/Loading"
-import { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
 
-import { useRouter } from "next/router"
 import Head from '../components/Head'
 
+import { AuthContext } from '../contexts/AuthContext'
+
 export default function Home() {
-  const route = useRouter();
+
+  const { routerContext } = useContext(AuthContext)
+
 
   useEffect(() => {
-    route.push('/conta')
+    routerContext.push('/conta')
   }, [])
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -12,6 +12,7 @@ import logo from "../../public/logos/logo-black-50px.png"
 
 import Dialog from '../Dialog'
 
+
 export default function Navbar() {
 
     const DASHBOAR_ROUTE="/dashboard"
@@ -22,6 +23,8 @@ export default function Navbar() {
 
     const { user, Logoff } = useContext(AuthContext)
     const [show, setShow] = useState(false);
+
+
 
     const activeRoute = (path) => {
         if (router.pathname == path) {

@@ -823,4 +823,127 @@ a.btn-default:visited {
     padding: 0px;
   }
 }
+
 /* DASHBOARD - FIM */
+
+/* MOEDAS */
+
+
+.moeda-card {
+  background: linear-gradient(45deg, rgba(255, 198, 107, 1) 0%, rgba(253, 146, 167, 1) 100%);
+  font-family: 'Montserrat', sans-serif;
+  border: none !important;
+  position: relative;
+  z-index: 2;
+}
+
+.moeda-card::before {
+  content: "";
+  background: url(/background.png);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-size: 100% 120%;
+  filter: opacity(0.12);
+  z-index: -1;
+}
+
+.moeda-card,
+.moeda-card header,
+.moeda-card header>.mh-logo,
+.moeda-card header>.mh-body,
+.moeda-card footer,
+.moeda-card footer>.m-value,
+.moeda-card footer>.m-last-value {
+  display: flex;
+}
+
+
+
+.moeda-card header>.mh-logo {
+  display: block;
+  width: 85px;
+}
+
+.moeda-card header>.mh-body {
+  flex-direction: column;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.moeda-card header {
+  width: 100%;
+}
+
+.moeda-card header>.mh-body>h3 {
+  font-weight: 700;
+  font-size: 1.7rem;
+}
+
+.moeda-card header>.mh-body>small {
+  margin-top: -10px;
+  font-weight: 400;
+  font-size: 1rem;
+}
+
+.moeda-card header>.mh-body>h3,
+.moeda-card header>.mh-body>small {
+  font-family: 'Montserrat', sans-serif;
+  color: #fff;
+}
+
+.moeda-card footer>.m-value,
+.moeda-card footer>.m-last-value {
+  color: #fff;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.moeda-card footer>.m-value {
+  margin-top: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moeda-card footer>.m-last-value {
+  margin-top: -10px;
+  flex-direction: column;
+}
+
+.moeda-card footer>.m-last-value>small,
+.moeda-card footer>.m-last-value>span {
+  font-weight: 800;
+}
+
+.moeda-card footer>.m-last-value>small {
+  color: #9f414e;
+  font-size: 1rem;
+}
+
+.moeda-card footer>.m-last-value>span {
+  font-size: .9rem;
+  margin-top: 15px;
+  font-weight: 400;
+}
+
+.moeda-card footer>.m-value>h2 {
+  font-size: 2.2rem;
+  margin-top: 10px;
+}
+
+.moeda-card footer>.m-value>svg {
+  font-size: 2.5rem;
+}
+
+.moeda-card footer {
+  flex-direction: column;
+  color: #fff;
+  width: 100%;
+}
+
+
+/* MOEDAS - FIM */
