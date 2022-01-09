@@ -21,18 +21,23 @@ export default function Moedas() {
     const [data, setData] = useState([])
 
     const handleMoedas = async () => {
+        if (user?.token) {
+            let response = await PegarMoedasCall(user.token);
+            if (response.status == 200 && Array.isArray(response?.result)) {
+                setData(response.result)
+            }
 
-        let response = await PegarMoedasCall(user.token);
-        if (response.status == 200 && Array.isArray(response?.result)) {
-            setData(response.result)
+            HttpResponseAlert(response, false);
         }
-
-        HttpResponseAlert(response, false);
     }
     useEffect(() => {
         isAuthorized()
         handleMoedas()
     }, [])
+
+    useEffect(async () => {
+        await handleMoedas()
+    }, [user])
 
     return (
         <>

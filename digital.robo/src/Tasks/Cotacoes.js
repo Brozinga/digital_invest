@@ -17,6 +17,21 @@ module.exports.PegarCotacoesTask = (MoedasRepository,
 
             logger.info("INICIANDO COTAÇÕES")
 
+            let dataRemocao = dayjs().subtract(
+                process.env.DIAS_REMOCAO, 'days');
+
+            logger.info(`Dias retroativos para remocao do historico: ${process.env.DIAS_REMOCAO}`)
+            logger.info(`Data de permanencia do historico (a partir de): ${dataRemocao.format("DD/MM/YYYY")}`)
+
+            logger.info("DELETANDO HISTORICO DE COTACOES")
+
+            await CotacoesRepository.deleteMany({
+                dataCotacao: {
+                    $lt: dataRemocao
+                }
+            })
+
+            logger.info("SELECIONANDO AS MOEDAS PARA COTACAO")
             const todasMoedas = await MoedasRepository.find({ "ativo": true }) || [];
 
             logger.info("Quantidade de moedas selecionadas: " + todasMoedas.length)

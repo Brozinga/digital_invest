@@ -32,11 +32,14 @@ export default function CardListagemMoedas({ dados }) {
         let ultimaCotacaoMaior = ultimaCotacao.valorCotado > penultimaCotacao.valorCotado ? 1 :
             ultimaCotacao.valorCotado < penultimaCotacao.valorCotado ? 2 : 0;
 
+            console.log(ultimaCotacao.dataCotacao)
+
+
         return {
             valorUltimaCotacao: ultimaCotacao.valorCotado,
             valorAnterior: penultimaCotacao.valorCotado,
             valorCotadoMaior: ultimaCotacaoMaior,
-            dataUltimaCotacao: ultimaCotacao.dataRegistro
+            dataUltimaCotacao: ultimaCotacao.dataCotacao
         }
     }
 
@@ -53,7 +56,6 @@ export default function CardListagemMoedas({ dados }) {
                             dados.map(d => {
 
                                 const { valorUltimaCotacao, valorCotadoMaior, valorAnterior, dataUltimaCotacao } = pegarUltimoValor(d)
-
                                 return (
                                     <div className="col-lg-4 col-md-6 col-sm-12" key={d.id}>
                                         <Card className="moeda-card p-lg-2 p-md-2 mb-3">
@@ -76,7 +78,7 @@ export default function CardListagemMoedas({ dados }) {
                                                 </div>
                                                 <div className='m-last-value'>
                                                     <small>{BrCurrency(valorAnterior)}</small>
-                                                    <span className='m-data'>DATA COTAÇÃO: {dayjs(dataUltimaCotacao).utc().format('DD/MM/YYYY HH:mm')}</span>
+                                                    <span className='m-data'>DATA COTAÇÃO: {dayjs(dataUltimaCotacao).format('DD/MM/YYYY HH:mm')}</span>
                                                 </div>
                                             </footer>
                                         </Card>

@@ -208,7 +208,7 @@ export default function Grafico({ user }) {
 
                 return {
                     dataAbreviada: item.dataAbreviadaComHora,
-                    data: dayjs(item.dataAdicao).utc().format('DD/MM HH[h]'),
+                    data: dayjs(item.dataAdicao).format('DD/MM HH[h]'),
                     valorCarteiraConvertido: BrCurrency(item.carteira),
                     valorCarteira: item.carteira,
                     icon: resultVerifyValueIsGreater(verificandoValor).icon,
