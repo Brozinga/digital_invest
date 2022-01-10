@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { Tab, Tabs } from 'react-bootstrap'
+import { Tab, Tabs, Accordion } from 'react-bootstrap'
 
 import { AuthContext } from '../../contexts/AuthContext'
 
@@ -9,8 +9,8 @@ import { LoadingCentalized } from "../../components/Loading"
 import BasicLayout from "../../components/Layouts/BasicLayout"
 import Card from "../../components/Card"
 import { HttpResponseAlert } from '../../components/Alerts'
-
 import CardListagemMoedas from '../../components/#Pages/CardListagemMoedas'
+import GraficosMoedas from '../../components/#Pages/GraficosMoedas/'
 
 
 export default function Moedas() {
@@ -32,7 +32,6 @@ export default function Moedas() {
     }
     useEffect(() => {
         isAuthorized()
-        handleMoedas()
     }, [])
 
     useEffect(async () => {
@@ -41,7 +40,7 @@ export default function Moedas() {
 
     return (
         <>
-            {!user?.email ?
+            {!user?.email || !data ?
                 <LoadingCentalized /> :
                 <main className="container">
                     <Card>
@@ -55,6 +54,13 @@ export default function Moedas() {
                                 <CardListagemMoedas dados={data} />
                             </Tab>
                             <Tab eventKey="evo-moedas" title="Evolução das Moedas">
+                                <Accordion flush>
+                                    {
+                                        data.map((d, i) =>
+                                            <GraficosMoedas indice={i} key={d.id} title={d.nome} dados={d} />
+                                        )
+                                    }
+                                </Accordion>
                             </Tab>
                             <Tab eventKey="compras" title="Historico de Compras">
                             </Tab>

@@ -828,9 +828,8 @@ a.btn-default:visited {
 
 /* MOEDAS */
 
-
 .moeda-card {
-  background: linear-gradient(45deg, rgba(255, 198, 107, 1) 0%, rgba(253, 146, 167, 1) 100%);
+  background: linear-gradient(45deg, rgb(35, 226, 214) 0%, rgba(61, 153, 247) 100%);
   font-family: 'Montserrat', sans-serif;
   border: none !important;
   position: relative;
@@ -859,8 +858,6 @@ a.btn-default:visited {
 .moeda-card footer>.m-last-value {
   display: flex;
 }
-
-
 
 .moeda-card header>.mh-logo {
   display: block;
@@ -920,7 +917,7 @@ a.btn-default:visited {
 }
 
 .moeda-card footer>.m-last-value>small {
-  color: #9f414e;
+  color: #1e66a9;
   font-size: 1rem;
 }
 
@@ -937,6 +934,7 @@ a.btn-default:visited {
 
 .moeda-card footer>.m-value>svg {
   font-size: 2.5rem;
+  margin-left: 15px;
 }
 
 .moeda-card footer {
@@ -945,5 +943,22 @@ a.btn-default:visited {
   width: 100%;
 }
 
+.moeda-grafico-title>button {
+  width: 100%;
+  font-weight: 600;
+  color: #4e4e4e;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.moeda-grafico-container.accordion-body {
+  padding: 10px;
+  margin-top: -15px;
+}
+
+@media (max-width: 600px) {
+  .moeda-grafico-container.accordion-body {
+    padding: 0px;
+  }
+}
 
 /* MOEDAS - FIM */

@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+
 import 'dayjs/locale/pt-br'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { HistoricoCarteiraCall } from '../../../services/ContaService'
 import { BrCurrency } from '../../../utils'
-import { HttpResponseAlert } from '../../Alerts'
 
 import {
     CategoryScale,
@@ -22,21 +21,20 @@ import {
     Chart as ChartJS, Line
 } from '@iftek/react-chartjs-3'
 
-import { FiAlertCircle } from "react-icons/fi"
+import Loading from '../../Loading'
+import { Accordion } from 'react-bootstrap'
 
+export default function GraficosMoedas({ dados, title, indice }) {
 
+    let _chartRef = React.createRef(null);
 
-export default function Grafico({ user }) {
+    const [dadosGrafico, setDadosGrafico] = useState([])
+    const [options, setOptions] = useState({})
 
     dayjs.extend(utc)
 
     ChartJS.register(CategoryScale, LinearScale, PointElement,
         LineElement, Title, Tooltip, Legend, Filler)
-
-    let _chartRef = React.createRef(null);
-
-    const [dataGrafico, setDataGrafico] = useState([]);
-    const [options, setOptions] = useState({});
 
     const optionsSetDefault = (dadosProntosGrafico) => {
         return {
@@ -66,7 +64,7 @@ export default function Grafico({ user }) {
                     }]
                 },
                 y: {
-                    beginAtZero: true,
+                    beginAtZero: false,
                     ticks: {
                         padding: 10,
                         font: {
@@ -76,20 +74,6 @@ export default function Grafico({ user }) {
                         },
                         callback: function (value, index, values) {
                             let result = BrCurrency(value).replace(/(\,00)/g, '')
-                            let countPoints = result.split('.')
-                            let limpandoZeros = countPoints[1]?.replace(/0/g, '')
-
-                            console.log(countPoints)
-
-                            if (countPoints.length == 3)
-                                return `${countPoints[0]}${limpandoZeros > 0 ? '.' : ''}${limpandoZeros} MI`;
-
-                            if (countPoints.length == 4)
-                                return `${countPoints[0]}${limpandoZeros > 0 ? '.' : ''}${limpandoZeros} BI`;
-
-                            if (countPoints.length == 5)
-                                return `${countPoints[0]}${limpandoZeros > 0 ? '.' : ''}${limpandoZeros} TRI`;
-
                             return `${result}`;
                         },
                     },
@@ -113,14 +97,14 @@ export default function Grafico({ user }) {
                             return "Valor no dia:";
                         },
                         label: function (ctx) {
-                            let data = dadosProntosGrafico[ctx.dataIndex];
-                            return `${BrCurrency(data.valorCarteira)} ${data.icon}`;
+                            let dataLocal = dadosProntosGrafico[ctx.dataIndex];
+                            return `${BrCurrency(dataLocal.valor)} ${dataLocal.icon}`;
                         },
                         labelTextColor: function (ctx) {
-                            let data = dadosProntosGrafico[ctx.dataIndex];
+                            let dataLocal = dadosProntosGrafico[ctx.dataIndex];
 
-                            return data.color == 'success' ? "#0fc96c" :
-                                data.color == "danger" ? "#f13c4e" :
+                            return dataLocal.color == 'success' ? "#0fc96c" :
+                                dataLocal.color == "danger" ? "#f13c4e" :
                                     "#0d6efd";
                         }
                     },
@@ -154,7 +138,6 @@ export default function Grafico({ user }) {
             },
         }
     }
-
     const verifyIfValueIsGreater = (actualValue, previusValue) => {
         if (actualValue > previusValue) {
             return 1;
@@ -168,7 +151,6 @@ export default function Grafico({ user }) {
             return 0;
         }
     }
-
     const resultVerifyValueIsGreater = (result) => {
         switch (result) {
             case 1:
@@ -190,49 +172,30 @@ export default function Grafico({ user }) {
         }
     }
 
-    const handleGrafico = async () => {
-        const response = await HistoricoCarteiraCall(user.token);
-        const arrayGraficoPronto = [];
-        let verificandoValor = 0;
+    useEffect(() => {
+        if (dados.cotacoes.length > 0) {
 
-        if (Array.isArray(response.result)) {
+            let dadosTransformados = dados.cotacoes.map((v, i) => {
+                let lastData = dados.cotacoes[i == 0 ? 0 : i - 1];
+                let verifyGreater = verifyIfValueIsGreater(v.valorCotado,
+                    lastData.valorCotado)
 
-            response.result = response.result.sort(function (a, b) {
-                return new Date(a.dataAdicao) - new Date(b.dataAdicao);
-            })
-
-            arrayGraficoPronto = response.result.map((item, index) => {
-
-                verificandoValor = verifyIfValueIsGreater(item.carteira,
-                    index == 0 ? item.carteira : response.result[index - 1].carteira)
-
+                const { icon, color } = resultVerifyValueIsGreater(verifyGreater)
                 return {
-                    dataAbreviada: item.dataAbreviadaComHora,
-                    data: dayjs(item.dataAdicao).format('DD/MM HH:mm'),
-                    valorCarteiraConvertido: BrCurrency(item.carteira),
-                    valorCarteira: item.carteira,
-                    icon: resultVerifyValueIsGreater(verificandoValor).icon,
-                    color: resultVerifyValueIsGreater(verificandoValor).color
+                    valor: v.valorCotado,
+                    icon,
+                    color,
+                    data: v.dataCotacao
                 }
             })
-            setOptions(optionsSetDefault(arrayGraficoPronto));
-            setDataGrafico(arrayGraficoPronto);
 
-        } else {
-            if (response.status != 404)
-                HttpResponseAlert(response, false);
+            setDadosGrafico(dadosTransformados)
+            setOptions(optionsSetDefault(dadosTransformados))
+
         }
+    }, [dados])
 
-    }
-
-    useEffect(async () => {
-        await handleGrafico()
-    }, [])
-
-
-    const labels = [...dataGrafico.map(v => v.data)];
-
-    const data = (canvas) => {
+    const data = canvas => {
         const ctx = canvas.getContext("2d");
         const gradient = ctx.createLinearGradient(0, 0, 0, 450);
         gradient.addColorStop(0, 'rgb(38, 137, 242)');
@@ -240,11 +203,11 @@ export default function Grafico({ user }) {
         gradient.addColorStop(1, 'rgb(38, 218, 218, .6)');
 
         return {
-            labels,
+            labels: dadosGrafico.map(v => dayjs(v.data).format("DD/MM HH[h]")),
             datasets: [
                 {
-                    label: 'Valor Carteira',
-                    data: dataGrafico.map((v) => v.valorCarteira),
+                    label: 'Valor Cotado',
+                    data: dadosGrafico.map((v) => v.valor),
                     tension: 0.3,
                     borderColor: gradient,
                     backgroundColor: gradient,
@@ -259,21 +222,21 @@ export default function Grafico({ user }) {
             ],
         };
     }
-    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [dataGrafico])
+
+    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [dados, options])
 
     return (
-        <>
-            {
-                dataGrafico.length > 0 ?
-
-                    <div className='chart-container'>
-                        {LineCustom}
-                    </div>
-                    : <div className="text-center no-history">
-                        <FiAlertCircle />
-                        <h3>As suas moedas ainda não foram vendidas</h3>
-                    </div>
-            }
-        </>
+        <Accordion.Item eventKey={indice} className="mt-4 m-lg-4">
+            <Accordion.Header className='moeda-grafico-title'>
+                {title}
+            </Accordion.Header>
+            <Accordion.Body className='moeda-grafico-container mb-3 p-lg-3'>
+                {
+                    !dadosGrafico.length ?
+                        <Loading /> :
+                        LineCustom
+                }
+            </Accordion.Body>
+        </Accordion.Item>
     )
 }

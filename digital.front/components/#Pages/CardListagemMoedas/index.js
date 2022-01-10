@@ -1,6 +1,6 @@
 import React from 'react'
 import Image from 'next/image'
-import { FiArrowUp, FiArrowDown, FiMinus } from 'react-icons/fi'
+import { FiArrowUp, FiArrowDown, FiArrowRight } from 'react-icons/fi'
 
 import 'dayjs/locale/pt-br'
 import dayjs from 'dayjs'
@@ -32,8 +32,7 @@ export default function CardListagemMoedas({ dados }) {
         let ultimaCotacaoMaior = ultimaCotacao.valorCotado > penultimaCotacao.valorCotado ? 1 :
             ultimaCotacao.valorCotado < penultimaCotacao.valorCotado ? 2 : 0;
 
-            console.log(ultimaCotacao.dataCotacao)
-
+        console.log(ultimaCotacao.dataCotacao)
 
         return {
             valorUltimaCotacao: ultimaCotacao.valorCotado,
@@ -51,7 +50,7 @@ export default function CardListagemMoedas({ dados }) {
                         <Loading />
                     </div>
                     :
-                    <div className="row">
+                    <div className="row mt-4">
                         {
                             dados.map(d => {
 
@@ -70,7 +69,7 @@ export default function CardListagemMoedas({ dados }) {
                                             </header>
                                             <footer>
                                                 <div className="m-value">
-                                                    {valorCotadoMaior == 0 ? <FiMinus /> :
+                                                    {valorCotadoMaior == 0 ? <FiArrowRight /> :
                                                         valorCotadoMaior == 1 ? <FiArrowUp /> :
                                                             valorCotadoMaior == 2 ? <FiArrowDown /> : null
                                                     }
