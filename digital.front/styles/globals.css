@@ -375,17 +375,23 @@ nav.navbar>div.container {
 /* CONTA - FIM */
 
 /* INPUTS GERAL */
+select.form-control,
 input[type="email"].form-control,
 input[type="password"].form-control,
+input[type="number"].form-control,
 input[type="text"].form-control {
   border-radius: 100px;
   height: 45px;
   padding-left: 20px;
 }
 
+.error>select.form-control,
 .error>input[type="email"].form-control,
 .error>input[type="password"].form-control,
 .error>input[type="text"].form-control,
+.error>input[type="number"].form-control,
+.error>select.form-control:focus,
+.error>input[type="number"].form-control:focus,
 .error>input[type="email"].form-control:focus,
 .error>input[type="password"].form-control:focus,
 .error>input[type="text"].form-control:focus {
@@ -393,9 +399,13 @@ input[type="text"].form-control {
   box-shadow: 0 0 3px 0.25rem #dc354524;
 }
 
+.sucess>select.form-control,
 .success>input[type="email"].form-control,
 .success>input[type="password"].form-control,
 .success>input[type="text"].form-control,
+.success>input[type="number"].form-control,
+.success>input[type="number"].form-control:focus,
+.sucess>select.form-control:focus,
 .success>input[type="email"].form-control:focus,
 .success>input[type="password"].form-control:focus,
 .success>input[type="text"].form-control:focus {
@@ -403,7 +413,9 @@ input[type="text"].form-control {
   box-shadow: 0 0 3px 0.25rem #19875424;
 }
 
+select.form-control:focus,
 input[type="email"].form-control:focus,
+input[type="number"].form-control:focus,
 input[type="password"].form-control:focus,
 input[type="text"].form-control:focus {
   color: #212529;
@@ -532,7 +544,8 @@ a.btn-default:visited {
   outline: none;
 }
 
-.toasterdefault.btn-primary {
+.toasterdefault.btn-primary
+.btn-blue {
   color: #fff;
   background-color: #0d6efd;
   border-color: #0d6efd;
@@ -549,8 +562,8 @@ a.btn-default:visited {
 .toasterdefault.btn-success:hover,
 .btn-success {
   color: #fff;
-  background-color: #198754;
-  border-color: #198754;
+  background-color: #1ea767;
+  border-color: #1ea767;
 }
 
 .toasterdefault.btn-danger,
@@ -845,7 +858,7 @@ a.btn-default:visited {
   left: 0;
   position: absolute;
   background-size: 100% 120%;
-  filter: opacity(0.12);
+  filter: opacity(0.06);
   z-index: -1;
 }
 
@@ -961,4 +974,70 @@ a.btn-default:visited {
   }
 }
 
+.react-datepicker {
+  font-size: 10pt;
+}
+
+.react-datepicker__header {
+  border-bottom: 1px solid #dddddd;
+  background-color: #ffffff;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  margin: 0.19rem;
+}
+
+.react-datepicker__triangle {
+  transform: translate(325px, 0px);
+}
+
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after,
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
+  left: -20px;
+}
+
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::after {
+  border-bottom-color: #ffffff;
+}
+
+.react-datepicker-popper[data-placement^=bottom] .react-datepicker__triangle::before {
+  background-color: #ffffff;
+}
+
+.react-datepicker__current-month {
+  text-transform: uppercase;
+}
+
+.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box ul.react-datepicker__time-list li.react-datepicker__time-list-item--selected,
+.react-datepicker__day--selected,
+.react-datepicker__day--selected:hover {
+  background-color: #0d6efd;
+}
+
+div.inputs {
+  border: 1px solid #d3d1d1;
+  border-radius: 10px;
+  padding: 10px 2px;
+  margin: 3px 5px;
+  position: relative;
+}
+
+.form-text {
+  font-size: 1em;
+}
+
+.form-text.valor-pronto {
+  font-size: 1.2rem;
+}
+
+.card-compra-moeda.form-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.inputs-prontos {
+  background-color: #f7f7f7;
+}
 /* MOEDAS - FIM */

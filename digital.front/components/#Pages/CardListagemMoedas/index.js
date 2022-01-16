@@ -32,7 +32,6 @@ export default function CardListagemMoedas({ dados }) {
         let ultimaCotacaoMaior = ultimaCotacao.valorCotado > penultimaCotacao.valorCotado ? 1 :
             ultimaCotacao.valorCotado < penultimaCotacao.valorCotado ? 2 : 0;
 
-        console.log(ultimaCotacao.dataCotacao)
 
         return {
             valorUltimaCotacao: ultimaCotacao.valorCotado,

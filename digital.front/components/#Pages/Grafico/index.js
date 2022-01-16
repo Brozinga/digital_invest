@@ -79,8 +79,6 @@ export default function Grafico({ user }) {
                             let countPoints = result.split('.')
                             let limpandoZeros = countPoints[1]?.replace(/0/g, '')
 
-                            console.log(countPoints)
-
                             if (countPoints.length == 3)
                                 return `${countPoints[0]}${limpandoZeros > 0 ? '.' : ''}${limpandoZeros} MI`;
 

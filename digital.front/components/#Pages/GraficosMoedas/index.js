@@ -39,6 +39,7 @@ export default function GraficosMoedas({ dados, title, indice }) {
     const optionsSetDefault = (dadosProntosGrafico) => {
         return {
             responsive: true,
+            animations: false,
             scales: {
                 x: {
                     grid: {
