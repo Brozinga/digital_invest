@@ -20,17 +20,16 @@ export default function ComprasMoedas({ dados }) {
         setStartDate(date)
     }
 
-    useEffect(() => {
-    }, [dados])
 
     const [moedasSelectBox, setMoedasSelectBox] = useState([])
+    const [selectId, setSelectId] = useState("")
     const [items, setItems] = useState([])
     const [show, setShow] = useState(false);
     const [startDate, setStartDate] = useState(addHours(dateNow, 2));
     const [dadoFiltrado, setDadoFiltrado] = useState({})
     const [quantidade, setQuantidade] = useState(1)
     const [valor, setValor] = useState(0.00)
-
+    const [valorTotal, setValorTotal] = useState(0.00)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -40,7 +39,7 @@ export default function ComprasMoedas({ dados }) {
         const selectedDate = new Date(time);
 
         return currentDate.getTime() < selectedDate.getTime();
-    };
+    }
 
     const handleMoeda = (data) => {
         data.selecionado = true;
@@ -48,22 +47,38 @@ export default function ComprasMoedas({ dados }) {
     }
 
     const handleAddCardCompra = () => {
+        let valor = dadoFiltrado.cotacoes[dadoFiltrado.cotacoes.length - 1].valorCotado * quantidade;
         setItems([
             ...items,
             {
                 id: dadoFiltrado.id,
                 nomeMoeda: dadoFiltrado.nome,
                 quantidade: quantidade,
-                valor: (dadoFiltrado.cotacoes[dadoFiltrado.cotacoes.length - 1].valorCotado * quantidade)
+                valor: valor
             }
         ])
+        setQuantidade(1)
+        setValorTotal(valorTotal + valor)
     }
 
     const handleExclude = (id) => {
+        let it = items.filter(it => it.id != id)
+        let valorTotalConcat = 0.00;
         setItems([
-            ...items.filter(it => it.id != id)
+            ...it
         ])
+
+        it.map(i => valorTotalConcat = valorTotalConcat + i.valor)
+        setValorTotal(valorTotalConcat)
     }
+
+    useEffect(() => {
+        if (items.length <= 0) {
+            setSelectId(dados[0]?.id)
+        } else {
+            setSelectId(items[0]?.id)
+        }
+    }, [items])
 
     return (
         <>
@@ -78,12 +93,16 @@ export default function ComprasMoedas({ dados }) {
                     <Modal.Title>Compra de Moedas</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <small className='d-block col-md-12 text-center'>
+                        A atuaização das moedas acontece cerca de 3 minutos, e os valores nesse formulário são estimativas.
+                    </small>
+                    <br />
                     <div className='col-md-12'>
-                        <div className=' d-flex justify-content-between container-fluid'>
-                            <Form.Group className="mb-3 mt-4 col-lg-4 col-md-4" controlId="add">
-                                <Button onClick={handleAddCardCompra} variant="success">Adicionar <FiPlus size={18} className='mb-1 mt-1' /></Button>
+                        <div className='flex-column flex-md-row flex-lg-row d-flex justify-content-lg-between container-fluid'>
+                            <Form.Group className="mb-3 mt-4 d-block" controlId="add">
+                                <Button disabled={items.length == dados.length} onClick={handleAddCardCompra} variant="success">Adicionar <FiPlus size={18} className='mb-1 mt-1' /></Button>
                             </Form.Group>
-                            <Form.Group className="text-center mb-3 mt-1 col-lg-4 col-md-6">
+                            <Form.Group className="text-center mb-3 d-block">
                                 <Form.Label htmlFor="disabledSelect">Data para Venda</Form.Label>
                                 <DatePicker
                                     className='form-control'
@@ -101,6 +120,8 @@ export default function ComprasMoedas({ dados }) {
                             </Form.Group>
                         </div>
                         <CardCompraMoeda
+                            selectId={selectId}
+                            setSelectId={setSelectId}
                             selectedItems={items}
                             setValor={setValor}
                             valor={valor}
@@ -121,7 +142,7 @@ export default function ComprasMoedas({ dados }) {
                             <Button variant="secondary" onClick={handleShow}>Finalizar Compra</Button>
                         </div>
                         <div className='col-sm-12 col-md-7 col-lg-5 mt-3 d-flex justify-content-md-end justify-content-sm-center'>
-                            <h3><strong>R$ 00,00</strong></h3>
+                            <h3><strong>{BrCurrency(valorTotal)}</strong></h3>
                         </div>
                     </div>
                 </Modal.Body>
@@ -134,12 +155,22 @@ export default function ComprasMoedas({ dados }) {
 
 
 function CardCompraMoeda({ dados, setDadoFiltrado, dadoFiltrado, hadlerMoedaSelect,
-    quantidade, setQuantidade, setValor, valor, selectedItems
+    quantidade, setQuantidade, setValor, valor, selectedItems, setSelectId, selectId
 }) {
 
     useEffect(() => {
         setDadoFiltrado(dados.find(i => i.id == dadoFiltrado?.id))
     }, [dados])
+
+    useEffect(() => {
+
+        setDadoFiltrado(dados.find(item => {
+            let val = selectedItems.filter(a => a.id == item.id)
+            if (val.length <= 0) {
+                return item
+            }
+        }))
+    }, [selectedItems])
 
     useEffect(() => {
         if (dadoFiltrado)
@@ -173,7 +204,7 @@ function CardCompraMoeda({ dados, setDadoFiltrado, dadoFiltrado, hadlerMoedaSele
     return (
         <>
             <div className='row inputs mb-2'>
-                <SelectMoeda selectedItems={selectedItems} dados={dados} handlerSelectMoeda={handleSelect} />
+                <SelectMoeda selectId={selectId} setSelectId={setSelectId} selectedItems={selectedItems} dados={dados} handlerSelectMoeda={handleSelect} />
                 <Form.Group className="text-center mb-3 col-lg-3 col-md-6" controlId="quantidade">
                     <Form.Label>Quantidade</Form.Label>
                     <Form.Control type="number" onChange={handleQuantidade} value={quantidade} min="1" placeholder="Quantidade" />
@@ -189,7 +220,7 @@ function CardCompraMoeda({ dados, setDadoFiltrado, dadoFiltrado, hadlerMoedaSele
     )
 }
 
-function SelectMoeda({ dados, selectedItems, handlerSelectMoeda }) {
+function SelectMoeda({ dados, selectedItems, handlerSelectMoeda, selectId, setSelectId }) {
 
     const [items, setItems] = useState([])
 
@@ -204,15 +235,14 @@ function SelectMoeda({ dados, selectedItems, handlerSelectMoeda }) {
     }, [selectedItems])
 
     const handlerCh = (e) => {
-        console.log(e)
+        setSelectId(e.target.value)
         handlerSelectMoeda(items.find(i => i.id == e.target.value))
     }
 
     return (
         <Form.Group className="text-center mb-3 col-lg-5 col-md-6">
             <Form.Label htmlFor="disabledSelect">Selecione a Moeda</Form.Label>
-            <Form.Select defaultValue={""} onChange={handlerCh} className='form-control' id="moedas">
-                <option value="" disabled>Selecione</option>
+            <Form.Select disabled={items.length <= 0} value={selectId} onChange={handlerCh} className='form-control' id="moedas">
                 {
                     items.length > 0 ?
                         items.map((value, index) =>
@@ -249,7 +279,7 @@ function PreSelecao({ dados, handleExclude }) {
                     </Form.Text>
                 </Form.Group>
                 <div className='mt-3 col-lg-1 col-md-2 col-sm-12'>
-                    <Button variant="danger" onClick={() => handleExcludeLocal(dados.id)}><FiTrash2 /></Button>
+                    <Button variant="danger" onClick={() => handleExcludeLocal(dados.id)}><FiTrash2 size={18} className='mb-1' /></Button>
                 </div>
             </div>
         </>
