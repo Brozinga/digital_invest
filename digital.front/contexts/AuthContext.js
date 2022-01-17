@@ -69,6 +69,7 @@ export function AuthProvider({ children }) {
         const cookie = getAuthCookie();
 
         if (!cookie || !cookie?.dataExpiracao || !cookie?.token) {
+            deleteAuthCookie()
             return false;
         }
 

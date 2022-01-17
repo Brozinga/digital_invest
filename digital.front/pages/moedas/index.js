@@ -35,7 +35,6 @@ export default function Moedas() {
             }
             else {
                 HttpResponseAlert(response, false);
-
             }
         }
     }
