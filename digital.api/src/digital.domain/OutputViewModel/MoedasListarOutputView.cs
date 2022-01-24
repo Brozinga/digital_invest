@@ -43,7 +43,7 @@ namespace digital.domain.OutputViewModel
                 Cotacoes = model.Cotacoes.Select(m => new CotacoesListarOutputView
                 {
                     IdCotacao = m.Id.ToString(),
-                    ValorCotado = m.ValorCotado,
+                    ValorCotado = (double) m.ValorCotado,
                     DataCotacao = m.DataCotacao
                 })
             };

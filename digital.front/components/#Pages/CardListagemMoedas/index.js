@@ -20,7 +20,7 @@ export default function CardListagemMoedas({ dados }) {
     }
 
     const filtrarUltima = (cotacoes) => {
-        return cotacoes[cotacoes.length - 1]
+        return cotacoes[cotacoes.length == 0 ? 0 : cotacoes.length - 1]
     }
 
     const pegarUltimoValor = (dado) => {
@@ -29,16 +29,17 @@ export default function CardListagemMoedas({ dados }) {
 
         let ultimaCotacao = filtrarUltima(dado.cotacoes);
 
-        let ultimaCotacaoMaior = ultimaCotacao.valorCotado > penultimaCotacao.valorCotado ? 1 :
-            ultimaCotacao.valorCotado < penultimaCotacao.valorCotado ? 2 : 0;
+        let ultimaCotacaoMaior = ultimaCotacao.valorCotado > penultimaCotacao?.valorCotado ? 1 :
+            ultimaCotacao.valorCotado < penultimaCotacao?.valorCotado ? 2 : 0;
 
 
         return {
             valorUltimaCotacao: ultimaCotacao.valorCotado,
-            valorAnterior: penultimaCotacao.valorCotado,
+            valorAnterior: penultimaCotacao?.valorCotado || ultimaCotacao.valorCotado,
             valorCotadoMaior: ultimaCotacaoMaior,
             dataUltimaCotacao: ultimaCotacao.dataCotacao
         }
+
     }
 
     return (

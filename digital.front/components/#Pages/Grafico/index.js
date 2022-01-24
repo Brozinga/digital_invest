@@ -3,7 +3,6 @@ import 'dayjs/locale/pt-br'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
-import { HistoricoCarteiraCall } from '../../../services/ContaService'
 import { BrCurrency } from '../../../utils'
 import { HttpResponseAlert } from '../../Alerts'
 
@@ -26,7 +25,7 @@ import { FiAlertCircle } from "react-icons/fi"
 
 
 
-export default function Grafico({ user }) {
+export default function Grafico({ dadosGrafico, setDadosGrafico }) {
 
     dayjs.extend(utc)
 
@@ -35,7 +34,6 @@ export default function Grafico({ user }) {
 
     let _chartRef = React.createRef(null);
 
-    const [dataGrafico, setDataGrafico] = useState([]);
     const [options, setOptions] = useState({});
 
     const optionsSetDefault = (dadosProntosGrafico) => {
@@ -66,7 +64,7 @@ export default function Grafico({ user }) {
                     }]
                 },
                 y: {
-                    beginAtZero: true,
+                    beginAtZero: false,
                     ticks: {
                         padding: 10,
                         font: {
@@ -188,21 +186,20 @@ export default function Grafico({ user }) {
         }
     }
 
-    const handleGrafico = async () => {
-        const response = await HistoricoCarteiraCall(user.token);
+    const handleGrafico = async (data) => {
         const arrayGraficoPronto = [];
         let verificandoValor = 0;
 
-        if (Array.isArray(response.result)) {
+        if (Array.isArray(data.result)) {
 
-            response.result = response.result.sort(function (a, b) {
+            data.result = data.result.sort(function (a, b) {
                 return new Date(a.dataAdicao) - new Date(b.dataAdicao);
             })
 
-            arrayGraficoPronto = response.result.map((item, index) => {
+            arrayGraficoPronto = data.result.map((item, index) => {
 
                 verificandoValor = verifyIfValueIsGreater(item.carteira,
-                    index == 0 ? item.carteira : response.result[index - 1].carteira)
+                    index == 0 ? item.carteira : data.result[index - 1].carteira)
 
                 return {
                     dataAbreviada: item.dataAbreviadaComHora,
@@ -214,21 +211,21 @@ export default function Grafico({ user }) {
                 }
             })
             setOptions(optionsSetDefault(arrayGraficoPronto));
-            setDataGrafico(arrayGraficoPronto);
+            setDadosGrafico(arrayGraficoPronto);
 
         } else {
-            if (response.status != 404)
-                HttpResponseAlert(response, false);
+            if (data.status != 404)
+                HttpResponseAlert(data, false);
         }
 
     }
 
     useEffect(async () => {
-        await handleGrafico()
-    }, [])
+        await handleGrafico(dadosGrafico)
+    }, [dadosGrafico])
 
 
-    const labels = [...dataGrafico.map(v => v.data)];
+    const labels = dadosGrafico.length > 0 ? [...dadosGrafico.map(v => v.data)] : [];
 
     const data = (canvas) => {
         const ctx = canvas.getContext("2d");
@@ -242,7 +239,7 @@ export default function Grafico({ user }) {
             datasets: [
                 {
                     label: 'Valor Carteira',
-                    data: dataGrafico.map((v) => v.valorCarteira),
+                    data: dadosGrafico.map((v) => v.valorCarteira),
                     tension: 0.3,
                     borderColor: gradient,
                     backgroundColor: gradient,
@@ -257,12 +254,12 @@ export default function Grafico({ user }) {
             ],
         };
     }
-    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [dataGrafico])
+    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [dadosGrafico])
 
     return (
         <>
             {
-                dataGrafico.length > 0 ?
+                dadosGrafico.length > 0 ?
 
                     <div className='chart-container'>
                         {LineCustom}

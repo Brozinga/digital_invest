@@ -26,11 +26,11 @@ namespace digital.domain.Models
 
         [BsonElement("valorTotalCompra")]
         [BsonRequired]
-        public decimal ValorTotalCompra { get; set; }
+        public double ValorTotalCompra { get; set; }
 
         [BsonElement("valorTotalVenda")]
         [BsonRequired]
-        public decimal ValorTotalVenda { get; set; }
+        public double ValorTotalVenda { get; set; }
 
         [BsonElement("moedasCompra")]
         [BsonRequired]

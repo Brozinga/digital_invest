@@ -4,6 +4,7 @@ using System;
 
 namespace digital.domain.Models
 {
+    [BsonIgnoreExtraElements]
     public class HistoricoCarteira
     {
         [BsonRepresentation(BsonType.ObjectId)]
@@ -16,7 +17,7 @@ namespace digital.domain.Models
 
         [BsonElement("carteira")]
         [BsonRequired]
-        public decimal Carteira { get; set; }
+        public double Carteira { get; set; }
 
         [BsonElement("dataAdicao")]
         public DateTime DataAdicao { get; set; }

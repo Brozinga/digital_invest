@@ -10,7 +10,7 @@ namespace digital.domain.OutputViewModel
         public string HistoricoCotacaoId { get; set; }
 
         [JsonProperty(PropertyName = "carteira")]
-        public decimal? Carteira { get; set; }
+        public double? Carteira { get; set; }
 
         [JsonProperty(PropertyName = "dataAdicao")]
         public DateTime DataAdicao { get; set; }

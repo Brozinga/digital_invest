@@ -63,7 +63,7 @@ export default function Moedas() {
                             className="mb-3"
                         >
                             <Tab eventKey="moedas" title="Cotações">
-                                <ComprasMoedas dados={data} />
+                                <ComprasMoedas dados={data} user={user} />
                                 <CardListagemMoedas dados={data} />
                             </Tab>
                             <Tab eventKey="evo-moedas" title="Evolução das Moedas">

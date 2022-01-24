@@ -178,6 +178,15 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a É necessário ter moedas para compra.
+        /// </summary>
+        public static string QuantidadeMoedaCompra {
+            get {
+                return ResourceManager.GetString("QuantidadeMoedaCompra", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a É necessário informar quantas moedas deseja comprar.
         /// </summary>
         public static string QuantidadeMoedasMinima {

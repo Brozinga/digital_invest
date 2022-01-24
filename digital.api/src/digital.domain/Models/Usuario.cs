@@ -43,7 +43,7 @@ namespace digital.domain.Models
         [BsonElement("carteira")]
         [BsonRequired]
         [BsonDefaultValue(0)]
-        public decimal Carteira { get; set; } = 500M;
+        public double Carteira { get; set; } = 500.0;
 
     }
 }

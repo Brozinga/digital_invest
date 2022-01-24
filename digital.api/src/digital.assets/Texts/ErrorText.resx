@@ -156,6 +156,9 @@
   <data name="NovoPedidoMoedaNaoEncontrada" xml:space="preserve">
     <value>Erro nas cotações, nem todas as moedas tem cotações registradas</value>
   </data>
+  <data name="QuantidadeMoedaCompra" xml:space="preserve">
+    <value>É necessário ter moedas para compra</value>
+  </data>
   <data name="QuantidadeMoedasMinima" xml:space="preserve">
     <value>É necessário informar quantas moedas deseja comprar</value>
   </data>

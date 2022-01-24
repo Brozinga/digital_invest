@@ -41,8 +41,12 @@ export default function NovaConta({ novaConta, setNovaConta, setTabLogin, resetN
 
     const submitNovaConta = async (novaConta) => {
         setLoading(true)
+
+        // novaConta.cpf = novaConta.cpf.replace(/\./, "").replace(/\-/g,"")
         const response = await NovaContaCall(novaConta)
+
         setLoading(false)
+
         HttpResponseAlert(response)
 
         if (response.status == 200) {

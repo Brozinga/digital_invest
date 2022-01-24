@@ -9,8 +9,6 @@ using Microsoft.Extensions.Hosting;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace digital.business.Handlers
@@ -43,7 +41,7 @@ namespace digital.business.Handlers
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
 
                 var moedasModel = new List<MoedasCompraVenda>();
-                data.ValorTotalCompra = 0.0M;
+                data.ValorTotalCompra = 0.0f;
 
                 foreach (var moedaComprada in data.MoedasCompra)
                 {
@@ -55,9 +53,10 @@ namespace digital.business.Handlers
 
                     moedasModel.Add(new MoedasCompraVenda
                     {
+                        Id = ObjectId.GenerateNewId(),
                         DataCotacao = moedaCotacao.DataCotacao,
                         ValorCotado = moedaCotacao.ValorCotado,
-                        MoedaId = moedaCotacao.Id,
+                        MoedaId = moedaCotacao.MoedaId,
                         Quantidade = moedaComprada.Quantidade
                     });
 

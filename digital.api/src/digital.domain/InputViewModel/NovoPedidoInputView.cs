@@ -12,16 +12,22 @@ namespace digital.domain.InputViewModel
     public class NovoPedidoInputView : BasicInputView
     {
 
+        public NovoPedidoInputView()
+        {
+            DataCompra = DateTime.Now;
+
+        }
+
         [System.Text.Json.Serialization.JsonIgnore]
         public IEnumerable<Claim> UsuarioClaims { get; set; }
 
         [JsonProperty("valorTotalCompra")]
         [System.Text.Json.Serialization.JsonIgnore]
-        public decimal ValorTotalCompra { get; set; }
+        public double ValorTotalCompra { get; set; }
 
         [JsonProperty("valorTotalVenda")]
         [System.Text.Json.Serialization.JsonIgnore]
-        public decimal ValorTotalVenda { get; set; }
+        public double ValorTotalVenda { get; set; }
 
         [JsonProperty("moedasCompra")]
         public List<MoedaCompraVendaAdicionarInputView> MoedasCompra { get; set; }
@@ -41,12 +47,11 @@ namespace digital.domain.InputViewModel
 
         public override void Validate()
         {
-            this.TrimAllStrings();
 
             AddNotifications(
                 new Contract<Notification>()
-                    .IsGreaterThan(ValorTotalCompra, 0, "ValorTotalCompra", ErrorText.ValorTotalEMenorQueZero)
-                    .IsGreaterThan(DataCompra, DateTime.Now.AddHours(3), "DataCompra", ErrorText.HoraCompraMinima)
+                    .IsGreaterThan(MoedasCompra.Count, 0, "MoedasCompra", ErrorText.QuantidadeMoedaCompra)
+                    .IsGreaterThan(DataVenda, DateTime.Now.AddHours(2), "DataVenda", ErrorText.HoraCompraMinima)
                 );
         }
     }

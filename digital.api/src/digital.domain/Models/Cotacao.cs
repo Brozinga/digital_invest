@@ -16,7 +16,7 @@ namespace digital.domain.Models
 
         [BsonElement("valorCotado")]
         [BsonRequired]
-        public decimal ValorCotado { get; set; }
+        public double ValorCotado { get; set; }
 
         [BsonElement("dataCotacao")]
         public DateTime DataCotacao { get; set; }

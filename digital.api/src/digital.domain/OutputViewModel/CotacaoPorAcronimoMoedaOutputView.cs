@@ -59,7 +59,7 @@ namespace digital.domain.OutputViewModel
         public string Id { get; set; }
 
         [JsonProperty(PropertyName = "valorCotado")]
-        public decimal ValorCotado { get; set; }
+        public double ValorCotado { get; set; }
 
         [JsonProperty(PropertyName = "dataCotacao")]
         public DateTime DataCotacao { get; set; }
@@ -68,7 +68,7 @@ namespace digital.domain.OutputViewModel
         {
             Id = model.Id.ToString(),
             DataCotacao = model.DataCotacao,
-            ValorCotado = model.ValorCotado
+            ValorCotado = (double) model.ValorCotado
         };
     }
 

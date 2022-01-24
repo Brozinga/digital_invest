@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react'
 import { Button, Modal, Form } from 'react-bootstrap'
 import DatePicker, { registerLocale } from "react-datepicker"
 
+import { EnviarPedidoCall } from '../../../services/PedidoService'
+
 import { addHours } from 'date-fns'
-import ptBR from 'date-fns/locale/pt-BR';
+import ptBR from 'date-fns/locale/pt-BR'
 
 import { FiPlus, FiTrash2 } from "react-icons/fi"
-import { BrCurrency } from '../../../utils';
+import { BrCurrency } from '../../../utils'
+import { HttpResponseAlert } from '../../Alerts'
+import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom'
 
-export default function ComprasMoedas({ dados }) {
+export default function ComprasMoedas({ dados, user }) {
 
     registerLocale("ptBR", ptBR)
 
@@ -25,7 +29,7 @@ export default function ComprasMoedas({ dados }) {
     const [selectId, setSelectId] = useState("")
     const [items, setItems] = useState([])
     const [show, setShow] = useState(false);
-    const [startDate, setStartDate] = useState(addHours(dateNow, 2));
+    const [vendaData, setvendaData] = useState(addHours(dateNow, 2));
     const [dadoFiltrado, setDadoFiltrado] = useState({})
     const [quantidade, setQuantidade] = useState(1)
     const [valor, setValor] = useState(0.00)
@@ -33,6 +37,30 @@ export default function ComprasMoedas({ dados }) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const Reset = () => {
+        setItems([])
+        setDadoFiltrado({})
+        setValorTotal(0.00)
+    }
+
+    const handleFinalizarCompra = async () => {
+        const response = await EnviarPedidoCall(user.token, {
+            moedasCompra: items.map(i => {
+                return {
+                    moedaId: i.id,
+                    quantidade: i.quantidade
+                }
+            }),
+            dataVenda: vendaData
+        })
+
+        HttpResponseAlert(response, true)
+
+        if (response.status == 200) {
+            Reset()
+        }
+    }
 
     const filterPassedTime = (time) => {
         const currentDate = addHours(new Date(), 1);
@@ -48,13 +76,15 @@ export default function ComprasMoedas({ dados }) {
 
     const handleAddCardCompra = () => {
         let valor = dadoFiltrado.cotacoes[dadoFiltrado.cotacoes.length - 1].valorCotado * quantidade;
+        let valorUnitario = dadoFiltrado.cotacoes[dadoFiltrado.cotacoes.length - 1].valorCotado;
         setItems([
             ...items,
             {
                 id: dadoFiltrado.id,
                 nomeMoeda: dadoFiltrado.nome,
                 quantidade: quantidade,
-                valor: valor
+                valor: valor,
+                valorUnitario
             }
         ])
         setQuantidade(1)
@@ -80,6 +110,28 @@ export default function ComprasMoedas({ dados }) {
         }
     }, [items])
 
+    useEffect(() => {
+        if (items.length > 0) {
+            let renewValues = [...items]
+            let valorTotalConcat = 0.00
+            let it = {}
+            let newItens = renewValues.map(item => {
+                it = dados.find(it => it.id == item.id)
+                if (it) {
+                    item.valor = it.cotacoes[it.cotacoes.length - 1].valorCotado * item.quantidade;
+                    item.valorUnitario = it.cotacoes[it.cotacoes.length - 1].valorCotado;
+                    valorTotalConcat += item.valor;
+                }
+
+                return item;
+            })
+
+            setItems(newItens);
+            setValorTotal(valorTotalConcat);
+
+        }
+    }, [dados])
+
     return (
         <>
             <div className='row'>
@@ -94,7 +146,7 @@ export default function ComprasMoedas({ dados }) {
                 </Modal.Header>
                 <Modal.Body>
                     <small className='d-block col-md-12 text-center'>
-                        A atuaização das moedas acontece cerca de 3 minutos, e os valores nesse formulário são estimativas.
+                        A atuaização das moedas acontece constantemente, e os valores nesse formulário podem variar.
                     </small>
                     <br />
                     <div className='col-md-12'>
@@ -115,8 +167,8 @@ export default function ComprasMoedas({ dados }) {
                                     filterTime={filterPassedTime}
                                     minDate={new Date()}
                                     locale="ptBR"
-                                    selected={startDate}
-                                    onChange={hadleDate} />
+                                    selected={vendaData}
+                                    onChange={setvendaData} />
                             </Form.Group>
                         </div>
                         <CardCompraMoeda
@@ -139,7 +191,7 @@ export default function ComprasMoedas({ dados }) {
 
                     <div className='mb-2 d-flex container-fluid justify-content-between align-content-center'>
                         <div className='col-lg-3 col-md-5 col-sm-12'>
-                            <Button variant="secondary" onClick={handleShow}>Finalizar Compra</Button>
+                            <Button variant="secondary" onClick={handleFinalizarCompra}>Finalizar Compra</Button>
                         </div>
                         <div className='col-sm-12 col-md-7 col-lg-5 mt-3 d-flex justify-content-md-end justify-content-sm-center'>
                             <h3><strong>{BrCurrency(valorTotal)}</strong></h3>
@@ -150,8 +202,6 @@ export default function ComprasMoedas({ dados }) {
         </>
     )
 }
-
-
 
 
 function CardCompraMoeda({ dados, setDadoFiltrado, dadoFiltrado, hadlerMoedaSelect,
@@ -273,9 +323,9 @@ function PreSelecao({ dados, handleExclude }) {
                     <Form.Control type="number" disabled value={dados.quantidade} />
                 </Form.Group>
                 <Form.Group className="text-center mb-3 col-lg-4 col-md-6" controlId="valor">
-                    <Form.Label>Valor</Form.Label>
+                    <Form.Label>Valor Unitário</Form.Label>
                     <Form.Text className="d-block mt-1 form-control-lg valor-pronto">
-                        {BrCurrency(dados.valor)}
+                        {BrCurrency(dados.valorUnitario)}
                     </Form.Text>
                 </Form.Group>
                 <div className='mt-3 col-lg-1 col-md-2 col-sm-12'>

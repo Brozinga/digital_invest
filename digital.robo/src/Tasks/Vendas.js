@@ -20,43 +20,43 @@ module.exports.VenderMoedasTask = (CotacoesRepository,
                 }) || [];
 
 
-        const horaAtual = dayjs().utc().hour();
+        const horaAtual = dayjs().utc().unix();
         let horaVenda = null;
-        let valorVenda = 0;
+        let valorVenda = 0.0;
         let usuario = null;
 
         for (const item of pegandoTodosPedidos) {
-            logger.info(`NUMERO DE PEDIDOS DE VENDA ENCONTRADOS: ${pegandoTodosPedidos.length}`)
 
-            horaVenda = item.dataVenda.getHours();
+            horaVenda = dayjs(item.dataVenda).unix()
 
             if (horaVenda <= horaAtual) {
+                logger.info(`NUMERO DE PEDIDOS DE VENDA ENCONTRADOS: ${pegandoTodosPedidos.length}`)
 
                 for (const mC of item.moedasCompra) {
 
-                    const { valorCotado, dataCotacao, moedaId } = await CotacoesRepository.findOne({
+                    const { valorCotado, dataCotacao } = await CotacoesRepository.findOne({
                         moedaId: mC.moedaId
                     }).sort({ dataCotacao: -1 });
 
                     item.moedasVenda.push({
                         valorCotado,
                         dataCotacao,
-                        moedaId,
+                        moedaId: mC.moedaId,
                         quantidade: mC.quantidade
                     })
-                    valorVenda += Number((valorCotado * mC.quantidade).toFixed(2))
+                    valorVenda += (parseFloat(valorCotado) * mC.quantidade)
                 }
 
                 usuario = await UsuariosRepository.findOne({ _id: item.usuarioId });
-                usuario.carteira += valorVenda;
+                usuario.carteira += parseFloat(valorVenda);
 
-                item.valorTotalVenda = valorVenda;
+                item.valorTotalVenda = parseFloat(valorVenda);
                 item.status = StatusEnum.FECHADO;
 
                 HistoricoCarteiraRepository.create({
                     usuarioId: item.usuarioId,
                     dataAdicao: dayjs().utc().format(),
-                    carteira: usuario.carteira
+                    carteira: parseFloat(usuario.carteira)
                 })
 
                 logger.info(`PEDIDO Nº: ${item._id}`)

@@ -132,6 +132,7 @@ export function AuthProvider({ children }) {
             isAuthorized,
             Logoff,
             getUser,
+            setUser,
             user
         }}>
             {children}

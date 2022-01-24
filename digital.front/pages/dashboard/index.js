@@ -9,12 +9,28 @@ import { BrCurrency } from "../../utils"
 import Card from "../../components/Card"
 import Grafico from '../../components/#Pages/Grafico'
 
+import { HistoricoCarteiraCall } from '../../services/ContaService'
+
+
 export default function Dashboard() {
 
-    const { user, isAuthorized } = useContext(AuthContext)
+    const { user, isAuthorized, setUser } = useContext(AuthContext)
+    const [dataGrafico, setDataGrafico] = useState([]);
 
-    useEffect(() => {
+
+    useEffect(async () => {
         isAuthorized()
+
+        const response = await HistoricoCarteiraCall(user.token);
+        let result = response.result[0];
+
+        setUser({
+            ...user,
+            carteira: result.carteira
+        })
+
+        setDataGrafico(response)
+
     }, [])
 
     return (
@@ -45,7 +61,7 @@ export default function Dashboard() {
                             {/* <hr/> */}
                         </div>
                         <div className="history-chart">
-                            <Grafico user={user} />
+                            <Grafico dadosGrafico={dataGrafico} setDadosGrafico={setDataGrafico} />
                         </div>
                     </Card>
                 </main>

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using MongoDB.Bson;
+using Newtonsoft.Json;
 using System;
 
 namespace digital.domain.OutputViewModel
@@ -9,7 +10,7 @@ namespace digital.domain.OutputViewModel
         public string IdCotacao { get; set; }
 
         [JsonProperty(PropertyName = "valorCotado")]
-        public decimal? ValorCotado { get; set; }
+        public double? ValorCotado { get; set; }
 
         [JsonProperty(PropertyName = "dataCotacao")]
         public DateTime? DataCotacao { get; set; }
