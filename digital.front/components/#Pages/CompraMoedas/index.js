@@ -29,14 +29,17 @@ export default function ComprasMoedas({ dados, user }) {
     const [selectId, setSelectId] = useState("")
     const [items, setItems] = useState([])
     const [show, setShow] = useState(false);
-    const [vendaData, setvendaData] = useState(addHours(dateNow, 2));
+    const [vendaData, setvendaData] = useState(addHours(dateNow, 3));
     const [dadoFiltrado, setDadoFiltrado] = useState({})
     const [quantidade, setQuantidade] = useState(1)
     const [valor, setValor] = useState(0.00)
     const [valorTotal, setValorTotal] = useState(0.00)
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setvendaData(addHours(dateNow, 3))
+        setShow(true)
+    };
 
     const Reset = () => {
         setItems([])
@@ -63,7 +66,7 @@ export default function ComprasMoedas({ dados, user }) {
     }
 
     const filterPassedTime = (time) => {
-        const currentDate = addHours(new Date(), 1);
+        const currentDate = addHours(new Date(), 2);
         const selectedDate = new Date(time);
 
         return currentDate.getTime() < selectedDate.getTime();

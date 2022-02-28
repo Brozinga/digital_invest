@@ -1,6 +1,4 @@
 ﻿using digital.assets.Texts;
-using digital.util.Extensions;
-using Flunt.Notifications;
 using Flunt.Validations;
 using Newtonsoft.Json;
 using System;
@@ -14,7 +12,7 @@ namespace digital.domain.InputViewModel
 
         public NovoPedidoInputView()
         {
-            DataCompra = DateTime.Now;
+            DataCompra = DateTime.UtcNow;
 
         }
 
@@ -49,9 +47,10 @@ namespace digital.domain.InputViewModel
         {
 
             AddNotifications(
-                new Contract<Notification>()
+                new Contract<NovoPedidoInputView>()
+                    .Requires()
                     .IsGreaterThan(MoedasCompra.Count, 0, "MoedasCompra", ErrorText.QuantidadeMoedaCompra)
-                    .IsGreaterThan(DataVenda, DateTime.Now.AddHours(2), "DataVenda", ErrorText.HoraCompraMinima)
+                    .IsGreaterThan(DataVenda, DateTime.UtcNow.AddHours(2), "DataVenda", ErrorText.HoraCompraMinima)
                 );
         }
     }

@@ -53,7 +53,9 @@ namespace digital.data.Repository
         public async Task<ICollection<Pedido>> PegarPedidosPorUsuarioId(ObjectId usuarioId)
         {
             var pedidos = await _dbContext.Pedidos.AsQueryable()
-                .Where(x => x.UsuarioId == usuarioId)
+                .OrderByDescending(x => x.Id)
+                .Take(50)
+                .Where(x => x.UsuarioId == usuarioId && x.Ativo == true)
                 .ToListAsync();
 
             return pedidos;

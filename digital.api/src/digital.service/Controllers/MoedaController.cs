@@ -1,7 +1,6 @@
 ﻿using digital.business.Handlers;
 using digital.domain.InputViewModel;
 using digital.util.Attributes;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

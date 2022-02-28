@@ -4,6 +4,7 @@ import { Tab, Tabs, Accordion } from 'react-bootstrap'
 import { AuthContext } from '../../contexts/AuthContext'
 
 import { PegarMoedasCall } from '../../services/MoedasService'
+import { TodosPedidosCall } from '../../services/PedidoService'
 
 import { LoadingCentalized } from "../../components/Loading"
 import BasicLayout from "../../components/Layouts/BasicLayout"
@@ -21,6 +22,7 @@ export default function Moedas() {
     const [tabSelected, setTabSelected] = useState('moedas')
 
     const [data, setData] = useState([])
+    const [pedidos, setPedidos] = useState([])
 
     const handleMoedas = async () => {
         if (user?.token) {
@@ -38,6 +40,31 @@ export default function Moedas() {
             }
         }
     }
+
+    const handlerSelectTab = async (event) => {
+        if (event == "compras")
+         await handleHistoricoPedidos()
+
+        setTabSelected(event)
+    }
+
+    const handleHistoricoPedidos = async () => {
+        if (user?.token) {
+            let response = await TodosPedidosCall(user.token);
+            if (response.status == 200 && Array.isArray(response?.result)) {
+                setPedidos(response.result)
+            }
+            if (response.status == 403) {
+                warning("Ops! sua sessão expirou!")
+                clearInterval(IntervalUpdate)
+                isAuthorized()
+            }
+            else {
+                HttpResponseAlert(response, false);
+            }
+        }
+    }
+
     useEffect(() => {
         clearInterval(IntervalUpdate)
         isAuthorized()
@@ -59,7 +86,7 @@ export default function Moedas() {
                         <Tabs
                             id="moedas-tab"
                             activeKey={tabSelected}
-                            onSelect={(k) => setTabSelected(k)}
+                            onSelect={(k) => handlerSelectTab(k)}
                             className="mb-3"
                         >
                             <Tab eventKey="moedas" title="Cotações">
@@ -76,6 +103,7 @@ export default function Moedas() {
                                 </Accordion>
                             </Tab>
                             <Tab eventKey="compras" title="Historico de Compras">
+
                             </Tab>
                         </Tabs>
                     </Card>

@@ -15,7 +15,8 @@ namespace digital.domain.InputViewModel
             this.TrimAllStrings();
 
             AddNotifications(
-                new Contract<Notification>()
+                new Contract<LoginInputView>()
+                    .Requires()
                     .IsEmail(Email, "Email", ErrorText.EmailInvalido)
                     .IsNotNullOrEmpty(Email, "Email", ErrorText.EmailVazio)
                     .IsNotNullOrEmpty(Senha, "Senha", ErrorText.SenhaInvalida)

@@ -133,7 +133,7 @@ namespace digital.assets.Texts {
         }
         
         /// <summary>
-        ///   Consulta uma cadeia de caracteres localizada semelhante a O horário da compra é de no mínimo, 3 horas acima do horário atual.
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O horário da compra é de no mínimo, 2 horas acima do horário atual.
         /// </summary>
         public static string HoraCompraMinima {
             get {
@@ -174,6 +174,15 @@ namespace digital.assets.Texts {
         public static string NovoPedidoMoedaNaoEncontrada {
             get {
                 return ResourceManager.GetString("NovoPedidoMoedaNaoEncontrada", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Pedidos de venda não foram encontrados.
+        /// </summary>
+        public static string PedidosNaoEncontrados {
+            get {
+                return ResourceManager.GetString("PedidosNaoEncontrados", resourceCulture);
             }
         }
         

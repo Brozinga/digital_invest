@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 
 namespace digital.domain.OutputViewModel

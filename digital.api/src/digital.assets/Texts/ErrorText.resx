@@ -142,7 +142,7 @@
     <value>Historico da carteira não encontrado</value>
   </data>
   <data name="HoraCompraMinima" xml:space="preserve">
-    <value>O horário da compra é de no mínimo, 3 horas acima do horário atual</value>
+    <value>O horário da compra é de no mínimo, 2 horas acima do horário atual</value>
   </data>
   <data name="MoedaIdObrigatorio" xml:space="preserve">
     <value>O Id da Moeda é Obrigatória</value>
@@ -155,6 +155,9 @@
   </data>
   <data name="NovoPedidoMoedaNaoEncontrada" xml:space="preserve">
     <value>Erro nas cotações, nem todas as moedas tem cotações registradas</value>
+  </data>
+  <data name="PedidosNaoEncontrados" xml:space="preserve">
+    <value>Pedidos de venda não foram encontrados</value>
   </data>
   <data name="QuantidadeMoedaCompra" xml:space="preserve">
     <value>É necessário ter moedas para compra</value>

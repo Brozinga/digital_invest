@@ -28,5 +28,15 @@ namespace digital.service.Controllers
             var result = await _pedidoHandler.Executar(data); 
             return StatusCode((int) result.Status, result);
         }
+
+        [HttpGet("v1/historico")]
+        [Authorize(Policy = "policy_basic")]
+        public async Task<IActionResult> Historico()
+        {
+            var identity = (ClaimsIdentity) User.Identity;
+
+            var result = await _pedidoHandler.Executar(new PegarHistoricoComprasInputView(identity.Claims));
+            return StatusCode((int)result.Status, result);
+        }
     }
 }
