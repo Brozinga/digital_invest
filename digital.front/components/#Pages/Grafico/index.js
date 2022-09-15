@@ -35,6 +35,7 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
     let _chartRef = React.createRef(null);
 
     const [options, setOptions] = useState({});
+    const [newGraficoPronto, setNewGraficoPronto] = useState([]);
 
     const optionsSetDefault = (dadosProntosGrafico) => {
         return {
@@ -59,7 +60,7 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
                                 right: 0,
                                 top: 10,
                                 bottom: 0,
-                            }
+                            },
                         }
                     }]
                 },
@@ -146,8 +147,8 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
                 },
                 title: {
                     display: false
-                },
-            },
+                }
+            }
         }
     }
 
@@ -187,19 +188,20 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
     }
 
     const handleGrafico = async (data) => {
+
         const arrayGraficoPronto = [];
         let verificandoValor = 0;
 
-        if (Array.isArray(data.result)) {
+        if (Array.isArray(data)) {
 
-            data.result = data.result.sort(function (a, b) {
+            data = data.sort(function (a, b) {
                 return new Date(a.dataAdicao) - new Date(b.dataAdicao);
             })
 
-            arrayGraficoPronto = data.result.map((item, index) => {
+            arrayGraficoPronto = data.map((item, index) => {
 
                 verificandoValor = verifyIfValueIsGreater(item.carteira,
-                    index == 0 ? item.carteira : data.result[index - 1].carteira)
+                    index == 0 ? item.carteira : data[index - 1].carteira)
 
                 return {
                     dataAbreviada: item.dataAbreviadaComHora,
@@ -210,8 +212,9 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
                     color: resultVerifyValueIsGreater(verificandoValor).color
                 }
             })
+
             setOptions(optionsSetDefault(arrayGraficoPronto));
-            setDadosGrafico(arrayGraficoPronto);
+            setNewGraficoPronto(arrayGraficoPronto);
 
         } else {
             if (data.status != 404)
@@ -225,7 +228,7 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
     }, [dadosGrafico])
 
 
-    const labels = dadosGrafico.length > 0 ? [...dadosGrafico.map(v => v.data)] : [];
+    const labels = newGraficoPronto.length > 0 ? [...newGraficoPronto.map(v => v.data)] : [];
 
     const data = (canvas) => {
         const ctx = canvas.getContext("2d");
@@ -234,12 +237,13 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
         gradient.addColorStop(.5, 'rgb(56, 167, 241)');
         gradient.addColorStop(1, 'rgb(38, 218, 218, .6)');
 
+
         return {
             labels,
             datasets: [
                 {
                     label: 'Valor Carteira',
-                    data: dadosGrafico.map((v) => v.valorCarteira),
+                    data: newGraficoPronto.map((v) => v.valorCarteira),
                     tension: 0.3,
                     borderColor: gradient,
                     backgroundColor: gradient,
@@ -254,12 +258,12 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
             ],
         };
     }
-    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [dadosGrafico])
+    const LineCustom = useMemo(() => (<Line ref={ref => _chartRef = ref} options={options} data={data} />), [newGraficoPronto])
 
     return (
         <>
             {
-                dadosGrafico.length > 0 ?
+                newGraficoPronto.length > 0 ?
 
                     <div className='chart-container'>
                         {LineCustom}

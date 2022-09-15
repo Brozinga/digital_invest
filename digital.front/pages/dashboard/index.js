@@ -1,37 +1,42 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import { AuthContext } from '../../contexts/AuthContext'
 
 import { LoadingCentalized } from "../../components/Loading"
-
 import BasicLayout from "../../components/Layouts/BasicLayout"
+import { HistoricoCarteiraCall, SaldoCarteiraCall } from '../../services/ContaService'
+
 import { BrCurrency } from "../../utils"
 
 import Card from "../../components/Card"
 import Grafico from '../../components/#Pages/Grafico'
 
-import { HistoricoCarteiraCall } from '../../services/ContaService'
-
-
 export default function Dashboard() {
 
-    const { user, isAuthorized, setUser } = useContext(AuthContext)
+    const { user, getUser, isAuthorized, setSaldo, saldo, addUpdateFunction } = useContext(AuthContext)
     const [dataGrafico, setDataGrafico] = useState([]);
+    const UpdateCarteira = async () => {
+        let userLocal = getUser()
+        if (userLocal?.token) {
+            const responseHistorico = await HistoricoCarteiraCall(userLocal.token);
+            const responseSaldo = await SaldoCarteiraCall(userLocal.token);
+
+            if (responseSaldo && responseSaldo?.result) {
+                setSaldo(responseSaldo?.result?.carteira || 0.00)
+            }
+
+            if (responseHistorico && responseHistorico?.result) {
+                setDataGrafico(responseHistorico?.result)
+            }
+        }
+    }
 
 
     useEffect(async () => {
         isAuthorized()
-
-        const response = await HistoricoCarteiraCall(user.token);
-        let result = response.result[0];
-
-        setUser({
-            ...user,
-            carteira: result.carteira
-        })
-
-        setDataGrafico(response)
-
+        await UpdateCarteira()
+        addUpdateFunction(UpdateCarteira)
     }, [])
+
 
     return (
         <>
@@ -48,7 +53,7 @@ export default function Dashboard() {
                             <div className="currency">
                                 <span className='currency-title'>Valor na Carteira</span>
                                 <div className="currency-value">
-                                    <p>{BrCurrency(user.carteira)}</p>
+                                    <p>{BrCurrency(saldo)}</p>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +63,6 @@ export default function Dashboard() {
                             <h3>
                                 Histórico da Carteira
                             </h3>
-                            {/* <hr/> */}
                         </div>
                         <div className="history-chart">
                             <Grafico dadosGrafico={dataGrafico} setDadosGrafico={setDataGrafico} />

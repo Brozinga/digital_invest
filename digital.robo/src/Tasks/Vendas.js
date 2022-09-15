@@ -1,8 +1,11 @@
 const { AsyncTask } = require('toad-scheduler')
 const dayjs = require('dayjs')
+const WebSocket = require('ws')
 const utc = require('dayjs/plugin/utc')
 const logger = require("../Utils/logger")(__filename)
 const StatusEnum = require("../../../digital.data/src/Enums/StatusEnum")
+
+const ws = new WebSocket(`${process.env.WEB_SOCKET_URL}?id=${process.env.WEB_SOCKET_ID}`)
 
 dayjs.extend(utc)
 
@@ -58,6 +61,9 @@ module.exports.VenderMoedasTask = (CotacoesRepository,
                     dataAdicao: dayjs().utc().format(),
                     carteira: parseFloat(usuario.carteira)
                 })
+
+                logger.info(`Enviando mensagem para atualização de tela`)
+                ws.send(JSON.stringify({ "sendTo": usuario._id }))
 
                 logger.info(`PEDIDO Nº: ${item._id}`)
                 logger.info(`VALOR DE COMPRA: ${item.valorTotalCompra}`)

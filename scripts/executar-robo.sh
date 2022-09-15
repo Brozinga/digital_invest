@@ -5,15 +5,20 @@ BASE_PATH=$PWD
 echo $BASE_PATH/digital.data/
 cd $BASE_PATH/digital.data/
 rm -rf ./node_modules
-yarn install
+npm install
+clear
 
 # Pacote para execução do Robô
 echo $BASE_PATH/digital.robo/
 cd $BASE_PATH/digital.robo/
 rm -rf ./node_modules
-yarn install
+npm install
+clear
 
 # Iniciando o Robô
+echo ""
+echo "================= DIGITAL INVEST - ROBÔ ================="
+
 if   [ "$ENV_PROFILE" == "PRODUCTION" ] ||
      [ "$ENV_PROFILE" == "production" ] ||
      [ "$ENV_PROFILE" == "Production" ]
@@ -22,3 +27,5 @@ if   [ "$ENV_PROFILE" == "PRODUCTION" ] ||
     else
         npm run dev
     fi
+    
+echo ""

@@ -9,14 +9,18 @@ using Microsoft.Extensions.Hosting;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
+using digital.domain.Enums;
 using digital.domain.OutputViewModel;
+using digital.util.Extensions;
 
 namespace digital.business.Handlers
 {
     public class PedidoHandler : GenericHandler, IHandlerBase<NovoPedidoInputView, BasicResponse>,
-        IHandlerBase<PegarHistoricoComprasInputView, BasicResponse>
+        IHandlerBase<PegarHistoricoComprasInputView, BasicResponse>,
+        IHandlerBase<RemoverPedidoInputView, BasicResponse>
 
     {
         private readonly TokenService _jwt;
@@ -50,7 +54,7 @@ namespace digital.business.Handlers
                 foreach (var moedaComprada in data.MoedasCompra)
                 {
                     var moedaCotacao = await _uow.CotacaoRepository
-                                                .PegarUltimaCotacaoPelaMoedaId(ObjectId.Parse(moedaComprada.MoedaId));
+                        .PegarUltimaCotacaoPelaMoedaId(ObjectId.Parse(moedaComprada.MoedaId));
 
                     if (moedaCotacao == null)
                         throw new Exception(ErrorText.NovoPedidoMoedaNaoEncontrada);
@@ -80,14 +84,13 @@ namespace digital.business.Handlers
                     ValorTotalCompra = data.ValorTotalCompra
                 });
 
-                 await _uow.UsuarioRepository.AtualizarUsuario(usuario);
+                await _uow.UsuarioRepository.AtualizarUsuario(usuario);
 
                 return BasicResponse.OK(SuccessText.PedidoCriado);
-
             }
             catch (Exception ex)
             {
-               return this.InternalServerError(ex);
+                return this.InternalServerError(ex);
             }
         }
 
@@ -100,7 +103,11 @@ namespace digital.business.Handlers
                 if (string.IsNullOrEmpty(usuarioId))
                     return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
 
-                var pedidos = await _uow.PedidoRepository.PegarPedidosPorUsuarioId(ObjectId.Parse(usuarioId));
+                var pedidos =
+                    await _uow.PedidoRepository.PegarPedidosPorUsuarioId(ObjectId.Parse(usuarioId),
+                        data.QuantidadeRegistros);
+                var qtdPedidos =
+                    await _uow.PedidoRepository.PegarQuantidadeTotalPedidosPorUsuarioId(ObjectId.Parse(usuarioId));
 
                 if (pedidos?.Count <= 0)
                     return BasicResponse.NotFound(ErrorText.PedidosNaoEncontrados);
@@ -109,25 +116,64 @@ namespace digital.business.Handlers
                 HistoricoComprasOutputView item = null;
                 List<HistoricoComprasOutputView> listaCompras = new List<HistoricoComprasOutputView>();
                 var moedasCompradasId = new List<ObjectId>();
-
+                IEnumerable<string> moedasNome = new List<string>();
                 foreach (var pedido in pedidos)
                 {
                     item = HistoricoComprasOutputView.Map(pedido);
                     moedasCompradasId = pedido.MoedasCompra.Select(x => x.MoedaId).ToList();
-                    item.Moedas = string.Join(", ", moedas
+                    moedasNome = moedas
                         .Where(x => moedasCompradasId.Contains(x.Id))
-                        .Select(x => x.Nome));
+                        .OrderBy(x => x.Nome)
+                        .Select(x => x.Nome);
+                    
+                    item.Moedas = string.Join(",", moedasNome);
 
                     listaCompras.Add(item);
                 }
 
-                return BasicResponse.OK(null, listaCompras);
-
+                return BasicResponse.OK(null, new
+                {
+                    quantidade = qtdPedidos,
+                    listaCompras
+                });
             }
             catch (Exception ex)
             {
                 return this.InternalServerError(ex);
             }
+        }
+
+        public  async Task<BasicResponse> Executar(RemoverPedidoInputView data)
+        {
+            var usuarioId = _jwt.GetUserIdByToken(data.UsuarioClaims);
+
+            if (string.IsNullOrEmpty(usuarioId))
+                return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+            
+            var pedido = await _uow.PedidoRepository.PegarPedido(ObjectId.Parse(data.Id),ObjectId.Parse(usuarioId));
+
+            if (pedido is null)
+                return BasicResponse.NotFound(ErrorText.PedidoNaoEncontrado);
+            
+            if(pedido.Status != EStatusPedido.ABERTO.ToDescriptionString())
+                return BasicResponse.BadRequest(ErrorText.CancelamentoSomenteStatusAberto);
+            
+            var usuario = await _uow.UsuarioRepository.PegarUsuarioId(ObjectId.Parse(usuarioId));
+            
+            if (usuario is null)
+                return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+
+            usuario.Carteira += pedido.ValorTotalCompra;
+
+            var pedidoCancelado = await _uow.PedidoRepository.CancelarPedido(pedido);
+
+            if (pedidoCancelado.ModifiedCount > 0)
+            {
+                await _uow.UsuarioRepository.AtualizarUsuario(usuario);
+            }
+            
+            return BasicResponse.OK(SuccessText.PedidoCancelado);
+
         }
     }
 }

@@ -126,4 +126,7 @@
   <data name="UsuarioCriado" xml:space="preserve">
     <value>Usuário cridado com sucesso</value>
   </data>
+  <data name="PedidoCancelado" xml:space="preserve">
+    <value>Pedido cancelado com sucesso</value>
+  </data>
 </root>

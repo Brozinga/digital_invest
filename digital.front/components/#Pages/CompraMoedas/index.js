@@ -106,6 +106,7 @@ export default function ComprasMoedas({ dados, user }) {
     }
 
     useEffect(() => {
+        console.log(items)
         if (items.length <= 0) {
             setSelectId(dados[0]?.id)
         } else {
@@ -143,7 +144,7 @@ export default function ComprasMoedas({ dados, user }) {
                 </div>
             </div>
 
-            <Modal size="lg" show={show} onHide={handleClose} animation={false}>
+            <Modal size="lg" backdrop="static" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Compra de Moedas</Modal.Title>
                 </Modal.Header>
@@ -153,11 +154,11 @@ export default function ComprasMoedas({ dados, user }) {
                     </small>
                     <br />
                     <div className='col-md-12'>
-                        <div className='flex-column flex-md-row flex-lg-row d-flex justify-content-lg-between container-fluid'>
-                            <Form.Group className="mb-3 mt-4 d-block" controlId="add">
+                        <div className='flex-column flex-md-row flex-lg-row d-flex justify-content-lg-between justify-content-md-between container-fluid'>
+                            <Form.Group className="col-md-3 mb-3 mt-4 d-block" controlId="add">
                                 <Button disabled={items.length == dados.length} onClick={handleAddCardCompra} variant="success">Adicionar <FiPlus size={18} className='mb-1 mt-1' /></Button>
                             </Form.Group>
-                            <Form.Group className="text-center mb-3 d-block">
+                            <Form.Group className="text-center col-md-6 col-lg-3 mb-3 d-block">
                                 <Form.Label htmlFor="disabledSelect">Data para Venda</Form.Label>
                                 <DatePicker
                                     className='form-control'
@@ -196,8 +197,10 @@ export default function ComprasMoedas({ dados, user }) {
                         <div className='col-lg-3 col-md-5 col-sm-12'>
                             <Button variant="secondary" onClick={handleFinalizarCompra}>Finalizar Compra</Button>
                         </div>
-                        <div className='col-sm-12 col-md-7 col-lg-5 mt-3 d-flex justify-content-md-end justify-content-sm-center'>
+                        <div className='col-sm-12 col-md-7 col-lg-5 d-flex justify-content-md-end justify-content-sm-center'>
+                            <div>Valor Total:
                             <h3><strong>{BrCurrency(valorTotal)}</strong></h3>
+                            </div>
                         </div>
                     </div>
                 </Modal.Body>
@@ -258,11 +261,11 @@ function CardCompraMoeda({ dados, setDadoFiltrado, dadoFiltrado, hadlerMoedaSele
         <>
             <div className='row inputs mb-2'>
                 <SelectMoeda selectId={selectId} setSelectId={setSelectId} selectedItems={selectedItems} dados={dados} handlerSelectMoeda={handleSelect} />
-                <Form.Group className="text-center mb-3 col-lg-3 col-md-6" controlId="quantidade">
+                <Form.Group className="text-center mb-3 col-lg-4 col-md-6" controlId="quantidade">
                     <Form.Label>Quantidade</Form.Label>
                     <Form.Control type="number" onChange={handleQuantidade} value={quantidade} min="1" placeholder="Quantidade" />
                 </Form.Group>
-                <Form.Group className="text-center mb-3 col-lg-4 col-md-6" controlId="valor">
+                <Form.Group className="text-center mb-3 col-lg-3 col-md-6" controlId="valor">
                     <Form.Label>Valor</Form.Label>
                     <Form.Text className="card-compra-moeda d-block mt-1 form-control-lg">
                         {BrCurrency(valor)}
@@ -293,7 +296,7 @@ function SelectMoeda({ dados, selectedItems, handlerSelectMoeda, selectId, setSe
     }
 
     return (
-        <Form.Group className="text-center mb-3 col-lg-5 col-md-6">
+        <Form.Group className="text-center mb-3 col-lg-5 col-md-12">
             <Form.Label htmlFor="disabledSelect">Selecione a Moeda</Form.Label>
             <Form.Select disabled={items.length <= 0} value={selectId} onChange={handlerCh} className='form-control' id="moedas">
                 {
@@ -325,13 +328,19 @@ function PreSelecao({ dados, handleExclude }) {
                     <Form.Label>Quantidade</Form.Label>
                     <Form.Control type="number" disabled value={dados.quantidade} />
                 </Form.Group>
-                <Form.Group className="text-center mb-3 col-lg-4 col-md-6" controlId="valor">
+                <Form.Group className="text-center mb-3 col-lg-2 col-md-6" controlId="valor">
                     <Form.Label>Valor Unitário</Form.Label>
                     <Form.Text className="d-block mt-1 form-control-lg valor-pronto">
-                        {BrCurrency(dados.valorUnitario)}
+                            {BrCurrency(dados.valorUnitario)}
                     </Form.Text>
                 </Form.Group>
-                <div className='mt-3 col-lg-1 col-md-2 col-sm-12'>
+                <Form.Group className="text-center mb-3 col-lg-2 col-md-6" controlId="valor">
+                    <Form.Label>Valor Total</Form.Label>
+                    <Form.Text className="d-block mt-1 form-control-lg valor-pronto">
+                            {BrCurrency(dados.valorUnitario * dados.quantidade)}
+                    </Form.Text>
+                </Form.Group>
+                <div className='mt-3 col-lg-1 col-md-12 col-sm-12'>
                     <Button variant="danger" onClick={() => handleExcludeLocal(dados.id)}><FiTrash2 size={18} className='mb-1' /></Button>
                 </div>
             </div>

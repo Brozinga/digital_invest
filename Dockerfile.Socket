@@ -1,0 +1,6 @@
+FROM node:16.13
+WORKDIR /usr/src/app
+COPY ./digital.robo ./digital.socket
+COPY ./scripts ./scripts
+RUN chmod +x /usr/src/app/scripts/executar-socket.sh
+CMD /bin/bash /usr/src/app/scripts/executar-socket.sh

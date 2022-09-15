@@ -19,11 +19,13 @@
     "react": "17.0.2",
     "react-bootstrap": "^2.0.4",
     "react-chartjs-2": "^4.0.0",
+    "react-data-table-component": "^7.5.3",
     "react-datepicker": "^4.6.0",
     "react-dom": "17.0.2",
     "react-hot-toast": "^2.1.1",
     "react-icons": "^4.3.1",
-    "react-table": "^7.7.0",
+    "react-use-websocket": "3.0.0",
+    "styled-components": "^5.3.5",
     "yup": "^0.32.11"
   },
   "devDependencies": {

@@ -180,4 +180,10 @@
   <data name="ValorTotalEMenorQueZero" xml:space="preserve">
     <value>O valor total da compra precisa ser superior a zero</value>
   </data>
+  <data name="PedidoNaoEncontrado" xml:space="preserve">
+    <value>Pedido não encontrado</value>
+  </data>
+  <data name="CancelamentoSomenteStatusAberto" xml:space="preserve">
+    <value>O status do pedido deve estar em aberto</value>
+  </data>
 </root>

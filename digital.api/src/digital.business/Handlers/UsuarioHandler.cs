@@ -16,7 +16,8 @@ namespace digital.business.Handlers
     public class UsuarioHandler : GenericHandler, IHandlerBase<NovoUsuarioInput, BasicResponse>,
         IHandlerBase<AlterarSenhaInputView, BasicResponse>,
         IHandlerBase<LoginInputView, BasicResponse>,
-        IHandlerBase<PegarHistoricoCarteiraInputView, BasicResponse>
+        IHandlerBase<PegarHistoricoCarteiraInputView, BasicResponse>,
+    IHandlerBase<PegarSaldoInputView, BasicResponse>
 
     {
         private readonly TokenService _jwt;
@@ -105,7 +106,9 @@ namespace digital.business.Handlers
 
                 var result = _jwt.GenerateToken(user);
 
-                return BasicResponse.OK(null, new LoginOutputView(data.Email.ToLower(), 
+                return BasicResponse.OK(null, new LoginOutputView(
+                                                                  user.Id.ToString(),
+                                                                  data.Email.ToLower(), 
                                                                   user.Nome.ToUpper(), 
                                                                   user.Carteira, 
                                                                   result.Token, 
@@ -130,14 +133,38 @@ namespace digital.business.Handlers
                 var usuarioExiste = await _uow.UsuarioRepository.Existe(ObjectId.Parse(userId));
 
                 if (!usuarioExiste)
-                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+                    return BasicResponse.NotFound(ErrorText.UsuarioNaoExiste);
 
-                var result = await _uow.HistoricoCarteiraRepository.PegarUsuarioId(ObjectId.Parse(userId));
+                var result = await _uow.HistoricoCarteiraRepository.PegarUsuarioId(ObjectId.Parse(userId), data.QuantidadeRegistros);
 
                 if (result.Count <= 0)
                     return BasicResponse.NotFound(ErrorText.HistoricoCarteiraNaoExiste);
 
                 return BasicResponse.OK(null, result.Select(x => HistoricoCarteiraOutputView.Map(x)));
+            }
+            catch (Exception ex)
+            {
+                return this.InternalServerError(ex);
+            }
+        }
+        
+        public async Task<BasicResponse> Executar(PegarSaldoInputView data)
+        {
+            try
+            {
+                var userId = _jwt.GetUserIdByToken(data.UsuarioClaims);
+                
+                if (userId == null)
+                    return BasicResponse.BadRequest(ErrorText.UsuarioNaoExiste);
+
+                var usuarioExiste = await _uow.UsuarioRepository.Existe(ObjectId.Parse(userId));
+
+                if (!usuarioExiste)
+                    return BasicResponse.NotFound(ErrorText.UsuarioNaoExiste);
+
+                var result = await _uow.UsuarioRepository.PegarUsuarioId(ObjectId.Parse(userId));
+
+                return BasicResponse.OK(null, SaldoCarteiraOutputView.Map(result));
             }
             catch (Exception ex)
             {

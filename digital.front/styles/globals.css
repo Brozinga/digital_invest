@@ -968,9 +968,60 @@ a.btn-default:visited {
   margin-top: -15px;
 }
 
+span.open, span.close, span.cancelado {
+  border-radius: 5px;
+  color: #FFF;
+  display: block;
+  padding: 5px 10px;
+}
+
+span.open {
+  background-color: #8754ff;
+  display: inline;
+}
+
+span.close {
+  background-color: #feac86;
+}
+
+span.cancelado {
+  background-color: #fd92a6;
+}
+
+.rdt_TableCol_Sortable>div {
+  font-weight: 700;
+  font-size: 10pt;
+  font-family: 'Manrope', sans-serif;
+  color: #282a2b !important;
+}
+
+button.btn.cancel {
+  display: inline;
+  height: 20px;
+  min-height: 23px;
+  width: 20px;
+  min-width: 20px;
+  margin-bottom: 12px;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding-right: 10px;
+  background-color: #dc3545;
+}
+
+button.btn.cancel > svg {
+  margin: -12px 0px 0px -10px;
+  width: 20px;
+}
+
 @media (max-width: 600px) {
   .moeda-grafico-container.accordion-body {
     padding: 0px;
+  }
+}
+
+@media (min-width: 992px) {
+  .modal-lg, .modal-xl {
+    max-width: 960px;
   }
 }
 

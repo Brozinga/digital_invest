@@ -104,6 +104,7 @@ namespace digital.service
         {
             if (env.IsDevelopment())
             {
+                app.UseHttpLogging();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Invest API v1"));

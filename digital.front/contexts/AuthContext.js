@@ -7,9 +7,10 @@ import {
     RemoveEncryptLocalStorage
 } from "../utils"
 import { LoginCall } from "../services/ContaService"
-
+import useWebSocket from 'react-use-websocket'
 
 const userIntialData = {
+    id: "",
     nome: "",
     carteira: 0,
     email: "",
@@ -28,6 +29,9 @@ const AuthContextIntialData = {
     isAuthorized: () => { },
     Logoff: () => { },
     getUser: () => userIntialData,
+    saldo: 0.00,
+    setSaldo: () => saldo,
+    addUpdateFunction: () => {},
     user: userIntialData
 }
 
@@ -36,15 +40,38 @@ export const AuthContext = createContext(AuthContextIntialData);
 export function AuthProvider({ children }) {
 
     const [user, setUser] = useState({ ...userIntialData })
+    const [updateFunction, setUpdateFunction] = useState([])
+    const [saldo, setSaldo] = useState(0.00)
+    const [socketUrl, setSocketUrl] = useState(`${process.env.NEXT_PUBLIC_WEB_SOCKET_URL_BASE}`);
+
+    const { lastMessage } = useWebSocket(socketUrl,{
+        onOpen: () => console.log(`Connected to App WS`),
+    });
+
+    useEffect(async () => {
+        console.log(lastMessage)
+        if (lastMessage !== null) {
+            for (let func of updateFunction) {
+                await func()
+            }
+        }
+    }, [lastMessage])
 
     useEffect(() => {
-        setUser(getUser())
-    }, [])
+        let userLocal = getUser()
+        setUser(userLocal)
+        if (userLocal?.id)
+            setSocketUrl(`${process.env.NEXT_PUBLIC_WEB_SOCKET_URL_BASE}?id=${userLocal?.id}`)
+    }, [user])
 
     const routerContext = useRouter();
 
     const setAuthCookie = (data) => {
         SaveEncryptLocalStorage(data, process.env.NEXT_PUBLIC_AUTHCONTEXT_DATA_NAME)
+    }
+
+    const addUpdateFunction = (newUpdateFunction) => {
+        setUpdateFunction([...updateFunction, newUpdateFunction])
     }
 
     const signIn = async ({ email, senha }) => {
@@ -86,7 +113,7 @@ export function AuthProvider({ children }) {
         }
 
         if (cookie.token && tokenExpirationDate >= currentDate) {
-            user = { ...cookie }
+            setUser({ ...cookie })
             return true;
         }
 
@@ -117,7 +144,6 @@ export function AuthProvider({ children }) {
             }
 
         } else {
-            console.log("USUARIO", user);
             return user;
         }
     }
@@ -133,6 +159,9 @@ export function AuthProvider({ children }) {
             Logoff,
             getUser,
             setUser,
+            saldo,
+            setSaldo,
+            addUpdateFunction,
             user
         }}>
             {children}

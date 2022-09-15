@@ -8,6 +8,11 @@ cd $BASE_PATH/digital.api/
 dotnet restore
 dotnet build
 
+clear
+
+echo ""
+echo "================= DIGITAL INVEST - API ================="
+
 if [ "$ENV_PROFILE" == "PRODUCTION" ] ||
     [ "$ENV_PROFILE" == "production" ] ||
     [ "$ENV_PROFILE" == "Production" ]; then
@@ -15,3 +20,5 @@ if [ "$ENV_PROFILE" == "PRODUCTION" ] ||
 else
     dotnet run --launch-profile=Development --project ./src/digital.service
 fi
+
+echo ""

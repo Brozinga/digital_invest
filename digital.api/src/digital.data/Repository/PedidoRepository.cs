@@ -28,9 +28,9 @@ namespace digital.data.Repository
             await _dbContext.Pedidos.InsertOneAsync(pedido);
         }
 
-        public async Task<Pedido> PegarPedido(ObjectId id)
+        public async Task<Pedido> PegarPedido(ObjectId id, ObjectId usuarioId)
         {
-           var result = await _dbContext.Pedidos.FirstOrDefaultAsync(x => x.Id == id);
+           var result = await _dbContext.Pedidos.FirstOrDefaultAsync(x => x.Id == id && x.UsuarioId == usuarioId);
             return result;
         }
 
@@ -44,21 +44,33 @@ namespace digital.data.Repository
             return result;
         }
 
-        public async void CancelarPedido(Pedido pedido)
+        public async Task<ReplaceOneResult> CancelarPedido(Pedido pedido)
         {
             pedido.Status = EStatusPedido.CANCELADO.ToDescriptionString();
-          await _dbContext.Pedidos.ReplaceOneAsync(x => x.Id == pedido.Id, pedido);
+            return await _dbContext.Pedidos.ReplaceOneAsync(x => x.Id == pedido.Id, pedido);
+        }
+        
+        public async Task<int> PegarQuantidadeTotalPedidosPorUsuarioId(ObjectId usuarioId)
+        {
+            var query = _dbContext.Pedidos.AsQueryable()
+                .Where(x => x.UsuarioId == usuarioId && x.Ativo == true);
+
+            var pedidos = await query.ToListAsync();
+            
+            return pedidos.Count;
         }
 
-        public async Task<ICollection<Pedido>> PegarPedidosPorUsuarioId(ObjectId usuarioId)
+        public async Task<ICollection<Pedido>> PegarPedidosPorUsuarioId(ObjectId usuarioId, int quantidadeRegistros = 0)
         {
-            var pedidos = await _dbContext.Pedidos.AsQueryable()
-                .OrderByDescending(x => x.Id)
-                .Take(50)
-                .Where(x => x.UsuarioId == usuarioId && x.Ativo == true)
-                .ToListAsync();
+            var pedidos = _dbContext.Pedidos.AsQueryable()
+                .Where(x => x.UsuarioId == usuarioId && x.Ativo == true);
 
-            return pedidos;
+            if (quantidadeRegistros > 0)
+                pedidos = pedidos.OrderByDescending(x => x.Id).Take(quantidadeRegistros);
+            else
+                pedidos.OrderByDescending(x => x.Id);
+
+            return await pedidos.ToListAsync();
         }
     }
 }

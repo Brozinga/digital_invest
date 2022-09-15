@@ -4,6 +4,7 @@ using digital.util.Attributes;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace digital.service.Controllers
 {
@@ -13,10 +14,12 @@ namespace digital.service.Controllers
     public class ContaController : ControllerBase
     {
         private readonly UsuarioHandler _userHandler;
+        private readonly ILogger<ContaController> _logger;
 
-        public ContaController(UsuarioHandler userHandler)
+        public ContaController(UsuarioHandler userHandler, ILogger<ContaController> logger)
         {
             _userHandler = userHandler;
+            _logger = logger;
         }
 
         /// <summary>
@@ -57,24 +60,13 @@ namespace digital.service.Controllers
                 new PegarHistoricoCarteiraInputView(quantidadeRegistros, User.Claims));
             return StatusCode((int)result.Status, result);
         }
-
-        //TODO - Implementar pegar o histórico do que já comprei um dia.
-        [HttpGet("v1/historico_compras")]
+        
+        [HttpGet("v1/saldo")]
         [AuthorizeMultiplePolicy("policy_basic", false)]
-        public async Task<IActionResult> PegarHistoricoCompras([FromRoute] int quantidadeRegistros = 20)
+        public async Task<IActionResult> PegarSaldo()
         {
             var result = await _userHandler.Executar(
-                new PegarHistoricoCarteiraInputView(quantidadeRegistros, User.Claims));
-            return StatusCode((int)result.Status, result);
-        }
-
-        //TODO - Implementar pegar o ultimo valor da minha carteira para atualização.
-        [HttpGet("v1/carteira")]
-        [AuthorizeMultiplePolicy("policy_basic", false)]
-        public async Task<IActionResult> PegarValorCarteira([FromRoute] int quantidadeRegistros = 20)
-        {
-            var result = await _userHandler.Executar(
-                new PegarHistoricoCarteiraInputView(quantidadeRegistros, User.Claims));
+                new PegarSaldoInputView(User.Claims));
             return StatusCode((int)result.Status, result);
         }
     }

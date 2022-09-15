@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.HttpLogging;
 
 namespace digital.ioc
 {
@@ -59,6 +60,19 @@ namespace digital.ioc
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            });
+        }
+        
+        public static void InjectLogger(this IServiceCollection services)
+        {
+            services.AddHttpLogging(httpLogging =>
+            {
+                httpLogging.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders |
+                                            HttpLoggingFields.RequestBody;
+                httpLogging.MediaTypeOptions.
+                    AddText("application/javascript");
+                httpLogging.RequestBodyLogLimit = 4096;
+                httpLogging.ResponseBodyLogLimit = 4096;
             });
         }
     }

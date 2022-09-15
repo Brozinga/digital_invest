@@ -1,9 +1,7 @@
 const path = require('path')
 
 require('dotenv').config({
-    path: process.env.NODE_ENV == "production" ?
-        path.resolve(process.cwd(), './.env.production') :
-        path.resolve(process.cwd(), './.env.development')
+    path: path.resolve(process.cwd(), `./.env.${process.env.NODE_ENV}`)
 })
 
 const { ToadScheduler, SimpleIntervalJob } = require('toad-scheduler')
