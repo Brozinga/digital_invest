@@ -10,7 +10,6 @@ import ptBR from 'date-fns/locale/pt-BR'
 import { FiPlus, FiTrash2 } from "react-icons/fi"
 import { BrCurrency } from '../../../utils'
 import { HttpResponseAlert } from '../../Alerts'
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom'
 
 export default function ComprasMoedas({ dados, user }) {
 
@@ -19,11 +18,6 @@ export default function ComprasMoedas({ dados, user }) {
     let dateNow = new Date();
     dateNow.setMinutes(0)
     dateNow.setSeconds(0)
-
-    const hadleDate = (date) => {
-        setStartDate(date)
-    }
-
 
     const [moedasSelectBox, setMoedasSelectBox] = useState([])
     const [selectId, setSelectId] = useState("")

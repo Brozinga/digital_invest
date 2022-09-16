@@ -376,6 +376,8 @@ nav.navbar>div.container {
 
 /* INPUTS GERAL */
 select.form-control,
+select.form-select,
+input[type="date"].form-control,
 input[type="email"].form-control,
 input[type="password"].form-control,
 input[type="number"].form-control,
@@ -386,12 +388,9 @@ input[type="text"].form-control {
 }
 
 .error>select.form-control,
-.error>input[type="email"].form-control,
-.error>input[type="password"].form-control,
-.error>input[type="text"].form-control,
+.error>select.form-select,
+.error>input[type="date"].form-control,
 .error>input[type="number"].form-control,
-.error>select.form-control:focus,
-.error>input[type="number"].form-control:focus,
 .error>input[type="email"].form-control:focus,
 .error>input[type="password"].form-control:focus,
 .error>input[type="text"].form-control:focus {
@@ -400,28 +399,55 @@ input[type="text"].form-control {
 }
 
 .sucess>select.form-control,
+.success>select.form-select,
 .success>input[type="email"].form-control,
-.success>input[type="password"].form-control,
-.success>input[type="text"].form-control,
+.success>input[type="date"].form-control,
 .success>input[type="number"].form-control,
-.success>input[type="number"].form-control:focus,
-.sucess>select.form-control:focus,
-.success>input[type="email"].form-control:focus,
-.success>input[type="password"].form-control:focus,
+.success>input[type="password"].form-control,
 .success>input[type="text"].form-control:focus {
   border: 1px solid #198754;
   box-shadow: 0 0 3px 0.25rem #19875424;
 }
 
 select.form-control:focus,
+select.form-select:focus,
 input[type="email"].form-control:focus,
+input[type="date"].form-control:focus,
 input[type="number"].form-control:focus,
 input[type="password"].form-control:focus,
-input[type="text"].form-control:focus {
+input[type="text"].form-control:focus
+ {
   color: #212529;
   background-color: #fff;
   border-color: #8466ef;
   box-shadow: 0 0 3px 0.25rem rgb(132 102 239 / 7%);
+}
+
+input[type="date"] {
+  position: relative;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  color: transparent;
+  background: transparent;
+}
+
+.date-icon {
+  position: relative;
+}
+
+.date-icon > svg {
+  position: absolute;
+  top: 14px;
+  right: 15px;
+  font-size: 13pt;
 }
 
 button.btn-primary {
@@ -1011,6 +1037,10 @@ button.btn.cancel {
 button.btn.cancel > svg {
   margin: -12px 0px 0px -10px;
   width: 20px;
+}
+
+.form-group-bt {
+  margin-top: 20px;
 }
 
 @media (max-width: 600px) {
