@@ -17,5 +17,6 @@ namespace digital.data.Interfaces
         Task<Moeda> PegarMoedaId(ObjectId id);
         Task<Moeda> PegarMoedaCotacao(ObjectId moedaId);
         Task<ICollection<Moeda>> PegarTodasMoedasComCotacoesPorHora();
+        Task<ICollection<Moeda>> PegarTodasMoedasComHistoricoCotacoes(int numeroCotacoes = 30);
     }
 }

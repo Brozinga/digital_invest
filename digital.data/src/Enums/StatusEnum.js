@@ -1,4 +1,5 @@
 module.exports ={
     ABERTO: "aberto",
-    FECHADO: "fechado"
+    LIQUIDADO: "liquidado",
+    CANCELADO: "cancelado"
 }

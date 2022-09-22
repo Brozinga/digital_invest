@@ -32,5 +32,16 @@ namespace digital.service.Controllers
             var result = await _moedaHandler.Executar(new PegarTodasAsMoedasCotacoesPorHoraInputView());
             return StatusCode((int)result.Status, result);
         }
+        
+        [HttpGet("v1/historico_completo/{quantidadeCotacoes:int}")]
+        [AuthorizeMultiplePolicy("policy_basic", false)]
+        public async Task<IActionResult> HistoricoCompleto(int quantidadeCotacoes)
+        {
+            var result = await _moedaHandler.Executar(new PegarTodasAsMoedasHistoricoCotacaoInputView()
+            {
+                quantidadeCotacoes = quantidadeCotacoes
+            });
+            return StatusCode((int)result.Status, result);
+        }
     }
 }

@@ -4,7 +4,7 @@ import { FiAlertCircle } from "react-icons/fi"
 
 import { AuthContext } from '../../contexts/AuthContext'
 
-import { PegarMoedasCall } from '../../services/MoedasService'
+import { PegarHistoricoMoedasCall } from '../../services/MoedasService'
 import { TodosPedidosCall, CancelarPedidoCall } from '../../services/PedidoService'
 
 import { LoadingCentalized } from "../../components/Loading"
@@ -29,7 +29,7 @@ export default function Moedas() {
 
     const handleMoedas = async () => {
         if (user?.token) {
-            let response = await PegarMoedasCall(user.token);
+            let response = await PegarHistoricoMoedasCall(user.token);
             if (response.status == 200 && Array.isArray(response?.result)) {
                 setData(response.result)
             }

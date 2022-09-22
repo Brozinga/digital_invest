@@ -204,7 +204,7 @@ export default function GraficosMoedas({ dados, title, indice }) {
         gradient.addColorStop(1, 'rgb(38, 218, 218, .6)');
 
         return {
-            labels: dadosGrafico.map(v => dayjs(v.data).format("DD/MM HH[h]")),
+            labels: dadosGrafico.map(v => dayjs(v.data).format("DD/MM HH[:]mm")),
             datasets: [
                 {
                     label: 'Valor Cotado',

@@ -54,7 +54,7 @@ module.exports.VenderMoedasTask = (CotacoesRepository,
                 usuario.carteira += parseFloat(valorVenda);
 
                 item.valorTotalVenda = parseFloat(valorVenda);
-                item.status = StatusEnum.FECHADO;
+                item.status = StatusEnum.LIQUIDADO;
 
                 HistoricoCarteiraRepository.create({
                     usuarioId: item.usuarioId,

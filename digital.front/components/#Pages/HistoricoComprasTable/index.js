@@ -93,7 +93,7 @@ export default function HistoricoComprasTable({ pedidos, HandlerCancelamento }) 
           <><span className='open'>{row.status.toLocaleUpperCase()}</span> <button className='btn btn-danger cancel' onClick={() => {
             setCancelmanto(row)
             setShow(!show)
-          }}><FiX size={18} className='mb-1' /></button></> : row.status == "cancelado" ?
+          }}><FiX size={18} className='mb-1' /></button></> : row.status == "liquidado" ?
             <span className='cancelado'>{row.status.toLocaleUpperCase()}</span> :
             <span className='close'>{row.status.toLocaleUpperCase()}</span>,
         sortable: true,

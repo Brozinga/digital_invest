@@ -64,6 +64,29 @@ namespace digital.data.Repository
 
             return moedas;
         }
+        
+        public async Task<ICollection<Moeda>> PegarTodasMoedasComHistoricoCotacoes(int numeroCotacoes = 30)
+        {
+            var moedas = await _dbContext.Moedas
+                .AsQueryable()
+                .Where(x => x.Ativo == true)
+                .ToListAsync();
+
+            var cotacoes = await _dbContext.Cotacoes.AsQueryable()
+                .OrderByDescending(x => x.DataCotacao)
+                .ToListAsync();
+
+            foreach (var moeda in moedas)
+            {
+                moeda.Cotacoes = cotacoes
+                    .Where(c => c.MoedaId == moeda.Id)
+                    .Take(numeroCotacoes)
+                    .OrderBy(c => c.DataCotacao)
+                    .ToList();
+            }
+
+            return moedas;
+        }
 
         public async Task<Moeda> PegarMoedaCotacao(ObjectId moedaId)
         {
