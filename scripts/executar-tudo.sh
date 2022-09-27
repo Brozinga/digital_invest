@@ -27,7 +27,7 @@ read -p "## Deseja subir o Dump do banco de dados? (S/N) " run_dump
 if [ "$run_dump" == "s" ] || [ "$run_dump" == "S" ]
 then
     #Inciando os documentos do banco mongodb
-    bash $BASE_PATH/scripts/dump-mongodb.sh
+    bash $BASE_PATH/scripts/restore-mongodb.sh
 fi
 
 read -p "## Deseja instalar as dependências? (S/N) " install_dep
