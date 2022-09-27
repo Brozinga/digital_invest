@@ -1,5 +1,9 @@
 #!/bin/sh
 
+echo ""
+
+echo "================= DIGITAL INVEST - BANCO DE DADOS ================="
+
 BASE_PATH=$PWD
 
 docker network create -d bridge digital-invest-network

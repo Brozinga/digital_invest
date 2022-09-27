@@ -14,7 +14,9 @@ fi
 if [ "$INSTALL_DEP" == "" ]
 then
     # Caso esteja executando de forma isolada
+    echo ""
     read -p "Deseja instalar as dependências? (S/N) " install_dep
+    echo ""
     INSTALL_DEP=install_dep
 fi
 

@@ -7,9 +7,9 @@ echo "================= DIGITAL INVEST ================="
 BASE_PATH=$PWD
 
 echo $BASE_PATH
-
+echo ""
 read -p "## Deseja executar o banco de dados? (S/N) " run_db
-
+echo ""
 
 if [ "$run_db" == "s" ] || [ "$run_db" == "S" ]
 then
@@ -21,17 +21,17 @@ then
     sleep 2
 fi
 
-
-read -p "## Deseja subir o Dump do banco de dados? (S/N) " run_dump
-
+echo ""
+read -p "## Deseja restaurar o banco de dados? (S/N) " run_dump
+echo ""
 if [ "$run_dump" == "s" ] || [ "$run_dump" == "S" ]
 then
     #Inciando os documentos do banco mongodb
     bash $BASE_PATH/scripts/restore-mongodb.sh
 fi
-
+echo ""
 read -p "## Deseja instalar as dependências? (S/N) " install_dep
-
+echo ""
 echo "## Aguarde Iniciando os 4 serviços necessários para o uso do sistema"
 sleep 1
 
