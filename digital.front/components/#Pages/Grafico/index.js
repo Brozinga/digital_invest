@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import { createRef, useState, useEffect, useMemo } from 'react'
 import 'dayjs/locale/pt-br'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -32,7 +32,7 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
     ChartJS.register(CategoryScale, LinearScale, PointElement,
         LineElement, Title, Tooltip, Legend, Filler)
 
-    let _chartRef = React.createRef(null);
+    let _chartRef = createRef(null);
 
     const [options, setOptions] = useState({});
     const [newGraficoPronto, setNewGraficoPronto] = useState([]);
@@ -223,8 +223,11 @@ export default function Grafico({ dadosGrafico, setDadosGrafico }) {
 
     }
 
-    useEffect(async () => {
-        await handleGrafico(dadosGrafico)
+    useEffect(() => {
+        async function Load() {
+            await handleGrafico(dadosGrafico)
+        }
+        Load()
     }, [dadosGrafico])
 
 

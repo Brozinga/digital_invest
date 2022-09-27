@@ -229,7 +229,7 @@ export default function HistoricoComprasTable({ pedidos, HandlerCancelamento }) 
                     <Form.Select type="text" name='status' value={status} onChange={e => setStatus(e.target.value)}>
                       <option value="">Selecione um Status</option>
                       <option value="aberto">Aberto</option>
-                      <option value="fechado">Fechado</option>
+                      <option value="liquidado">Liquidado</option>
                       <option value="cancelado">Cancelado</option>
                     </Form.Select>
                   </Form.Group>

@@ -1,49 +1,91 @@
 # Digital Invest
-version: '3'
-services:
+version: '3.9'
 
+services:
   digital-db:
     image: mongo
     container_name: digital-db
     ports:
       - 27017:27017
     volumes:
-      - digital-invest-db:/data/db
+      - di-db:/data/db
       - ./assets/backups:/data/dump
+    networks:
+      - digital-invest-network
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - digital-db
+    container_name: digitaldb-express
+    ports:
+      - 8085:8081
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_BASICAUTH_USERNAME: digitaldb
+      ME_CONFIG_BASICAUTH_PASSWORD: 4inv3st
+      ME_CONFIG_MONGODB_PORT: 27017
+      ME_CONFIG_MONGODB_SERVER: digital-db
+    links:
+      - digital-db
+    volumes:
+      - digital-invest-db:/data/db
+    networks:
+      - digital-invest-network
+  digital-socket:
+    build:
+      dockerfile: Dockerfile.Socket
+    container_name: digital-socket
+    depends_on:
+      - digital-db
+    ports:
+      - 7000:7000
+    restart: unless-stopped
+    environment:
+      ENV_PROFILE: production
     networks:
       - digital-invest-network
 
   digital-robo:
     build:
-      context: .
       dockerfile: Dockerfile.Robo
-    image: digital-robo:latest
-    container_name: digital-robo
-    environment:
-      ENV_PROFILE: Production
     depends_on:
-      - digital-db
+      - digital-socket
+    container_name: digital-robo
+    restart: unless-stopped
+    environment:
+      ENV_PROFILE: production
     links:
       - digital-db
-    restart: always
+      - digital-socket
     networks:
       - digital-invest-network
 
   digital-api:
     build:
-      context: .
       dockerfile: Dockerfile.API
-    image: digital-api:latest
-    container_name: digital-api
-    environment:
-      ENV_PROFILE: Production
-    ports:
-      - 5000:5000
     depends_on:
       - digital-db
+    ports:
+      - 5000:80
+    container_name: digital-api
+    restart: unless-stopped
     links:
       - digital-db
-    restart: always
+    networks:
+      - digital-invest-network
+
+  digital-front:
+    build:
+      dockerfile: Dockerfile.Front
+    depends_on:
+      - digital-api
+    container_name: digital-front
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    links:
+      - digital-socket
+      - digital-api
     networks:
       - digital-invest-network
 

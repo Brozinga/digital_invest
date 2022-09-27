@@ -35,7 +35,7 @@ export default function Conta() {
             <div className="container bg-center login-tab">
                 <div className="logo">
                     <div className="logo-container">
-                        <Image src={logo} layout='responsive' width={90} height={102} />
+                        <Image src={logo} alt="Digital invest - logomarca" layout='responsive' width={90} height={102} />
                     </div>
                     <div>
                         <h2>

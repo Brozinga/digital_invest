@@ -90,13 +90,17 @@ export default function Moedas() {
         isAuthorized()
     }, [])
 
-    useEffect(async () => {
-        await handleMoedas()
-        addUpdateFunction(handleHistoricoPedidos)
-        IntervalUpdate = setInterval(async () => {
+    useEffect(() => {
+        async function Load() {
+            await handleMoedas()
+            addUpdateFunction(handleHistoricoPedidos)
+            IntervalUpdate = setInterval(async () => {
             console.log("atualizacao de moedas")
             await handleMoedas()
         }, [process.env.NEXT_PUBLIC_TEMPO_ATUALIZACAO])
+        }
+
+        Load()
     }, [user])
 
     return (

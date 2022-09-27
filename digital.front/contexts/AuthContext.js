@@ -48,13 +48,15 @@ export function AuthProvider({ children }) {
         onOpen: () => console.log(`Connected to App WS`),
     });
 
-    useEffect(async () => {
-        console.log(lastMessage)
+    useEffect(() => {
+       async function Load() {
         if (lastMessage !== null) {
             for (let func of updateFunction) {
                 await func()
             }
         }
+       }
+       Load();
     }, [lastMessage])
 
     useEffect(() => {

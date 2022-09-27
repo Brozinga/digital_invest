@@ -31,10 +31,14 @@ export default function Dashboard() {
     }
 
 
-    useEffect(async () => {
-        isAuthorized()
-        await UpdateCarteira()
-        addUpdateFunction(UpdateCarteira)
+    useEffect(() => {
+        async function Load() {
+            isAuthorized()
+            await UpdateCarteira()
+            addUpdateFunction(UpdateCarteira)
+        }
+
+        Load()
     }, [])
 
 

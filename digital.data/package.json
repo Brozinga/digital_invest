@@ -5,6 +5,6 @@
   "license": "MIT",
   "dependencies": {
     "@mongoosejs/double": "^0.2.0",
-    "mongoose": "^6.0.7"
+    "mongoose": "^6.6.2"
   }
 }

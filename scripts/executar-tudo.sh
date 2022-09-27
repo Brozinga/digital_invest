@@ -1,12 +1,51 @@
-#!/bin/bash
+#!/bin/sh
+
+echo
+echo "================= DIGITAL INVEST ================="
 
 # Setando o caminho fixo para execução do script
 BASE_PATH=$PWD
 
 echo $BASE_PATH
 
-# Executando todos os serviços em sequência em novas telas
-start bash $BASE_PATH/scripts/executar-socket.sh
-start bash $BASE_PATH/scripts/executar-robo.sh
-start bash $BASE_PATH/scripts/executar-api.sh
-start bash $BASE_PATH/scripts/executar-front.sh
+read -p "## Deseja executar o banco de dados? (S/N) " run_db
+
+
+if [ "$run_db" == "s" ] || [ "$run_db" == "S" ]
+then
+    # Excluindo o docker do banco se existir e estiver online
+    docker container rm -f digital-db
+    #Inciar o banco de dados
+    bash $BASE_PATH/scripts/executar-banco.sh
+    echo "## Aguarde enquanto o servidor de banco de dados é iniciado"
+    sleep 2
+fi
+
+
+read -p "## Deseja subir o Dump do banco de dados? (S/N) " run_dump
+
+if [ "$run_dump" == "s" ] || [ "$run_dump" == "S" ]
+then
+    #Inciando os documentos do banco mongodb
+    bash $BASE_PATH/scripts/dump-mongodb.sh
+fi
+
+read -p "## Deseja instalar as dependências? (S/N) " install_dep
+
+echo "## Aguarde Iniciando os 4 serviços necessários para o uso do sistema"
+sleep 1
+
+
+#Setando a instalação de todas as dependências
+if [ "$install_dep" == "s" ] || [ "$install_dep" == "S" ]
+then
+    start bash $BASE_PATH/scripts/executar-socket.sh install
+    start bash $BASE_PATH/scripts/executar-robo.sh install
+    start bash $BASE_PATH/scripts/executar-api.sh install
+    start bash $BASE_PATH/scripts/executar-front.sh install
+else
+    start bash $BASE_PATH/scripts/executar-socket.sh not_install
+    start bash $BASE_PATH/scripts/executar-robo.sh not_install
+    start bash $BASE_PATH/scripts/executar-api.sh not_install
+    start bash $BASE_PATH/scripts/executar-front.sh not_install
+fi
