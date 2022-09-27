@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo
-echo "================= DIGITAL INVEST ================="
+echo "================= DIGITAL INVEST - DESENVOLVIMENTO ================="
 
 # Setando o caminho fixo para execução do script
 BASE_PATH=$PWD
