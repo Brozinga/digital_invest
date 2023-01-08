@@ -8,6 +8,27 @@ O objetivo o estudo de arquitetura de projeto, comunicação entre CSharp e Mong
 
 Esse projeto foi feito usando front-end com NextJS, uma API em C# para gerenciamento, e serivços em NodeJS (Sendo um Robô, e um servidor Websocket para comunicação em tempo real)
 
+### *O que o sistema tem?*
+
+- Cadastro de novos usuários com validações (entrando já com R$ 500,00).
+
+
+- Login também com validações.
+
+
+- Dashboard onde com um gráfico é possível ver a evolução do seu património e essa contagem é feita apenas após a venda das moedas, e a tela é atualizada em tempo real.
+ 
+
+- Cotação onde através de quadros é informado o valor antigo e o atual de cada moeda, esse painel faz a atualização a cada 3 min (conforme configuração).
+
+
+- Compra de moedas, onde você escolhe o tipo, e a quantidade de moedas que deseja comprar, e já informa a data da venda, sendo no mínimo 3 horas após a compra.
+
+
+- Gráfico de evolução de moedas, onde via gráfico é possível acompanhar as 20 ultimas cotações de cada moeda para efetuar a estratégia de compra (atualizado a cada 3 min).
+
+
+- Tabela de histórico de compras, onde há filtros e pode ser localizado todos os processos que o usuário já fez (caso esteja aberto, pode clicar no X vermelho para cancelar).
 
 ## Arquitetura:
    
@@ -57,3 +78,8 @@ Algumas artes contidas nesse projeto não são de minha autoria, sendo utilizado
 [Dribbble](https://dribbble.com/) </br>
 [Freepik](https://br.freepik.com/)
 
+## Informações Adicionais
+
+### [TELAS DO SISTEMA](INTERFACE.md) <br/>
+
+### [MIT LICENSE](LICENSE.md)
