@@ -20,7 +20,12 @@ then
     INSTALL_DEP=install_dep
 fi
 
-if [ "$INSTALL_DEP" == "s" ] || [ "$INSTALL_DEP" == "S" ] || [ "$INSTALL_DEP" == "install" ]
+if [ "$INSTALL_DEP" == "s" ] ||
+[ "$INSTALL_DEP" == "S" ] ||
+[ "$INSTALL_DEP" == "install" ] ||
+[ "$ENV_PROFILE" == "PRODUCTION" ] ||
+[ "$ENV_PROFILE" == "production" ] ||
+[ "$ENV_PROFILE" == "Production" ]
 then
     # Instalação dos pacotes
     echo $BASE_PATH/digital.socket/

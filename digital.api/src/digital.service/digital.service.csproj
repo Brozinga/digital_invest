@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\APRENDENDO\digital_invest_matteus\digital.api\src\digital.service\digital.service.xml</DocumentationFile>
+    <DocumentationFile>.\digital.service.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

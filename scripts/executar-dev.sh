@@ -39,13 +39,13 @@ sleep 1
 #Setando a instalação de todas as dependências
 if [ "$install_dep" == "s" ] || [ "$install_dep" == "S" ]
 then
-    start bash $BASE_PATH/scripts/executar-socket.sh install
-    start bash $BASE_PATH/scripts/executar-robo.sh install
-    start bash $BASE_PATH/scripts/executar-api.sh install
-    start bash $BASE_PATH/scripts/executar-front.sh install
+    bash $BASE_PATH/scripts/executar-socket.sh install &
+    bash $BASE_PATH/scripts/executar-robo.sh install &
+    bash $BASE_PATH/scripts/executar-api.sh install &
+    bash $BASE_PATH/scripts/executar-front.sh install &
 else
-    start bash $BASE_PATH/scripts/executar-socket.sh not_install
-    start bash $BASE_PATH/scripts/executar-robo.sh not_install
-    start bash $BASE_PATH/scripts/executar-api.sh not_install
-    start bash $BASE_PATH/scripts/executar-front.sh not_install
+    bash $BASE_PATH/scripts/executar-socket.sh not_install &
+    bash $BASE_PATH/scripts/executar-robo.sh not_install &
+    bash $BASE_PATH/scripts/executar-api.sh not_install &
+    bash $BASE_PATH/scripts/executar-front.sh not_install &
 fi

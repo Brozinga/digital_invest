@@ -121,3 +121,4 @@ dist
 data/
 .history/
 .vscode/
+.idea/
