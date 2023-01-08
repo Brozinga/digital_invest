@@ -1,0 +1,9 @@
+FROM node:lts-alpine
+WORKDIR /app
+COPY ./digital.socket ./digital.socket
+COPY ./scripts ./scripts
+RUN chmod +x /app/scripts/executar-socket.sh
+CMD /bin/sh /app/scripts/executar-socket.sh
+EXPOSE 7000
+
+

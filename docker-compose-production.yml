@@ -1,0 +1,78 @@
+# Digital Invest
+version: '3.9'
+
+services:
+  digital-db:
+    image: mongo
+    container_name: digital-db
+    ports:
+      - 27017:27017
+    volumes:
+      - di-db:/data/db
+      - ./assets/backups:/data/dump
+    networks:
+      - digital-invest-network
+  digital-socket:
+    build:
+      dockerfile: Dockerfile.Socket
+    container_name: digital-socket
+    depends_on:
+      - digital-db
+    ports:
+      - 7000:7000
+    restart: unless-stopped
+    environment:
+      ENV_PROFILE: production
+    networks:
+      - digital-invest-network
+
+  digital-robo:
+    build:
+      dockerfile: Dockerfile.Robo
+    depends_on:
+      - digital-socket
+    container_name: digital-robo
+    restart: unless-stopped
+    environment:
+      ENV_PROFILE: production
+    links:
+      - digital-db
+      - digital-socket
+    networks:
+      - digital-invest-network
+
+  digital-api:
+    build:
+      dockerfile: Dockerfile.API
+    depends_on:
+      - digital-db
+    ports:
+      - 5000:80
+    container_name: digital-api
+    restart: unless-stopped
+    links:
+      - digital-db
+    networks:
+      - digital-invest-network
+
+  digital-front:
+    build:
+      dockerfile: Dockerfile.Front
+    depends_on:
+      - digital-api
+    container_name: digital-front
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    links:
+      - digital-socket
+      - digital-api
+    networks:
+      - digital-invest-network
+
+networks:
+  digital-invest-network:
+    driver: bridge
+
+volumes:
+  di-db: null

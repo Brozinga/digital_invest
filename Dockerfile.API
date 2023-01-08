@@ -1,0 +1,18 @@
+# Container para Build da solução
+FROM mcr.microsoft.com/dotnet/sdk:6.0.404-alpine3.16-amd64 AS build-env
+WORKDIR /app
+
+# Copiando os CSPROJs para instalacao de dependencias
+COPY ./digital.api/src/digital.service/*.csproj ./
+RUN dotnet restore
+
+# Copiando todo o projeto
+COPY ./digital.api ./
+RUN dotnet publish digital.solution.sln -c Release -o out
+
+# Container que vai copiar os arquivos buildados, e rodar
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "digital.service.dll"]
+EXPOSE 80/tcp

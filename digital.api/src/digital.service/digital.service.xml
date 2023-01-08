@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>digital.service</name>
+    </assembly>
+    <members>
+        <member name="M:digital.service.Controllers.ContaController.Criar(digital.domain.InputViewModel.NovoUsuarioInput)">
+            <summary>
+            Método para criar novos usuários
+            </summary>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

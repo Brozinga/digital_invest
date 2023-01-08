@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.14.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\digital.data\digital.data.csproj" />
+    <ProjectReference Include="..\digital.domain\digital.domain.csproj" />
+    <ProjectReference Include="..\digital.util\digital.util.csproj" />
+  </ItemGroup>
+
+</Project>

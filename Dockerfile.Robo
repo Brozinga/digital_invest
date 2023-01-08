@@ -1,0 +1,7 @@
+FROM node:lts-alpine
+WORKDIR /app
+COPY ./digital.data ./digital.data
+COPY ./digital.robo ./digital.robo
+COPY ./scripts ./scripts
+RUN chmod +x /app/scripts/executar-robo.sh
+CMD /bin/sh /app/scripts/executar-robo.sh
