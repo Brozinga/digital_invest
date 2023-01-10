@@ -6,7 +6,7 @@ O projeto se trata de uma exchange de compra e venda de criptomoedas onde tudo �
 
 O objetivo o estudo de arquitetura de projeto, comunicação entre CSharp e Mongodb, sistema em tempo real com Websocket.
 
-Esse projeto foi feito usando front-end com NextJS, uma API em C# para gerenciamento, e serivços em NodeJS (Sendo um Robô, e um servidor Websocket para comunicação em tempo real)
+Esse projeto foi feito usando front-end com NextJS, uma API em C# para gerenciamento, e serviços em NodeJS (Sendo um Robô, e um servidor Websocket para comunicação em tempo real)
 
 ### *O que o sistema tem?*
 
