@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.HttpLogging;
 
 namespace digital.service
 {
@@ -54,10 +55,21 @@ namespace digital.service
 
             services.InjectJWT(Configuration.GetSection("JWT:Secret").Value);
 
+		services.AddHttpLogging(httpLogging =>
+            {
+                httpLogging.LoggingFields = HttpLoggingFields.All;
+                httpLogging.RequestBodyLogLimit = 4096;
+                httpLogging.ResponseBodyLogLimit = 4096;
+            });
+
             services.AddControllers();
 
             services.AddCors(op => op.AddPolicy("allowAll", p =>
-              p.AllowAnyHeader()
+              //p.AllowAnyOrigin()
+
+               p.WithOrigins("https://digital-invest.online",
+                             "https://www.digital-invest.online",
+                             "https://socket.digital-invest.online")
               .AllowAnyMethod()
               .AllowAnyOrigin()
             ));
@@ -104,11 +116,12 @@ namespace digital.service
         {
             if (env.IsDevelopment())
             {
-                app.UseHttpLogging();
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Digital Invest API v1"));
             }
+
+            app.UseHttpLogging();
 
             app.UseRouting();
 

@@ -1,4 +1,5 @@
-﻿using digital.business.Handlers;
+﻿using System;
+using digital.business.Handlers;
 using digital.domain.InputViewModel;
 using digital.util.Attributes;
 using Microsoft.AspNetCore.Authorization;
@@ -32,6 +33,10 @@ namespace digital.service.Controllers
         public async Task<IActionResult> Criar([FromBody] NovoUsuarioInput usuario)
         {
             var result = await _userHandler.Executar(usuario);
+            
+            if(_logger.IsEnabled(LogLevel.Information))
+                _logger.LogInformation("api/conta/criar - DateTime: {DT} | Status Response: {status} | Dados: {data}",DateTime.UtcNow.ToLongTimeString(), result.Status, usuario);
+
             return StatusCode((int)result.Status, result);
         }
 
@@ -40,6 +45,10 @@ namespace digital.service.Controllers
         public async Task<IActionResult> AlterarSenha([FromBody] AlterarSenhaInputView passChange)
         {
             var result = await _userHandler.Executar(passChange);
+            
+            if(_logger.IsEnabled(LogLevel.Information))
+                _logger.LogInformation("api/conta/alterar_senha - DateTime: {DT} | Status Response: {status} | Dados: {data}",DateTime.UtcNow.ToLongTimeString(), result.Status, passChange);
+
             return StatusCode((int)result.Status, result);
         }
 
@@ -49,6 +58,10 @@ namespace digital.service.Controllers
         public async Task<IActionResult> Login([FromBody] LoginInputView userLogin)
         {
             var result = await _userHandler.Executar(userLogin);
+            
+            if(_logger.IsEnabled(LogLevel.Information))
+                _logger.LogInformation("api/conta/login - DateTime: {DT} | Status Response: {status} | Dados: {data}",DateTime.UtcNow.ToLongTimeString(), result.Status, userLogin);
+
             return StatusCode((int)result.Status, result);
         }
 
@@ -58,6 +71,10 @@ namespace digital.service.Controllers
         {
             var result = await _userHandler.Executar(
                 new PegarHistoricoCarteiraInputView(quantidadeRegistros, User.Claims));
+            
+            if(_logger.IsEnabled(LogLevel.Information))
+                _logger.LogInformation("api/conta/historico_carteira - DateTime: {DT} | Status Response: {status} | Dados: {data}",DateTime.UtcNow.ToLongTimeString(), result.Status, quantidadeRegistros.ToString());
+            
             return StatusCode((int)result.Status, result);
         }
         
@@ -67,6 +84,10 @@ namespace digital.service.Controllers
         {
             var result = await _userHandler.Executar(
                 new PegarSaldoInputView(User.Claims));
+            
+            if(_logger.IsEnabled(LogLevel.Information))
+                _logger.LogInformation("api/conta/saldo - DateTime: {DT} | Status Response: {status} | PegandoSaldo",DateTime.UtcNow.ToLongTimeString(), result.Status);
+
             return StatusCode((int)result.Status, result);
         }
     }
